@@ -12,7 +12,7 @@ public class Main
 	{
 		IUserFunction users = new UserFunction();
 		try
-		{//TODO Vi har et problem med kode, da vi får en tilfældig kode.. 
+		{ 
 			users.createUser(new User(1, "", "", "", Rights.Student));
 			users.getUser(10);
 			users.updateUser(new User(1, "", "", "", Rights.Teacher));
