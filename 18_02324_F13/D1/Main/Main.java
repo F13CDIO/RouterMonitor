@@ -13,10 +13,10 @@ public class Main
 		IUserFunction users = new UserFunction();
 		try
 		{ 
-			users.createUser(new User(1, "", "", "", Rights.Student));
-			users.getUser(10);
-			users.updateUser(new User(1, "", "", "", Rights.Teacher));
-			users.updateUserPassword(new User(19, "", "", "ReRFdf!hH", Rights.Admin));
+			users.createUser(new User(10, "", "", "", Rights.Student));
+			System.out.println(users.getUser(10));
+			users.updateUser(new User(10, "", "", "", Rights.Teacher));
+			users.updateUserPassword(new User(10, "", "", "ReRFdf+hH", Rights.Admin));
 		}
 		catch(DALException e)
 		{

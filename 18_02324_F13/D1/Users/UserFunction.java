@@ -1,7 +1,6 @@
 package Users;
 
 import java.util.*;
-
 import Exceptions.DALException;
 import Persistance.PasswordChecker;
 import Users.User.Rights;
@@ -16,13 +15,13 @@ public class UserFunction implements IUserFunction
 		createAdmin();
 	}
 	
+	//Creates the default administrator
 	private void createAdmin()
 	{
 		users.add(new User(10, "Administrator", "a000001", "02324it!", Rights.Admin));
 	}
 	
-	public void createUser(User user)
-	throws DALException
+	public void createUser(User user) throws DALException
 	{	
 		int oprID = 10 + users.size();
 		if(oprID < 100 && oprID > 10)
@@ -35,9 +34,9 @@ public class UserFunction implements IUserFunction
 		}
 	}
 	
-	public void updateUser(User user)
-	throws DALException
+	public void updateUser(User user) throws DALException
 	{
+		//
 		if(user.getID()-10 < users.size() && user.getID() > 9)
 		{	
 			if(user.getRights() == Rights.Admin || user.getRights() == Rights.Student || user.getRights() == Rights.Teacher)
