@@ -13,7 +13,9 @@ public class User implements IUser
 	{
 		Admin, Teacher, Student;
 	}
-
+	/**
+	 * Der er to constructor
+	 */
 	public User(int oprID, String oprName, String studyNr, Rights rights)
 	{
 		passGen = new PassGen();
