@@ -4,10 +4,17 @@ import Users.User.Rights;
 
 public class DALException extends Exception {
 
+	/**
+	 * 
+	 * @param oprID The out of bounds ID
+	 */
 	public DALException(int oprID) {
 		super("Index: " + oprID + " out of bounds!");
 	}
 
+	/**
+	 * 
+	 */
 	public DALException() {
 		super("No list");
 	}

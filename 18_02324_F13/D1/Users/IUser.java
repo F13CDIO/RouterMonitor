@@ -11,5 +11,5 @@ public interface IUser
 	Rights getRights();
 	void setRights(Rights rights);
 	void setPassword(String password);
-	
+	String toString();	
 }

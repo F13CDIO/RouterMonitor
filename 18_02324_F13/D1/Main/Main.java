@@ -16,7 +16,7 @@ public class Main
 			users.createUser(new User(10, "", "", "", Rights.Student));
 			System.out.println(users.getUser(10));
 			users.updateUser(new User(10, "", "", "", Rights.Teacher));
-			users.updateUserPassword(new User(10, "", "", "ReRFdf+hH", Rights.Admin));
+			//users.updateUserPassword(new User(10, "", "", "ReRFdf+hH", Rights.Admin));
 		}
 		catch(DALException e)
 		{
