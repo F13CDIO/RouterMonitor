@@ -19,7 +19,8 @@ public class DALException extends Exception {
 	public DALException(boolean valid) {
 		super(
 				"Your pasword need to contain one of the four following: \n"
-				+"A big letter from 'A' to 'Z'\nA small letter from 'a' to 'z'\n"
+				+"An uppercase letter from 'A' to 'Z'\n"
+				+"A lowercase letter from 'a' to 'z'\n"
 				+"A number from '0' to '9'\n"
 				+"A special char of {'.', '-', '_', '+', '!', '?', '='}");
 	}

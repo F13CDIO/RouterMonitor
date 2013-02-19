@@ -3,6 +3,7 @@ package Users;
 import java.util.*;
 
 import Exceptions.DALException;
+import Persistance.PasswordChecker;
 import Users.User.Rights;
 
 public class UserFunction implements IUserFunction
@@ -59,18 +60,18 @@ public class UserFunction implements IUserFunction
 	public void updateUserPassword(User user)
 	throws DALException
 	{
-		PassCheck passCheck = new PassCheck();
+		PasswordChecker passCheck = new PasswordChecker();
 		//TODO Denne metode skal kunne kaste en exception hvis koden er forkert eller indexOutOfBounds
 		//Der bliver oprette en klasse eller en metode til at kontroller dette..
 		if(user.getID()-10 < users.size() && user.getID() > 9)
 		{
-		if(passCheck.Check(user.getPassword()))
+		if(passCheck.isPasswordStrongEnough(user.getPassword()))
 		{
 			users.get(user.getID() - 10).setPassword(user.getPassword());
 		}
 		else
 		{
-			throw new DALException(passCheck.Check(user.getPassword()));
+			throw new DALException(passCheck.isPasswordStrongEnough(user.getPassword()));
 		}
 		}
 		else
