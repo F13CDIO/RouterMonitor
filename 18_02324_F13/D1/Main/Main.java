@@ -15,7 +15,7 @@ public class Main
 		ScaleProgram scale = new ScaleProgram();
 		try
 		{ 
-			users.createUser(new User(11, "John", "S111754", "12BAasAS12", Rights.Student));
+			users.createUser(new User(11, "Johnny", "S111754", "12BAasAS12", Rights.Student));
 			System.out.println(users.getUser(10));
 			System.out.println(users.getUser(11));
 			System.out.println(users.getUserList());
