@@ -1,6 +1,6 @@
 package Users;
-import java.util.Scanner;
 
+import java.util.Scanner;
 import Exceptions.DALException;
 
 public class Boundary {
