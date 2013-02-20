@@ -12,7 +12,7 @@ public class Main
 	public static void main(String[] args)
 	{
 		IUserFunction users = new UserFunction();
-		ScaleProgram scale = new ScaleProgram("10","Lorte12" );
+		ScaleProgram scale = new ScaleProgram();
 		try
 		{ 
 			users.createUser(new User(11, "John", "S111754", "12BAasAS12", Rights.Student));

@@ -1,26 +1,23 @@
 package Scale;
 
 public class ScaleProgram {
-	
-	String userID = "";
-	String password = "";
-	
-	public ScaleProgram(String userID, String password)
-	{
-		this.userID = userID;
-		this.password = password;
-	}
-	
+		
 	int tara = 0;
 	int brutto = 0;
 	int netto = 0;
 	
-	
+	/**
+	 * Input tara weight in KG
+	 * @param taraIKg
+	 */
 	public void setTara(int taraIKg)
 	{
 		tara = taraIKg;
 	}
-	
+	/**
+	 * input brutto weight in KG
+	 * @param bruttoiKg
+	 */
 	public void setBrutto(int bruttoiKg)
 	{
 		brutto = bruttoiKg;
@@ -35,15 +32,15 @@ public class ScaleProgram {
 	{
 		return brutto;
 	}
-	
+	/**
+	 * This methode returns the netto weight 
+	 * Netto = brutto - tara 
+	 * @return Netto weight in
+	 */
 	public int getNetto()
 	{
 		netto = brutto - tara;
 		return netto;
 	}
-	
-	
-
-	
-	
+		
 }
