@@ -85,6 +85,16 @@ public class User implements IUser
 		
 	}
 
+	@Override
+	public void setName(String name) {
+		oprName = name;	
+	}
+	
+	@Override
+	public void setStudyNr(String nr){
+		studyNr = nr;
+	}
+
 }
 
 	

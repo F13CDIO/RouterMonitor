@@ -118,23 +118,36 @@ public class FrameEditUser
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{	
-				if (passwordOld.getPassword().length == 0)
-				{
-					System.out.println("Old empty");
-				}
-				
-				else
-				{
-					if (Arrays.equals(passwordNew.getPassword(), passwordConfirm.getPassword()) && passwordNew.getPassword().length > 0)
+				String oldPass = new String(passwordOld.getPassword());
+				String newPass = new String(passwordNew.getPassword());
+				String confPass = new String(passwordConfirm.getPassword());
+				try {
+					if (oldPass.length() == 0)
 					{
-						System.out.println("Same");
-						System.out.println(passwordNew.getPassword().length);
+						System.out.println("Old empty");
 					}
-					
+				
 					else
 					{
-						System.out.println("Not the same");
+						if (newPass.equals(confPass) && func.validPass(Integer.parseInt(userData[0]), oldPass))
+						{
+						String pass = new String(passwordNew.getPassword());
+							
+							func.updateUser(Integer.parseInt(userData[0]), textName.getText(), textCPR.getText(), pass);
+							setVisible(false);
+						}
+						else{
+							JOptionPane	.showMessageDialog(frmEditUser,"Something is wrong with the password");
+						}
 					}
+					
+					
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block !!!!!!!!
+					e.printStackTrace();
+				} catch (DALException e) {
+					// TODO Auto-generated catch block !!!!!!!!
+					e.printStackTrace();
 				}
 					
 			}

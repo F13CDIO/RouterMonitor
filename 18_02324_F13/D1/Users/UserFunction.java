@@ -64,17 +64,20 @@ public class UserFunction implements IUserFunction
 //	}
 		
 	
-	public void updateUser(User user)
+	public void updateUser(int id, String username, String sNr, String password)
 	throws DALException
 	{
+		IUser user = getUser(id);
 		PasswordChecker passCheck = new PasswordChecker();
 		//Index out of bounds
 		if(user.getID()-10 < users.size() && user.getID() > 9)
 		{
 			//wrong password
-			if(passCheck.isPasswordStrongEnough(user.getPassword()))
+			if(passCheck.isPasswordStrongEnough(password))
 			{
-				users.get(user.getID() - 10).setPassword(user.getPassword());
+				user.setPassword(password);
+				user.setName(username);
+				user.setStudyNr(sNr);
 			}
 			else
 			{
@@ -138,6 +141,11 @@ public class UserFunction implements IUserFunction
 		IUser user = getUser(userID);
 		users.remove(user);
 		
+	}
+	
+	public boolean validPass(int id, String password) throws DALException{
+		IUser user = getUser(id);
+		return password.equals(user.getPassword());
 	}
 	
 	

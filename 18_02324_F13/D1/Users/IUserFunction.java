@@ -31,7 +31,7 @@ public interface IUserFunction
 	 * @param user The user to be updated
 	 * @throws DALException
 	 */
-	void updateUser(User user) throws DALException;
+	void updateUser(int id, String name,String sNr, String password) throws DALException;
 	
 	/**
 	 * Delete a user
@@ -50,6 +50,8 @@ public interface IUserFunction
 	int checkLogin(int id, String password) throws DALException;
 	
 	String[] userData(int id) throws DALException;
+	
+	boolean validPass(int id, String password) throws DALException;
 	
 	
 }

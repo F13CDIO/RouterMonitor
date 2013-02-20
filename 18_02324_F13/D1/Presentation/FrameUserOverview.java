@@ -85,6 +85,7 @@ public class FrameUserOverview
 				{
 					String userID = (String)table.getValueAt(table.getSelectedRow(), 0);
 					String name = (String)table.getValueAt(table.getSelectedRow(), 1);
+					func.deleteUser(Integer.parseInt(userID));
 					JOptionPane	.showMessageDialog(frmUserOverview, name +  " deleted");
 					// call controller
 					
@@ -130,7 +131,8 @@ public class FrameUserOverview
 		{	
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				JOptionPane	.showMessageDialog(frmUserOverview,"WEIGHT CALL");
+				updateTable(userType);
+				//JOptionPane	.showMessageDialog(frmUserOverview,"WEIGHT CALL");
 			}
 		});
 		btnTestProgram.setBounds(305, 11, 284, 23);
