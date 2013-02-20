@@ -6,17 +6,14 @@ public class User implements IUser
 	private String oprName;
 	private String studyNr;
 	private String password;
-	private Rights rights;
+	private int rights;
 	private PassGen passGen;
 
-	public enum Rights
-	{
-		Admin, Teacher, Student;
-	}
+	
 	/**
 	 * Der er to constructor
 	 */
-	public User(int oprID, String oprName, String studyNr, Rights rights)
+	public User(int oprID, String oprName, String studyNr, int rights)
 	{
 		passGen = new PassGen();
 		this.oprID = oprID;
@@ -26,7 +23,7 @@ public class User implements IUser
 		this.rights = rights;
 	}
 	
-	public User(int oprID, String oprName, String studyNr, String password, Rights rights)
+	public User(int oprID, String oprName, String studyNr, String password, int rights)
 	{
 		this.oprID = oprID;
 		this.oprName = oprName;
@@ -50,22 +47,14 @@ public class User implements IUser
 		return studyNr;
 	}
 
-	public int getRights()
-	{
-		switch(rights){
-			case Admin:
-				return 0;
-			case Student:
-				return 1;
-			case Teacher:
-				return 2;
-		}
-		return -1;
-	}
 
-	public void setRights(Rights rights)
+	public void setRights(int rights)
 	{
 		this.rights = rights;
+	}
+	public int getRights()
+	{
+		return rights;
 	}
 
 	public String getPassword()
@@ -95,4 +84,7 @@ public class User implements IUser
 		
 		
 	}
+
 }
+
+	

@@ -12,14 +12,20 @@ import java.util.Arrays;
 
 import javax.swing.JPasswordField;
 
+import Exceptions.DALException;
+import Users.IUserFunction;
+
 public class FrameEditUser 
 {
 	int userType;
+	private IUserFunction func;
+	private String[] userData;
 	
 	// Constructor
-	public FrameEditUser(int userId) 
+	public FrameEditUser(int userId, IUserFunction func) 
 	{
 			initialize();
+			this.func = func;
 			this.userType = userType;
 			
 			if (this.userType > 0)
@@ -28,7 +34,15 @@ public class FrameEditUser
 				textName.setEnabled(false);
 			}
 			
-			// userObject = getUSerObject
+			try {
+				userData = func.userData(userId);
+				textName.setText(userData[1]);
+				textCPR.setText(userData[2]);
+				
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	
 	JFrame frmEditUser;

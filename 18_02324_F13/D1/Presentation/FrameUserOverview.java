@@ -12,6 +12,9 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import Exceptions.DALException;
+import Users.IUserFunction;
+
 public class FrameUserOverview 
 {
 	private JFrame frmUserOverview;
@@ -19,14 +22,16 @@ public class FrameUserOverview
 	private JButton btnAddUser;
 	private JButton btnDelete;
 	private JButton btnEdit;
-	private String[] columnNames = {"ID", "Name", "CPR", "Data", "Type"};
+	private String[] columnNames = {"ID", "Name", "CPR", "Data"};
 	private JScrollPane scrollPane = new JScrollPane();
 	private JButton btnTestProgram;
 	private int userType;
+	private IUserFunction func;
 	
-	public FrameUserOverview(int userType) 
+	public FrameUserOverview(int userType, IUserFunction func) 
 	{
 		this.userType = userType;
+		this.func = func;
 		initialize();
 		
 		// If not Administrator
@@ -106,7 +111,7 @@ public class FrameUserOverview
 				try
 				{
 					String userID = (String)table.getValueAt(table.getSelectedRow(), 0);
-					FrameEditUser frameEditUser = new FrameEditUser(Integer.parseInt(userID));
+					FrameEditUser frameEditUser = new FrameEditUser(Integer.parseInt(userID), func);
 					frameEditUser.setVisible(true);
 				}
 				
@@ -134,7 +139,13 @@ public class FrameUserOverview
 	
 	public void updateTable(int userType)
 	{	
-		Object data[][] = new Object[1][5];
+		Object[][] data = null;
+		try {
+			data = func.getUserList();
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		table = new JTable(data,columnNames);
 		scrollPane.setViewportView(table);	

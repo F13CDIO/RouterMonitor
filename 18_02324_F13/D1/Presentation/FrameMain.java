@@ -9,15 +9,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
+import Exceptions.DALException;
+import Users.IUserFunction;
+
 public class FrameMain 
 {
 
 	private JFrame frmLogin;
 	private JTextField textId;
 	private JPasswordField passwordField;
+	private IUserFunction func;
 	
-	public FrameMain() 
+	public FrameMain(IUserFunction func) 
 	{
+		this.func = func;
 		initialize();
 	}
 	
@@ -62,18 +67,31 @@ public class FrameMain
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				int userType = 1;
-				
-				if (userType == -1)					
-				{
-					JOptionPane.showMessageDialog(frmLogin,"Invalid input. Try again");
+				try {
+					// Checks the entered password and logs in as the usertype recieved
+					String pass = new String(passwordField.getPassword());
+					int uID = Integer.parseInt(textId.getText());
+					System.out.println(uID +" "+pass);
+					int userType = func.checkLogin(uID,pass);
+					System.out.println(userType);
+					if (userType == -1)					
+					{
+						JOptionPane.showMessageDialog(frmLogin,"Invalid input. Try again");
+					}
+					
+					else
+					{
+						FrameUserOverview frameUserAdmin = new FrameUserOverview(userType, func);
+						frameUserAdmin.setVisible(true);
+					}
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DALException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				
-				else
-				{
-					FrameUserOverview frameUserAdmin = new FrameUserOverview(userType);
-					frameUserAdmin.setVisible(true);
-				}
 				
 				
 				

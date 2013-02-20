@@ -4,7 +4,6 @@ import java.util.*;
 
 import Exceptions.DALException;
 import Persistance.PasswordChecker;
-import Users.User.Rights;
 
 /**
  * 
@@ -25,16 +24,16 @@ public class UserFunction implements IUserFunction
 	//Creates the admin at index 0 with standard info
 	private void createAdmin()
 	{
-		users.add(new User(10, "Administrator", "a000001", "02324it!", Rights.Admin));
+		users.add(new User(10, "Administrator", "a000001", "02324it!", 0));
 	}
 	
-	public void createUser(User user) throws DALException
+	public void createUser(IUser user) throws DALException
 	{	
 		int oprID = 10 + users.size();
 		if(oprID < 100 && oprID > 10)
 		{
 			//add a new user to the arraylist
-			users.add(new User(oprID, user.getName(), user.getStudyNr(), user.getRights()));
+			users.add(new User(oprID, user.getName(), user.getStudyNr(), user.getPassword(), user.getRights()));
 		}
 		else
 		{
@@ -101,15 +100,16 @@ public class UserFunction implements IUserFunction
 		}
 	}
 	
-	public List<String[]> getUserList() throws DALException
+	public Object[][] getUserList() throws DALException
 	{
-		List<String[]> userData = new ArrayList<String[]>();
+		Object[][] userData = new String[users.size()][4];
 		//arraylist exists check
 		if(users != null)
 		{
 			//inserts all the userdata in the arraylist
 			for(int i = 0; i < users.size(); i++){
-				userData.add(users.get(i).getUserData());
+				String[] data = users.get(i).getUserData();
+				userData[i] = data;
 			}
 			return userData;
 		}
@@ -131,6 +131,13 @@ public class UserFunction implements IUserFunction
 	public String[] userData(int id) throws DALException{
 		IUser user = getUser(id);
 		return user.getUserData();
+	}
+
+	@Override
+	public void deleteUser(int userID) throws DALException {
+		IUser user = getUser(userID);
+		users.remove(user);
+		
 	}
 	
 	

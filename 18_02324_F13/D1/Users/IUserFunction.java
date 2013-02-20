@@ -19,13 +19,13 @@ public interface IUserFunction
 	 * @return The Arraylist of the users in the database
 	 * @throws DALException
 	 */
-	List<String[]> getUserList() throws DALException;
+	Object[][] getUserList() throws DALException;
 	/**
 	 * Creates a new user in the database
 	 * @param user A new user to be created
 	 * @throws DALException
 	 */
-	void createUser(User user) throws DALException;
+	void createUser(IUser user) throws DALException;
 	/**
 	 * Updates the password for a user
 	 * @param user The user to be updated

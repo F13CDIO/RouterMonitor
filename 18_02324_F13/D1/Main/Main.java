@@ -1,7 +1,7 @@
 package Main;
 import Exceptions.DALException;
 import Users.*;
-import Users.User.Rights;
+import Presentation.FrameMain;
 import Scale.ScaleProgram;
 
 public class Main 
@@ -13,9 +13,14 @@ public class Main
 	{
 		IUserFunction users = new UserFunction();
 		ScaleProgram scale = new ScaleProgram();
+		FrameMain gui = new FrameMain(users);
+		//IUser user = new User(11, "Johnny", "S111754", "12BAasAS12", 1);
+		IUser user = new User(11, "Johnny", "S111754", "12345678lK", 1);
+		
+		gui.setVisible(true);
 		try
 		{ 
-			users.createUser(new User(11, "Johnny", "S111754", "12BAasAS12", Rights.Student));
+			users.createUser(user);
 			System.out.println(users.getUser(10));
 			System.out.println(users.getUser(11));
 			System.out.println(users.getUserList());

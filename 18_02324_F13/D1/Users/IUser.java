@@ -1,6 +1,5 @@
 package Users;
 
-import Users.User.Rights;
 
 public interface IUser 
 {
@@ -9,7 +8,7 @@ public interface IUser
 	String getStudyNr();
 	String getPassword();
 	int getRights();
-	void setRights(Rights rights);
+	void setRights(int rights);
 	void setPassword(String password);
 	String toString();	
 	String[] getUserData();
