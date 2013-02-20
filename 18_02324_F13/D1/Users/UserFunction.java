@@ -1,6 +1,7 @@
 package Users;
 
 import java.util.*;
+
 import Exceptions.DALException;
 import Persistance.PasswordChecker;
 import Users.User.Rights;
@@ -87,8 +88,7 @@ public class UserFunction implements IUserFunction
 		}
 	}
 	
-	public User getUser(int userID)
-	throws DALException
+	public User getUser(int userID) throws DALException
 	{ 
 		//Index out of bounds check
 		if(userID > 9 && users.size() > (userID - 10))
@@ -101,18 +101,36 @@ public class UserFunction implements IUserFunction
 		}
 	}
 	
-	public List<User> getUserList()
-	throws DALException
+	public List<String[]> getUserList() throws DALException
 	{
+		List<String[]> userData = new ArrayList<String[]>();
 		//arraylist exists check
 		if(users != null)
 		{
-			return users;
+			//inserts all the userdata in the arraylist
+			for(int i = 0; i < users.size(); i++){
+				userData.add(users.get(i).getUserData());
+			}
+			return userData;
 		}
 		else
 		{
 			throw new DALException();
 		}
+	}
+	
+	public int checkLogin(int id, String password) throws DALException{
+		IUser checkUser = getUser(id);
+		if(checkUser.getPassword().equals(password))
+			return checkUser.getRights();
+		else
+			return -1;
+		
+	}
+	
+	public String[] userData(int id) throws DALException{
+		IUser user = getUser(id);
+		return user.getUserData();
 	}
 	
 	

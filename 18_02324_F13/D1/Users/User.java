@@ -50,9 +50,17 @@ public class User implements IUser
 		return studyNr;
 	}
 
-	public Rights getRights()
+	public int getRights()
 	{
-		return rights;
+		switch(rights){
+			case Admin:
+				return 0;
+			case Student:
+				return 1;
+			case Teacher:
+				return 2;
+		}
+		return -1;
 	}
 
 	public void setRights(Rights rights)
@@ -73,5 +81,18 @@ public class User implements IUser
 	public String toString()
 	{
 		return "ID: "+ oprID + ", Name: " + oprName + ", Rights: " + rights;
+	}
+	/**
+	 * returns all the user data in a string array
+	 */
+	public String[] getUserData(){
+		String[] userData = new String[4];
+		userData[0] = Integer.toString(getID());
+		userData[1] = getName();
+		userData[2] = getStudyNr();
+		userData[3] = Integer.toString(getRights());
+		return userData;
+		
+		
 	}
 }

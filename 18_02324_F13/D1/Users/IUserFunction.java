@@ -1,5 +1,6 @@
 package Users;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Exceptions.DALException;
@@ -18,7 +19,7 @@ public interface IUserFunction
 	 * @return The Arraylist of the users in the database
 	 * @throws DALException
 	 */
-	List<User> getUserList() throws DALException;
+	List<String[]> getUserList() throws DALException;
 	/**
 	 * Creates a new user in the database
 	 * @param user A new user to be created
@@ -31,4 +32,24 @@ public interface IUserFunction
 	 * @throws DALException
 	 */
 	void updateUser(User user) throws DALException;
+	
+	/**
+	 * Delete a user
+	 * @param userID
+	 * @throws DALException
+	 */
+	void deleteUser(int userID) throws DALException;
+	
+	/**
+	 * Check the user ID and the password of the user
+	 * @param id
+	 * @param password
+	 * @return
+	 * @throws DALException
+	 */
+	int checkLogin(int id, String password) throws DALException;
+	
+	String[] userData(int id) throws DALException;
+	
+	
 }

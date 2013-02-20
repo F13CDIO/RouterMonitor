@@ -8,8 +8,9 @@ public interface IUser
 	String getName();
 	String getStudyNr();
 	String getPassword();
-	Rights getRights();
+	int getRights();
 	void setRights(Rights rights);
 	void setPassword(String password);
 	String toString();	
+	String[] getUserData();
 }
