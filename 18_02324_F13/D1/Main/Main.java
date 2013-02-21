@@ -14,6 +14,6 @@ public class Main
 		FrameMain gui = new FrameMain(userFunction);
 		gui.setVisible(true);
 		
-		//Admin login: id = 10, password = 02324it!
+		//Admin login: id = 10, password = 02324it! 
 	}
 }
