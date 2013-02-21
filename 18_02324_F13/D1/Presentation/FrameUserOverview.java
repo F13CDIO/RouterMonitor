@@ -8,6 +8,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import Exceptions.DALException;
 import Scale.ScaleProgram;
@@ -21,7 +23,6 @@ public class FrameUserOverview
 	private JButton btnDelete;
 	private JButton btnEdit;
 	private JScrollPane scrollPane = new JScrollPane();
-	private JButton btnTestProgram;
 	private int userTypeLoggedIn;
 	private IUserFunction func;
 	private int userId;
@@ -50,12 +51,41 @@ public class FrameUserOverview
 	
 	private void initialize() 
 	{
+		// Window listener - updates table when frame gets activated
+		WindowListener listener = new WindowListener() 
+		{
+			@Override
+			public void windowOpened(WindowEvent e) {}
+			
+			@Override
+			public void windowIconified(WindowEvent e) {}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e) {}
+			
+			@Override
+			public void windowDeactivated(WindowEvent e) {}
+			
+			@Override
+			public void windowClosing(WindowEvent e) {}
+			
+			@Override
+			public void windowClosed(WindowEvent e) {}
+			
+			@Override
+			public void windowActivated(WindowEvent e) 
+			{
+				updateTable();
+			}
+		};
+		
 		// Frame
 		frmUserOverview = new JFrame();
 		frmUserOverview.setTitle("User overview");
 		frmUserOverview.setBounds(100, 100, 614, 356);
 		frmUserOverview.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmUserOverview.getContentPane().setLayout(null);
+		frmUserOverview.addWindowListener(listener);
 
 		// Scrollpane
 		scrollPane.setBounds(10, 45, 578, 231);
@@ -123,17 +153,6 @@ public class FrameUserOverview
 		btnEdit.setBounds(10, 286, 284, 23);
 		frmUserOverview.getContentPane().add(btnEdit);
 		
-		btnTestProgram = new JButton("Update table");
-		btnTestProgram.addActionListener(new ActionListener() 
-		{	
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				updateTable();
-			}
-		});
-		btnTestProgram.setBounds(305, 11, 132, 23);
-		frmUserOverview.getContentPane().add(btnTestProgram);
-		
 		JButton btnTestWeight = new JButton("Test weight");
 		btnTestWeight.addActionListener(new ActionListener() 
 		{
@@ -146,7 +165,7 @@ public class FrameUserOverview
 				JOptionPane	.showMessageDialog(frmUserOverview, "Small test: (Brutto: 100, Tara: 10) = " + scale.getNetto());
 			}
 		});
-		btnTestWeight.setBounds(443, 11, 145, 23);
+		btnTestWeight.setBounds(305, 11, 283, 23);
 		frmUserOverview.getContentPane().add(btnTestWeight);
 	}
 	

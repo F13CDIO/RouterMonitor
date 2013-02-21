@@ -39,7 +39,8 @@ public class FrameMain
 		frmLogin.setBounds(100, 100, 242, 133);
 		frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmLogin.getContentPane().setLayout(null);
-		
+		          
+            
 		//Labels
 		JLabel lblUserId = new JLabel("User id");
 		lblUserId.setBounds(22, 11, 89, 14);
