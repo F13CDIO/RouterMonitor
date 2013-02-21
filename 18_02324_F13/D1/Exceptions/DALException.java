@@ -1,7 +1,5 @@
 package Exceptions;
 
-import Users.User.Rights;
-
 public class DALException extends Exception {
 
 	/**
@@ -17,10 +15,6 @@ public class DALException extends Exception {
 	 */
 	public DALException() {
 		super("No list");
-	}
-
-	public DALException(Rights rights) {
-		super(rights + " not valid user type!");
 	}
 
 	public DALException(boolean valid) {
