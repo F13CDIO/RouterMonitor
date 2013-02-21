@@ -8,11 +8,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
 
 import Exceptions.DALException;
+import Scale.ScaleProgram;
 import Users.IUserFunction;
 
 public class FrameUserOverview 
@@ -22,26 +20,27 @@ public class FrameUserOverview
 	private JButton btnAddUser;
 	private JButton btnDelete;
 	private JButton btnEdit;
-	private String[] columnNames = {"ID", "Name", "CPR", "Data"};
 	private JScrollPane scrollPane = new JScrollPane();
 	private JButton btnTestProgram;
-	private int userType;
+	private int userTypeLoggedIn;
 	private IUserFunction func;
+	private int userId;
 	
-	public FrameUserOverview(int userType, IUserFunction func) 
+	public FrameUserOverview(int userType, int userId, IUserFunction func) 
 	{
-		this.userType = userType;
+		this.userTypeLoggedIn = userType;
 		this.func = func;
+		this.userId = userId;
 		initialize();
 		
 		// If not Administrator
-		if (this.userType > 0)
+		if (this.userTypeLoggedIn > 0)
 		{
 			btnAddUser.setEnabled(false);
 			btnDelete.setEnabled(false);
 		}
 		
-		updateTable(userType);
+		updateTable();
 	}
 
 	public void setVisible(boolean visible)
@@ -68,7 +67,7 @@ public class FrameUserOverview
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				FrameAddUser winAddUSer = new FrameAddUser();
+				FrameAddUser winAddUSer = new FrameAddUser(func);
 				winAddUSer.setVisible(true);
 			}
 		});
@@ -87,8 +86,6 @@ public class FrameUserOverview
 					String name = (String)table.getValueAt(table.getSelectedRow(), 1);
 					func.deleteUser(Integer.parseInt(userID));
 					JOptionPane	.showMessageDialog(frmUserOverview, name +  " deleted");
-					// call controller
-					
 				}
 				
 				catch(Exception e2)
@@ -112,7 +109,7 @@ public class FrameUserOverview
 				try
 				{
 					String userID = (String)table.getValueAt(table.getSelectedRow(), 0);
-					FrameEditUser frameEditUser = new FrameEditUser(Integer.parseInt(userID), func);
+					FrameEditUser frameEditUser = new FrameEditUser(userTypeLoggedIn, Integer.parseInt(userID), func);
 					frameEditUser.setVisible(true);
 				}
 				
@@ -126,26 +123,52 @@ public class FrameUserOverview
 		btnEdit.setBounds(10, 286, 284, 23);
 		frmUserOverview.getContentPane().add(btnEdit);
 		
-		btnTestProgram = new JButton("Test weight");
+		btnTestProgram = new JButton("Update table");
 		btnTestProgram.addActionListener(new ActionListener() 
 		{	
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				updateTable(userType);
-				//JOptionPane	.showMessageDialog(frmUserOverview,"WEIGHT CALL");
+				updateTable();
 			}
 		});
-		btnTestProgram.setBounds(305, 11, 284, 23);
+		btnTestProgram.setBounds(305, 11, 132, 23);
 		frmUserOverview.getContentPane().add(btnTestProgram);
+		
+		JButton btnTestWeight = new JButton("Test weight");
+		btnTestWeight.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				ScaleProgram scale = new ScaleProgram();
+				
+				scale.setBrutto(100);
+				scale.setTara(10);
+				JOptionPane	.showMessageDialog(frmUserOverview, "Small test: (Brutto: 100, Tara: 10) = " + scale.getNetto());
+			}
+		});
+		btnTestWeight.setBounds(443, 11, 145, 23);
+		frmUserOverview.getContentPane().add(btnTestWeight);
 	}
 	
-	public void updateTable(int userType)
+	public void updateTable()
 	{	
+		String[] columnNames = {"ID", "Name", "CPR", "Type"};
 		Object[][] data = null;
-		try {
-			data = func.getUserList();
-		} catch (DALException e) {
-			// TODO Auto-generated catch block
+		
+		try 
+		{
+			if (userTypeLoggedIn > 0)
+			{
+				data = new Object[1][4];
+				data[0] = func.userData(userId);
+			}
+			
+			else
+				data = func.getUserList();
+		} 
+		
+		catch (DALException e) 
+		{
 			e.printStackTrace();
 		}
 

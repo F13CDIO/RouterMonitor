@@ -13,11 +13,11 @@ import Persistance.PasswordChecker;
 
 public class UserFunction implements IUserFunction
 {
-	private List<User> users;
+	private List<IUser> users;
 	
 	public UserFunction()
 	{
-		users = new ArrayList<User>();
+		users = new ArrayList<IUser>();
 		createAdmin();
 	}
 	
@@ -25,6 +25,15 @@ public class UserFunction implements IUserFunction
 	private void createAdmin()
 	{
 		users.add(new User(10, "Administrator", "a000001", "02324it!", 0));
+	}
+	
+	@Override
+	public String createUser(int userType, String name, String sNr) throws DALException 
+	{
+		User user = new User(name, sNr,  userType);
+		users.add(user);
+		return user.getPassword();
+		
 	}
 	
 	public void createUser(IUser user) throws DALException
@@ -63,6 +72,14 @@ public class UserFunction implements IUserFunction
 //		}
 //	}
 		
+	@Override
+	public void updateUser(int id, String name, String sNr) throws DALException 
+	{
+		IUser user = getUser(id);
+		user.setName(name);
+		user.setStudyNr(sNr);
+
+	}
 	
 	public void updateUser(int id, String username, String sNr, String password)
 	throws DALException
@@ -90,7 +107,7 @@ public class UserFunction implements IUserFunction
 		}
 	}
 	
-	public User getUser(int userID) throws DALException
+	public IUser getUser(int userID) throws DALException
 	{ 
 		//Index out of bounds check
 		if(userID > 9 && users.size() > (userID - 10))
@@ -147,6 +164,10 @@ public class UserFunction implements IUserFunction
 		IUser user = getUser(id);
 		return password.equals(user.getPassword());
 	}
+
+	
+
+	
 	
 	
 }

@@ -17,21 +17,21 @@ import Users.IUserFunction;
 
 public class FrameEditUser 
 {
-	int userType;
+	int userTypeLoggedIn;
 	private IUserFunction func;
 	private String[] userData;
 	
 	// Constructor
-	public FrameEditUser(int userId, IUserFunction func) 
+	public FrameEditUser(int userTypeLoggedIn,int userId, IUserFunction func)
 	{
 			initialize();
 			this.func = func;
-			this.userType = userType;
+			this.userTypeLoggedIn = userTypeLoggedIn;
 			
-			if (this.userType > 0)
+			if (this.userTypeLoggedIn > 0)
 			{
 				textCPR.setEditable(false);
-				textName.setEnabled(false);
+				textName.setEditable(false);
 			}
 			
 			try {
@@ -58,7 +58,7 @@ public class FrameEditUser
 		frmEditUser.setVisible(visible);
 	}
 	
-		private void initialize() 
+	private void initialize() 
 	{
 		//Frame
 		frmEditUser = new JFrame();
@@ -121,42 +121,46 @@ public class FrameEditUser
 				String oldPass = new String(passwordOld.getPassword());
 				String newPass = new String(passwordNew.getPassword());
 				String confPass = new String(passwordConfirm.getPassword());
-				try {
-					if (oldPass.length() == 0)
+				try 
+				{
+							
+					// IF Admin and old password is not entered
+					if ((oldPass.length() == 0) && userTypeLoggedIn == 0)
 					{
-						System.out.println("Old empty");
+						int userId = Integer.parseInt(userData[0]);
+						func.updateUser(userId, textName.getText(), textCPR.getText());
+						setVisible(false);
 					}
 				
 					else
 					{
 						if (newPass.equals(confPass) && func.validPass(Integer.parseInt(userData[0]), oldPass))
 						{
-						String pass = new String(passwordNew.getPassword());
-							
-							func.updateUser(Integer.parseInt(userData[0]), textName.getText(), textCPR.getText(), pass);
+							String pass = new String(passwordNew.getPassword());
+							int userId = Integer.parseInt(userData[0]);
+							func.updateUser(userId, textName.getText(), textCPR.getText(), pass);
 							setVisible(false);
 						}
-						else{
+						else
 							JOptionPane	.showMessageDialog(frmEditUser,"Something is wrong with the password");
-						}
+						
 					}
 					
 					
-				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block !!!!!!!!
+				} 
+				
+				catch (NumberFormatException e) 
+				{
 					e.printStackTrace();
-				} catch (DALException e) {
-					// TODO Auto-generated catch block !!!!!!!!
+				} 
+				
+				catch (DALException e) 
+				{
 					e.printStackTrace();
-				}
-					
+				}	
 			}
-		
-		
 		});
 		btnUpdate.setBounds(10, 196, 182, 20);
 		frmEditUser.getContentPane().add(btnUpdate);
-		
-		
 	}
 }

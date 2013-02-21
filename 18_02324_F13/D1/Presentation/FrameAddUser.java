@@ -7,6 +7,10 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+
+import Exceptions.DALException;
+import Users.IUserFunction;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -16,10 +20,12 @@ public class FrameAddUser
 	private JTextField textName;
 	private ButtonGroup buttonGroup = new ButtonGroup();
 	private JTextField textCPR;
+	private IUserFunction func;
 	
 	// Constructor
-	public FrameAddUser() 
+	public FrameAddUser(IUserFunction func) 
 	{
+		this.func = func;
 		initialize();
 	}
 	
@@ -61,10 +67,10 @@ public class FrameAddUser
 		rbTeacher.setBounds(17, 25, 92, 23);
 		frmAddNewUser.getContentPane().add(rbTeacher);
 		
-		JRadioButton rbAdmin = new JRadioButton("0");
+		JRadioButton rbAdmin = new JRadioButton("Admin");
 		buttonGroup.add(rbAdmin);
 		rbAdmin.setBounds(17, 45, 92, 23);
-		rbAdmin.setActionCommand("Admin");
+		rbAdmin.setActionCommand("0");
 		frmAddNewUser.getContentPane().add(rbAdmin);
 		
 		//Labels
@@ -88,25 +94,24 @@ public class FrameAddUser
 				if (buttonGroup.getSelection() != null && !name.equals("") && !CPR.equals(""))
 				{
 					int selectedRadioButton = Integer.parseInt(buttonGroup.getSelection().getActionCommand());
-					
-					switch (selectedRadioButton)
+					String password = "";
+					try 
 					{
-						case 0:
-							break;
-						
-						case 1:
-							JOptionPane	.showMessageDialog(frmAddNewUser,"User created. Password = Wh5N90K");
-							break;
-							
-						case 2:
-							break;
-							
-						
-							
-							default:
-								break;
-					}			
-					System.out.println("Selected: " + selectedRadioButton + ", Name: "+ name + ", CPR: " + CPR);
+						password = func.createUser(selectedRadioButton, textName.getText(), textCPR.getText());
+						JOptionPane	.showMessageDialog(frmAddNewUser,textName.getText() + " created. Password is (" + password + ")");
+					} 
+					
+					catch (DALException e) 
+					{
+						e.printStackTrace();
+					}
+					finally
+					{
+						setVisible(false);
+					}
+					
+					
+			
 				}
 				
 				else

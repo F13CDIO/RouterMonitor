@@ -14,7 +14,6 @@ import Users.IUserFunction;
 
 public class FrameMain 
 {
-
 	private JFrame frmLogin;
 	private JTextField textId;
 	private JPasswordField passwordField;
@@ -67,13 +66,14 @@ public class FrameMain
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				try {
+				try 
+				{
 					// Checks the entered password and logs in as the usertype recieved
 					String pass = new String(passwordField.getPassword());
 					int uID = Integer.parseInt(textId.getText());
-					System.out.println(uID +" "+pass);
 					int userType = func.checkLogin(uID,pass);
-					System.out.println(userType);
+					
+					// If no user
 					if (userType == -1)					
 					{
 						JOptionPane.showMessageDialog(frmLogin,"Invalid input. Try again");
@@ -81,20 +81,20 @@ public class FrameMain
 					
 					else
 					{
-						FrameUserOverview frameUserAdmin = new FrameUserOverview(userType, func);
+						FrameUserOverview frameUserAdmin = new FrameUserOverview(userType,uID, func);
 						frameUserAdmin.setVisible(true);
 					}
-				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
+				} 
+				
+				catch (NumberFormatException e) 
+				{
 					e.printStackTrace();
-				} catch (DALException e) {
-					// TODO Auto-generated catch block
+				} 
+				
+				catch (DALException e) 
+				{
 					e.printStackTrace();
 				}
-				
-				
-				
-				
 			}
 		});
 		btnLogin.setBounds(22, 56, 185, 23);

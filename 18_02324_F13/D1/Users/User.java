@@ -8,19 +8,21 @@ public class User implements IUser
 	private String password;
 	private int rights;
 	private PassGen passGen;
+	private static int idCount = 11;
 
 	
 	/**
 	 * Der er to constructor
 	 */
-	public User(int oprID, String oprName, String studyNr, int rights)
+	public User(String oprName, String studyNr, int rights)
 	{
 		passGen = new PassGen();
-		this.oprID = oprID;
+		this.oprID = idCount;
 		this.oprName = oprName;
 		this.studyNr = studyNr;
-		this.password = passGen.genPassword();
 		this.rights = rights;
+		this.password = passGen.genPassword();
+		idCount++;
 	}
 	
 	public User(int oprID, String oprName, String studyNr, String password, int rights)
