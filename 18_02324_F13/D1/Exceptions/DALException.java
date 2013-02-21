@@ -3,7 +3,6 @@ package Exceptions;
 public class DALException extends Exception {
 
 	/**
-	 * 
 	 * @param oprID The out of bounds ID
 	 */
 	public DALException(int oprID) {
@@ -11,12 +10,15 @@ public class DALException extends Exception {
 	}
 
 	/**
-	 * 
+	 * No list!
 	 */
 	public DALException() {
 		super("No list");
 	}
-
+	/**
+	 * If the password is not valid you get this exception.
+	 * @param valid
+	 */
 	public DALException(boolean valid) {
 		super(
 				"Your pasword need to contain one of the four following: \n"
