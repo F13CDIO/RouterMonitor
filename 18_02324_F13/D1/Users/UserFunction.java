@@ -36,41 +36,7 @@ public class UserFunction implements IUserFunction
 		
 	}
 	
-	public void createUser(IUser user) throws DALException
-	{	
-		int oprID = 10 + users.size();
-		if(oprID < 100 && oprID > 10)
-		{
-			//add a new user to the arraylist
-			users.add(new User(oprID, user.getName(), user.getStudyNr(), user.getPassword(), user.getRights()));
-		}
-		else
-		{
-			//out of bounds
-			throw new DALException(oprID);
-		}
-	}
-	
-//	public void updateUser(User user) throws DALException
-//	{
-//		
-//		if(user.getID()-10 < users.size() && user.getID() > 9)
-//		{	
-//			if(user.getRights() == Rights.Admin || user.getRights() == Rights.Student || user.getRights() == Rights.Teacher)
-//			{
-//				users.get(user.getID() - 10).setRights(user.getRights());
-//			}
-//			else 
-//			{
-//				throw new DALException(user.getRights());
-//			}
-//		
-//		}
-//		else
-//		{
-//			throw new DALException(user.getID());
-//		}
-//	}
+
 		
 	@Override
 	public void updateUser(int id, String name, String sNr) throws DALException 
