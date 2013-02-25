@@ -8,7 +8,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.util.Arrays;
 
 import javax.swing.JPasswordField;
 

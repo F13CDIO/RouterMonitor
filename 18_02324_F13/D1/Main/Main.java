@@ -1,6 +1,5 @@
 package Main;
 
-import Exceptions.DALException;
 import Users.*;
 import Presentation.FrameMain;
 
