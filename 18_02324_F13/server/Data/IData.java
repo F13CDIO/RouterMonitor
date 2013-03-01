@@ -1,7 +1,6 @@
 package Data;
 
 import java.util.List;
-
 import Data.Data.DataPackage;
 
 public interface IData 
