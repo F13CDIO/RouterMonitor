@@ -1,7 +1,8 @@
 package Data;
 
 import java.util.List;
-import Data.DataList.Data;
+
+import Data.Data.DataPackage;
 
 public interface IData 
 {
@@ -16,5 +17,5 @@ public interface IData
 	String getHost(int index);
 	String getSubHost(int index);
 	String getUserAgent(int index);
-	List<Data> getDataList();
+	List<DataPackage> getDataList();
 }

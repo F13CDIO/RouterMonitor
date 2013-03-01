@@ -3,7 +3,7 @@ package Data;
 public class DataTest 
 {
 	int j = 0;
-	IData data = new DataList();
+	IData data = new Data();
 	public static void main(String[] args)
 	{
 		DataTest testClass = new DataTest();
