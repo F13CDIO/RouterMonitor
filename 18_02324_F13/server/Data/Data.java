@@ -4,8 +4,12 @@ import java.util.*;
 
 public class Data implements IData
 {
-	private List<DataPackage> dataList = new ArrayList<DataPackage>();
-
+	private List<DataPackage> dataList;
+	public Data()
+	{
+		dataList = new ArrayList<DataPackage>();
+	}
+	
 	@Override
 	public void setInIP(String IP, int index) {
 		dataList.get(index).setInIP(IP);
