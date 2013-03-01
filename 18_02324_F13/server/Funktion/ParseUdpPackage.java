@@ -1,7 +1,15 @@
 package Funktion;
 
+import Data.*;
+
 public class ParseUdpPackage implements IParseUdpPackage {
     int index;
+    IData data;
+    
+    public ParseUdpPackage()
+    {
+    	data = new Data();
+    }
 	
     public void parse(String input) {
         String ip1 = getIP1(input);
@@ -10,11 +18,12 @@ public class ParseUdpPackage implements IParseUdpPackage {
         String fullHost = getFullHost(input);
         String host = getHost(fullHost);
         String subHost = getSubHost(fullHost);
+        data.addDataset(ip1, ip2, host, subHost, null);
         
-        System.out.println("IP1 = " + ip1);
-        System.out.println("IP2 = " + ip2);
-        System.out.println("Host = " + host);
-        System.out.println("Subhost = " + subHost);
+        System.out.println("IP1 = " + data.getInIP(0));
+        System.out.println("IP2 = " + data.getOutIP(0));
+        System.out.println("Host = " + data.getHost(0));
+        System.out.println("Subhost = " + data.getSubHost(0));
     }
 
     private String getIP1(String input) {
