@@ -12,23 +12,6 @@ public class DataTest
 		testClass.funktionTest();
 	}
 	
-	public void test()
-	{
-		j++;
-		data.addDataset(null, "456", "Host", "Subhost" + j, "Chrome");
-		data.setHost("Test Host: " + j, j-1);
-	}
-	
-	public void printList()
-	{
-		data.setHost("End", j -1);
-		
-		for(int i = 0; i < data.getDataList().size(); i++)
-		{
-			System.out.println(data.getHost(i));
-		}
-	}
-	
 	public void funktionTest()
 	{
 		parse.parse("T 10.16.99.136:56086 -> 173.194.65.139:80 [AP] \n"+
