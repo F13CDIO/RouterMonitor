@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="D1"/>
-	<classpathentry kind="src" path=" D2"/>
+	<classpathentry kind="src" path="server"/>
 	<classpathentry kind="src" path="rPi"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
