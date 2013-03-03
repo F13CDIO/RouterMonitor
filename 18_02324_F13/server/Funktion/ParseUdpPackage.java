@@ -21,10 +21,11 @@ public class ParseUdpPackage implements IParseUdpPackage
         String fullHost = getFullHost(input);
         String host = getHost(fullHost);
         String subHost = getSubHost(fullHost);
+        String userAgent = getUserAgent(input);
         
-        if(ip1 != null && ip2 != null && host != null)
+        if(ip1 != null && ip2 != null && host != null && userAgent != null)
         {
-        	data.addDataset(ip1, ip2, host, subHost, null);
+        	data.addDataset(ip1, ip2, host, subHost, userAgent);
         }
     }
 
@@ -99,6 +100,13 @@ public class ParseUdpPackage implements IParseUdpPackage
 	        String subHost = fullHost.substring(pos+1, index);
 	        return subHost;
         }
+    }
+    
+    public String getUserAgent(String input){
+    	index = input.indexOf("User-Agent", index);
+    	int endIndex = input.indexOf(")", index);
+    	String userAgent = input.substring(index+12,endIndex+1);
+    	return userAgent;
     }
     
     //Bør denne metode være der??
