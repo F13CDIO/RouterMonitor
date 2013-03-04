@@ -5,11 +5,11 @@ import Data.*;
 public class ParseUdpPackage implements IParseUdpPackage
 {
     private int index;
-    private IData data;
+    private IData data = new DataLayer().getData();
     
     public ParseUdpPackage()
     {
-    	data = new Data();
+    	//data = new Data();
     }
 	
     //Lave til public void parse(String input, IData data) i stedet for?, for at en controller kan bruge samme dataobject 
@@ -104,14 +104,15 @@ public class ParseUdpPackage implements IParseUdpPackage
     
     public String getUserAgent(String input){
     	index = input.indexOf("User-Agent", index);
-    	int endIndex = input.indexOf(")", index);
-    	String userAgent = input.substring(index+12,endIndex+1);
-    	return userAgent;
-    }
-    
-    //Bør denne metode være der??
-    public IData getData()
-    {
-    	return data;
+    	if(index < 0)
+    	{
+    		return null;
+    	}
+    	else
+    	{
+	    	int endIndex = input.indexOf(")", index);
+	    	String userAgent = input.substring(index+12,endIndex+1);
+	    	return userAgent;
+    	}
     }
 }
