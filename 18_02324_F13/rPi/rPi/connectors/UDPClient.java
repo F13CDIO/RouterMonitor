@@ -7,7 +7,7 @@ import java.net.*;
  *  written 01-03-2013 by Niclas Falck
  */
 
-class UDPServer
+class UDPClient
 {
 	private int destinationPort;
 	InetAddress destinationIpAddress;

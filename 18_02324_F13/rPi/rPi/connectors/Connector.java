@@ -6,7 +6,7 @@ import java.net.InetAddress;
 public class Connector implements IConnector {
 	
 	private TCPClient tcp;
-	private UDPServer udp;
+	private UDPClient udp;
 		
 	@Override
 	public BufferedReader initTCPClient(String message)
@@ -23,7 +23,7 @@ public class Connector implements IConnector {
 	@Override
 	public void initUDPServer(int portToSendFrom, int destinationPort, InetAddress destinationIP)
 	{
-		udp = new UDPServer();
+		udp = new UDPClient();
 		try {
 			udp.initUDPServer(portToSendFrom, destinationPort, destinationIP);
 		} catch (Exception e){
