@@ -9,18 +9,25 @@ import java.net.*;
 
 class TCPClient
 {
-	private static short DEFAULT_PORT = 0;
 	private Socket clientSocket;
 	private BufferedReader inFromServer;
 	private DataOutputStream outToServer;
 
-	public BufferedReader createConnection(String messageFromPi) throws Exception
+	public BufferedReader createConnection(InetAddress serverAddress, short serverPort) throws Exception
 	{
-		clientSocket = new Socket("localhost", DEFAULT_PORT);
-		outToServer = new DataOutputStream(clientSocket.getOutputStream());
-		inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		outToServer.writeBytes(messageFromPi);	
+		clientSocket = new Socket(serverAddress, serverPort);
+		inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));	
 		return inFromServer;
+	}
+	public void sendLine(String message)
+	{
+		try {
+			outToServer = new DataOutputStream(clientSocket.getOutputStream());
+			outToServer.writeBytes(message);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 	
 	public void closeConnection() throws Exception

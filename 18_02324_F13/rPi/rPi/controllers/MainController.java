@@ -33,7 +33,7 @@ public class MainController {
 	private String parseInputStream()
 	{
 		try {
-			return streamParser.parseString(br.readLine());
+			return streamParser.parseString(br);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "";
@@ -42,15 +42,6 @@ public class MainController {
 	private String get_IP()
 	{
 		return "";
-	}
-	
-
-	
-
-	
-	private void menuAction(int action)
-	{
-		
 	}
 	
 }

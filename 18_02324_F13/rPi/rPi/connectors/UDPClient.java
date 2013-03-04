@@ -15,7 +15,7 @@ class UDPClient
 	byte[] sendData = new byte[1024];
 	byte[] buf = new byte[1024];
 	
-	public void initUDPServer(int portToSendFrom, int destinationPort, InetAddress destinationIpAddress) throws Exception
+	public void initUDP(int portToSendFrom, int destinationPort, InetAddress destinationIpAddress) throws Exception
 	{
 		serverSocket = new DatagramSocket(portToSendFrom);
 		this.destinationPort = destinationPort;
