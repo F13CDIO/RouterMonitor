@@ -7,7 +7,6 @@ public class ConnectionController {
 	
 	private static int PING_TIMEOUT = 10; // timeout in seconds
 	private static String SERVER_IP = ""; //Hard code IP
-	
 	MainController mc = new MainController();
 	
 	public void connectToNetwork(String SSID)
@@ -17,6 +16,7 @@ public class ConnectionController {
 	}
 	private String scanLocalNetworks()
 	{
+		mc.exec("iw wlan0 scan");
 		return "";
 	}
 	
