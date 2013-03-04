@@ -1,9 +1,10 @@
 package rPi.connectors;
 
 import java.io.BufferedReader;
+import java.net.InetAddress;
 
 public interface IConnector {
 	BufferedReader initTCPClient(String message);
-	void listenForTcp(short port);
-	void initUDPServer(BufferedReader output);
+	void initUDPServer(int portToSendFrom, int destinationPort, InetAddress destinationIP);
+	void sendUDP(BufferedReader bf);
 }

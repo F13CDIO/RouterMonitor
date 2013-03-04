@@ -1,13 +1,17 @@
 package rPi.connectors;
 
 import java.io.BufferedReader;
+import java.net.InetAddress;
 
 public class Connector implements IConnector {
+	
+	private TCPClient tcp;
+	private UDPServer udp;
 		
 	@Override
 	public BufferedReader initTCPClient(String message)
 	{
-		TCPClient tcp = new TCPClient();
+		tcp = new TCPClient();
 		try {
 			return tcp.createConnection(message);
 		} catch (Exception e) {
@@ -17,12 +21,26 @@ public class Connector implements IConnector {
 		return null;
 	}
 	@Override
-	public void listenForTcp(short port)
+	public void initUDPServer(int portToSendFrom, int destinationPort, InetAddress destinationIP)
 	{
-			// TODO Auto-generated catch block	
-	}	
-	public void initUDPServer(BufferedReader output)
+		udp = new UDPServer();
+		try {
+			udp.initUDPServer(portToSendFrom, destinationPort, destinationIP);
+		} catch (Exception e){
+			// TO be handled
+		}
+	}
+	public void sendUDP(BufferedReader bf)
 	{
-		UDPServer udp = new UDPServer();
+		if (udp != null){
+			try {
+				udp.sendData(bf);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			// udp not initialized or broken
+		}
 	}
 }
