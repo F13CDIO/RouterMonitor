@@ -3,6 +3,8 @@ package rPi.controllers;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class MainController {
 	
@@ -30,18 +32,42 @@ public class MainController {
 		return br;
 	}
 
-	private String parseInputStream()
-	{
-		try {
-			return streamParser.parseString(br);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "";
-		}
-	}
+//	private String parseInputStream()
+//	{
+//
+//		try {
+//			return streamParser.parseString(br);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			return "";
+//		}
+//	}
 	private String get_IP()
 	{
-		return "";
+		String IP = "";
+		try 
+		{
+			IP = InetAddress.getLocalHost().toString();
+		} 
+		catch (UnknownHostException e)
+		{
+			e.printStackTrace();
+		}
+		char backslash = '/';
+		String nyIP = "";
+		for(int i = 0; i <IP.length()-1;i++)
+		{
+			char temp = IP.charAt(i);
+			if(temp == backslash)
+			{
+				nyIP = IP.substring(i+1);
+				break;
+			}
+		}
+		
+		return nyIP;
+		
+
 	}
 	
 }
