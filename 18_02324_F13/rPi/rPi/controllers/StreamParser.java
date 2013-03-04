@@ -1,39 +1,51 @@
 package rPi.controllers;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 
 
 
 public class StreamParser {
-	
+
 	String trigger = "T";
-	
-	public String parseString(String str)
+	byte NUMBER_OF_LINES = 2;
+
+	public String parseString(BufferedReader br)
 	{
-		
 		String lines = "";
-		
-		while(str != null)
+		String line;
+		try 
 		{
-			if(str.startsWith(trigger))
+			line = br.readLine();
+			while(line != null)
 			{
-				for (int i = 0; i < 2; i++) 
+				if(line.startsWith(trigger))
 				{
-					lines = str+lines+"\n";
+					for (int i = 0; i < NUMBER_OF_LINES; i++) 
+					{
+						lines = line+lines+"\n";
+					}
 				}
 			}
-		}
-		
-		return str;
+
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+//		finally
+//		{
+			return lines;
+//		}
 	}
 	public String parseNetworkData(String str)
 	{
 		return str;
 	}
-	
-//	public String parsePing(String str) 
-//	{
-//		return str;
-//	}
+
+	//	public String parsePing(String str) 
+	//	{
+	//		return str;
+	//	}
 
 }
