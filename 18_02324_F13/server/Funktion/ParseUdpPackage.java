@@ -1,6 +1,7 @@
 package Funktion;
 
 import Data.*;
+import java.util.Calendar;
 
 public class ParseUdpPackage implements IParseUdpPackage
 {
@@ -9,12 +10,11 @@ public class ParseUdpPackage implements IParseUdpPackage
     
     public ParseUdpPackage()
     {
-    	//data = new Data();
     }
 	
-    //Lave til public void parse(String input, IData data) i stedet for?, for at en controller kan bruge samme dataobject 
     public void parse(String input) 
     {
+    	Calendar cal = Calendar.getInstance();
         String ip1 = getIP1(input);
         String ip2 = getIP2(input);
         
@@ -25,7 +25,7 @@ public class ParseUdpPackage implements IParseUdpPackage
         
         if(ip1 != null && ip2 != null && host != null && userAgent != null)
         {
-        	data.addDataset(ip1, ip2, host, subHost, userAgent);
+        	data.addDataset(cal.getTime(), ip1, ip2, host, subHost, userAgent);
         }
     }
 

@@ -25,5 +25,6 @@ public class DataTest
         System.out.println("Host = " + data.getData().getHost(0));
         System.out.println("Subhost = " + data.getData().getSubHost(0));
         System.out.println("User-agent = " + data.getData().getUserAgent(0));
+        System.out.println("Timestamp = " + data.getData().getTimeStamp(0));
 	}
 }
