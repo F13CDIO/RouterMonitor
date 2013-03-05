@@ -160,7 +160,10 @@ public class Data implements IData
 		{
 			return "Time: " + this.getTimeStamp()+
 					"\nHost: " + this.getHost() +
-					"\nSubhost: " + this.getSubHost();
+					"\nSubhost: " + this.getSubHost() +
+					"\nIn IP: " + this.getInIP() + 
+					"\nOut IP: " + this.getOutIP() +
+					"\nUser - Agent: " + this.getUserAgent();
 		}
 	}
 

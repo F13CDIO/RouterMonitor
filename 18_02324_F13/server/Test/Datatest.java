@@ -1,6 +1,5 @@
 package Test;
 
-import java.util.*;
 import java.io.*;
 
 import Funktion.*;
@@ -14,39 +13,38 @@ public class Datatest
 		
 		try
 		{
-		FileInputStream fstream = new FileInputStream("C:\\Users\\Gronex\\Dropbox\\Grp 18\\http_example.txt");
-		DataInputStream in = new DataInputStream(fstream);
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-		String str;
-		String parseString = "";
-		while(true)
-		{
-			str = reader.readLine();
-			if(str.substring(0, 1).equals("T") || str.substring(0, 3).equals("  G"))
+			FileInputStream fstream = new FileInputStream("C:\\Users\\Gronex\\Dropbox\\Grp 18\\http_example.txt");
+			DataInputStream in = new DataInputStream(fstream);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+			String str;
+			String parseString = "";
+			while(!((str = reader.readLine()).equals("")))
 			{
-				parseString += str+"\n";
-				System.out.println(parseString);
+				if(str.substring(0, 1).equals("T") || str.substring(0, 3).equals("  G"))
+				{
+					parseString += str+"\n";
+					//System.out.println(parseString);
+				}
+				else
+				{
+					parse.parse(parseString);
+					//System.out.println(parseString);
+					parseString = "";
+				}
 			}
-			if(str.length() == 0)
-			{
-				System.out.println("jdgkjfdngj");
-				parse.parse(parseString);
-				parseString = "";
-			}
-		}
 		}
 		catch(Exception e)
 		{
 			e.getMessage();
 		}
-		List list = data.getData().getDataList();
-		System.out.println(list.size());
-		for(int i = 0; i < list.size(); i++)
-		{
-			System.out.println("jdfh");
-			System.out.println(list.get(i).toString());
-		}
 		
+		for(int i = 0; i < data.getData().getDataList().size(); i++)
+		{
+			//stopper på L251??
+			System.out.println(data.getData().getDataList().get(i).toString() + "\n");
+		}
+
+		System.out.println(data.getData().getDataList().size());
 		
 	}
 }
