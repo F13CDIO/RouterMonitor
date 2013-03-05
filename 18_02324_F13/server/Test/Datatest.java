@@ -13,6 +13,7 @@ public class Datatest
 		
 		try
 		{
+			//ret filepath
 			FileInputStream fstream = new FileInputStream("C:\\Users\\Gronex\\Dropbox\\Grp 18\\http_example.txt");
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -40,7 +41,6 @@ public class Datatest
 		
 		for(int i = 0; i < data.getData().getDataList().size(); i++)
 		{
-			//stopper på L251??
 			System.out.println(data.getData().getDataList().get(i).toString() + "\n");
 		}
 
