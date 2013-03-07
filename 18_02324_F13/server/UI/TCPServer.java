@@ -1,6 +1,4 @@
 package UI;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -15,19 +13,11 @@ public class TCPServer
     private String capitalizedSentence;
     private Socket connectionSocket;
 
-	
     public TCPServer() throws IOException 
     {
     	serverSocket = new ServerSocket(9000);
     	connectionSocket = serverSocket.accept();
     }
-    
-    public void closeConnection() throws IOException
-    {
-    	serverSocket.close();
-    }
-    
- 
     
 	public void start() throws IOException
 	{
@@ -35,8 +25,7 @@ public class TCPServer
 		{
 	       BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
 	       DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
-	       
-	       
+	           
 	       String clientRequest = inFromClient.readLine();
 	       
 	       if (clientRequest.equals("Ready"))
@@ -47,13 +36,6 @@ public class TCPServer
 	    	   int grantedPortNumber = udpServer.getPort();
 		       outToClient.writeBytes("Port granted = " + grantedPortNumber + "\n");
 	       }
-	      
-	       
 		}
 	}
-
-	
-
-
-	
 }

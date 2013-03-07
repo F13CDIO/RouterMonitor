@@ -6,12 +6,22 @@ import Funktion.IFunction;
 
 public class UI 
 {
-	private IFunction function;
+	private static IFunction function;
 	private TCPServer tcpServer;
+	
+	public UI()
+	{
+		
+	}
 	
 	public UI(IFunction function)
 	{
 		this.function = function;
+	}
+	
+	public static IFunction getFunctionInstance()
+	{
+		return function;
 	}
 
 	public void initialize() 
@@ -31,11 +41,6 @@ public class UI
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			
-			finally
-			{
-				tcpServer.closeConnection();
 			}
 		} 
 		
