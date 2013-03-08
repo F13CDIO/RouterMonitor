@@ -10,16 +10,17 @@ public class Datatest
 	public static void main(String[] args) {
 		DataLayer data = new DataLayer(new Data());
 		IParseUdpPackage parse = new ParseUdpPackage();
-		
+
+		long startTime = System.nanoTime();
 		try
 		{
 			//ret filepath
-			FileInputStream fstream = new FileInputStream("C:\\Users\\Gronex\\Dropbox\\Grp 18\\http_example.txt");
+			FileInputStream fstream = new FileInputStream("C:/Users/Mads/Dropbox/Grp 18/http_example_more_data.txt");
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			String str;
 			String parseString = "";
-			while(!((str = reader.readLine()).equals("")))
+			while((str = reader.readLine()) != null)
 			{
 				if(str.substring(0, 1).equals("T") || str.substring(0, 3).equals("  G"))
 				{
@@ -36,8 +37,9 @@ public class Datatest
 		}
 		catch(Exception e)
 		{
-			e.getMessage();
+			System.out.println(e.getMessage());
 		}
+		long calcTime =((System.nanoTime() - startTime)/ (long) Math.pow(10, 6));
 		
 		for(int i = 0; i < data.getData().getDataList().size(); i++)
 		{
@@ -45,6 +47,7 @@ public class Datatest
 		}
 
 		System.out.println(data.getData().getDataList().size());
+		System.out.println("Time to real the data: " + calcTime + " ms.");
 		
 	}
 }
