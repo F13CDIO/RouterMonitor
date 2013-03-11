@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.*;
 
 public class TCPServer
 {
+	private List<Socket> socketList= new ArrayList<Socket>();
 	private ServerSocket serverSocket;
 	private String clientRequest;
     private String capitalizedSentence;
@@ -16,13 +18,16 @@ public class TCPServer
     public TCPServer() throws IOException 
     {
     	serverSocket = new ServerSocket(9000);
-    	connectionSocket = serverSocket.accept();
     }
     
 	public void start() throws IOException
 	{
 		while(true)
-		{
+		{			
+			connectionSocket = serverSocket.accept();
+	    	socketList.add(connectionSocket);
+	    	System.out.println(connectionSocket.getInetAddress() + " has connected");
+			
 	       BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
 	       DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
 	           
