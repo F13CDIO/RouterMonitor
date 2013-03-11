@@ -12,6 +12,7 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
     }
 
     public void parse(String input) {
+    	System.out.println(input);
         Calendar cal = Calendar.getInstance();
 
         /* Different 'get'-methods for the different types of info.
@@ -26,6 +27,7 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
         /* Only save data if all the "important" information was found.
          * Useragent and subhost is not considered "important" */
         if (ip1 != null && ip2 != null && host != null) {
+        	System.out.println(cal.getTime() + "" + cal.getTime()+ ip1+ ip2+ host+ subHost+ userAgent);
             data.addDataset(cal.getTime(), ip1, ip2, host, subHost, userAgent);
         }
     }
