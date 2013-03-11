@@ -5,7 +5,8 @@ import java.io.IOException;
 
 
 
-public class StreamParser {
+public class StreamParser 
+{
 
 	String trigger = "T";
 	byte NUMBER_OF_LINES = 2;
@@ -29,17 +30,19 @@ public class StreamParser {
 			}
 
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (IOException e) 
+		{
 			e.printStackTrace();
 		} 
-//		finally
-//		{
-			return lines;
-//		}
+
+		return lines;
+
 	}
 	public String parseNetworkData(String str)
 	{
+		
+
+
 		return str;
 	}
 
