@@ -5,7 +5,8 @@ import java.io.IOException;
 
 
 
-public class StreamParser {
+public class StreamParser 
+{
 
 	String trigger = "T";
 	byte NUMBER_OF_LINES = 2;
@@ -29,17 +30,24 @@ public class StreamParser {
 			}
 
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (IOException e) 
+		{
 			e.printStackTrace();
 		} 
-//		finally
-//		{
-			return lines;
-//		}
+
+		return lines;
+
+	}
+	// Method for parsing the command from server currently "start\nPORT_NUMBER" to start sending network traffic over udp and "stop" to stop
+	public String parseTCPCommand(BufferedReader br) throws Exception
+	{
+		
 	}
 	public String parseNetworkData(String str)
 	{
+		
+
+
 		return str;
 	}
 

@@ -24,6 +24,7 @@ public class MainController {
 			e.printStackTrace();
 		}
 	}
+	
 	// This method is called from exec and "listens" to the terminal output
 	private BufferedReader convertStdoutToBufferedReader()
 	{
@@ -32,15 +33,7 @@ public class MainController {
 		return br;
 	}
 
-	private String parseInputStream()
-	{
-//		try {
-			return streamParser.parseString(br);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			return "";
-//		}
-	}
+	
 	private String get_IP()
 	{
 		String IP = "";
@@ -66,16 +59,13 @@ public class MainController {
 		
 		return nyIP;
 		
-
 	}
 	
 
-	
-
-	
 	private void menuAction(int action)
 	{
 		
 	}
 	
+
 }
