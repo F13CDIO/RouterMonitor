@@ -33,11 +33,6 @@ public class MainController {
 		return br;
 	}
 
-
-	private String parseInputStream()
-	{
-			return streamParser.parseString(br);
-	}
 	
 	private String get_IP()
 	{

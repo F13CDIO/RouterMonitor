@@ -15,15 +15,15 @@ public class ConnectionController {
 	//====== THE CONSTANTS YOU MIGHT WANNA CHANGE ======//
 	
 	private static InetAddress SERVER_IP; // Hard code IP for now
-	private static short DEFAULT_PORT = 0; // the port the server listens on
+	private static short DEFAULT_PORT = 0; // the TCP port the server listens on
 	
 	//=================================================//
 	
 	Connector con = new Connector();
 	BufferedReader inputFromServer = con.initTCPClient(SERVER_IP, DEFAULT_PORT);
+	StreamParser parser = new StreamParser();
 	
-	
-	
+	String fromServer = parser.parseString(inputFromServer);
 	MainController mc = new MainController();
 	
 	public void connectToNetwork(String SSID)
@@ -33,7 +33,7 @@ public class ConnectionController {
 	}
 	private String scanLocalNetworks()
 	{
-		mc.exec("iw wlan0 scan");
+		//mc.exec("iw wlan0 scan");
 		return "";
 	}
 }
