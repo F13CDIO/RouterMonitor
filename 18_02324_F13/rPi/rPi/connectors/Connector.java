@@ -3,17 +3,21 @@ package rPi.connectors;
 import java.io.BufferedReader;
 import java.net.InetAddress;
 
+/*
+ * Implementation of the controller that handles our network connections through use of TCPCLient and UDPCLient
+ */
+
 public class Connector implements IConnector {
 	
 	private TCPClient tcp;
 	private UDPClient udp;
 		
 	@Override
-	public BufferedReader initTCPClient(String message)
+	public BufferedReader initTCPClient(InetAddress serverAddress, short serverPort)
 	{
 		tcp = new TCPClient();
 		try {
-			return tcp.createConnection(message);
+			return tcp.createConnection(serverAddress, serverPort);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -21,11 +25,17 @@ public class Connector implements IConnector {
 		return null;
 	}
 	@Override
-	public void initUDPServer(int portToSendFrom, int destinationPort, InetAddress destinationIP)
+	public void sendTCP(String message)
+	{
+		assert(tcp != null);
+		tcp.sendLine(message);
+	}
+	@Override
+	public void initUDP(int portToSendFrom, int destinationPort, InetAddress destinationIP)
 	{
 		udp = new UDPClient();
 		try {
-			udp.initUDPServer(portToSendFrom, destinationPort, destinationIP);
+			udp.initUDP(portToSendFrom, destinationPort, destinationIP);
 		} catch (Exception e){
 			// TO be handled
 		}

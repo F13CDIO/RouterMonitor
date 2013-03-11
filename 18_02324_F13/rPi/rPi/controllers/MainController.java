@@ -33,11 +33,24 @@ public class MainController {
 		return br;
 	}
 
+<<<<<<< HEAD
 	private String parseInputStream()
 	{
 			return streamParser.parseString(br);
 	}
 	
+=======
+//	private String parseInputStream()
+//	{
+//
+//		try {
+//			return streamParser.parseString(br);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			return "";
+//		}
+//	}
+>>>>>>> 1187e6aefb179c8bd302df7a13882f7412946d38
 	private String get_IP()
 	{
 		String IP = "";
@@ -65,9 +78,12 @@ public class MainController {
 		
 	}
 	
+<<<<<<< HEAD
 	private void menuAction(int action)
 	{
 		
 	}
 	
+=======
+>>>>>>> 1187e6aefb179c8bd302df7a13882f7412946d38
 }
