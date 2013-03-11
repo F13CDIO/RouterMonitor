@@ -1,11 +1,11 @@
 package Data;
 
-import java.util.List;
+import java.util.*;
 import Data.Data.DataPackage;
 
 public interface IData 
 {
-	void addDataset(String inIP, String outIP, String host, String subHost, String userAgent);
+	void addDataset(Date date, String inIP, String outIP, String host, String subHost, String userAgent);
 	void setInIP(String IP, int index); //Skal der kastes en NoDataException, eller noget lignende, i tilfælde af manglende data?
 	void setOutIP(String IP, int index);
 	void setHost(String host, int index);
@@ -16,5 +16,6 @@ public interface IData
 	String getHost(int index);
 	String getSubHost(int index);
 	String getUserAgent(int index);
+	Date getTimeStamp(int index);
 	List<DataPackage> getDataList();
 }

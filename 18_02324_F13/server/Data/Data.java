@@ -71,17 +71,21 @@ public class Data implements IData
 		return dataList.get(index).getUserAgent();
 	}
 
+	@Override
+	public Date getTimeStamp(int index) {
+		return dataList.get(index).getTimeStamp();
+	}
 
 	@Override
 	public List<DataPackage> getDataList() {
 		return dataList;
 	}
 
-
 	@Override
-	public void addDataset(String inIP, String outIP, String host, String subHost, String userAgent) {
-		dataList.add(new DataPackage(inIP, outIP, host, subHost, userAgent));
+	public void addDataset(Date date, String inIP, String outIP, String host, String subHost, String userAgent) {
+		dataList.add(new DataPackage(date ,inIP, outIP, host, subHost, userAgent));
 	}
+
 	
 	public class DataPackage
 	{
@@ -90,9 +94,11 @@ public class Data implements IData
 		private String host;
 		private String subHost;
 		private String userAgent;
+		private Date timeStamp;
 		
-		private DataPackage(String inIP, String outIP, String host, String subHost, String userAgent)
+		private DataPackage(Date timeStamp, String inIP, String outIP, String host, String subHost, String userAgent)
 		{
+			this.timeStamp = timeStamp;
 			this.inIP = inIP;
 			this.outIP = outIP;
 			this.host = host;
@@ -144,5 +150,21 @@ public class Data implements IData
 		public String getUserAgent() {
 			return userAgent;
 		}
+		
+		public Date getTimeStamp()
+		{
+			return timeStamp;
+		}
+		
+		public String toString()
+		{
+			return "Time: " + this.getTimeStamp()+
+					"\nHost: " + this.getHost() +
+					"\nSubhost: " + this.getSubHost() +
+					"\nIn IP: " + this.getInIP() + 
+					"\nOut IP: " + this.getOutIP() +
+					"\nUser - Agent: " + this.getUserAgent();
+		}
 	}
+
 }
