@@ -9,7 +9,8 @@ import java.util.*;
 
 public class TCPServer
 {
-	private List<Socket> socketList= new ArrayList<Socket>();
+	private UDPServer udpServer;
+	private Thread udpServerThread;
 	private ServerSocket serverSocket;
 	private String clientRequest;
     private String capitalizedSentence;
@@ -25,7 +26,6 @@ public class TCPServer
 		while(true)
 		{			
 			connectionSocket = serverSocket.accept();
-	    	socketList.add(connectionSocket);
 	    	System.out.println(connectionSocket.getInetAddress() + " has connected");
 			
 	       BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
@@ -35,8 +35,8 @@ public class TCPServer
 	       
 	       if (clientRequest.equals("Ready"))
 	       {
-	    	   UDPServer udpServer = new UDPServer();
-	    	   Thread udpServerThread = new Thread(udpServer);
+	    	   udpServer = new UDPServer();
+	    	   udpServerThread = new Thread(udpServer);
 	    	   udpServerThread.start();
 	    	   int grantedPortNumber = udpServer.getPort();
 		       outToClient.writeBytes("Port granted = " + grantedPortNumber + "\n");
@@ -48,6 +48,7 @@ public class TCPServer
 	{
 		try {
 			connectionSocket.close();
+			//TODO: Close the thread
 			System.out.println("Connection closed");
 		} catch (IOException e) {
 			e.printStackTrace();

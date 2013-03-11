@@ -8,8 +8,6 @@ public class UDPServer implements Runnable
 {
 	private static int availableUDPPort = 8001;
 	private int portUDP;
-	private byte[] buf = new byte[1024];
-	private int lenBuf = buf.length;
 	private DatagramPacket inPacketUDP;
 	private DatagramSocket inSocketUDP;
 	private IFunction function = UI.getFunctionInstance();
@@ -42,13 +40,14 @@ public class UDPServer implements Runnable
 			while (true)
 			{
 				//String data = "10.16.99.136:55751 -> 69.171.235.16:80 [AP]\nGET /ping?partition=236&cb=gks9 HTTP/1.1..Host: 3-pct.channel.facebook.com..Connection: keep-alive..User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/";
-
-				inPacketUDP = new DatagramPacket(buf, lenBuf);
+				
+				inPacketUDP = new DatagramPacket(new byte[1024], 1024);
 				inSocketUDP.receive(inPacketUDP);
 				
 				String data = new String(inPacketUDP.getData());
 				function.parse(data);
 			}
+			
 		}
 		catch(SocketException se)
 		{
@@ -65,5 +64,11 @@ public class UDPServer implements Runnable
 			System.out.println("finally!!");
 			inSocketUDP.close();
 		}
+	}
+	
+	public void close()
+	{
+		inSocketUDP.close();
+		System.out.println("close");
 	}
 }
