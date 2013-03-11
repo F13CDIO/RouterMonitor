@@ -42,6 +42,10 @@ public class UDPServer implements Runnable
 				//String data = "10.16.99.136:55751 -> 69.171.235.16:80 [AP]\nGET /ping?partition=236&cb=gks9 HTTP/1.1..Host: 3-pct.channel.facebook.com..Connection: keep-alive..User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/";
 				
 				inPacketUDP = new DatagramPacket(new byte[1024], 1024);
+				if(Thread.interrupted())
+				{
+					break;
+				}
 				inSocketUDP.receive(inPacketUDP);
 				
 				String data = new String(inPacketUDP.getData());

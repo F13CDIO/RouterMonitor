@@ -41,6 +41,11 @@ public class TCPServer
 	    	   int grantedPortNumber = udpServer.getPort();
 		       outToClient.writeBytes("Port granted = " + grantedPortNumber + "\n");
 	       }
+	       //Den kommer ikke der til, pga readLine højere oppe
+	       if(!connectionSocket.isConnected())
+	       {
+	    	   Close();
+	       }
 		}
 	}
 	
@@ -48,7 +53,7 @@ public class TCPServer
 	{
 		try {
 			connectionSocket.close();
-			//TODO: Close the thread
+			udpServerThread.interrupt();
 			System.out.println("Connection closed");
 		} catch (IOException e) {
 			e.printStackTrace();
