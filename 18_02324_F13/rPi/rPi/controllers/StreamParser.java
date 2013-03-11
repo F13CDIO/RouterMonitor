@@ -67,9 +67,6 @@ public class StreamParser
 
 	public String parseNetworkData(String str)
 	{
-
-
-
 		return str;
 	}
 
