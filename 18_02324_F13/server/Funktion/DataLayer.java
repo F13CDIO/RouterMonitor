@@ -13,7 +13,7 @@ public class DataLayer
 	
 	public DataLayer()
 	{
-	//	
+	//for common instantiation
 	}
 	
 	public IData getData()

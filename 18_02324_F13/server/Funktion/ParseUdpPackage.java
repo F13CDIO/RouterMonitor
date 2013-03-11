@@ -3,7 +3,7 @@ package Funktion;
 import Data.*;
 import java.util.Calendar;
 
-public class ParseUdpPackage implements IParseUdpPackage {
+public class ParseUdpPackage implements IParseUdpPackage, IFunction {
 
     private int masterIndex;
     private IData data = new DataLayer().getData();
