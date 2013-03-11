@@ -33,15 +33,12 @@ public class MainController {
 		return br;
 	}
 
-<<<<<<< HEAD
 
 	@SuppressWarnings("unused")
 	private String parseInputStream()
 	{
 			return streamParser.parseString(br);
 	}
-=======
->>>>>>> af077335def78dcd5f4a76107db0a73ae5340822
 	
 	@SuppressWarnings("unused")
 	private String get_IP()
