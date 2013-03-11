@@ -42,6 +42,10 @@ public class UI
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			finally
+			{
+				tcpServer.Close();
+			}
 		} 
 		
 		catch (IOException e1) 

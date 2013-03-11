@@ -42,17 +42,24 @@ public class UDPServer implements Runnable
 		{
 			try
 			{
-				String data = "10.16.99.136:55751 -> 69.171.235.16:80 [AP]\nGET /ping?partition=236&cb=gks9 HTTP/1.1..Host: 3-pct.channel.facebook.com..Connection: keep-alive..User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/";
+				//String data = "10.16.99.136:55751 -> 69.171.235.16:80 [AP]\nGET /ping?partition=236&cb=gks9 HTTP/1.1..Host: 3-pct.channel.facebook.com..Connection: keep-alive..User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/";
 				
 				inSocketUDP.receive(inPacketUDP);
-				System.out.println("Vi parser");
+				
+				String data = new String(inPacketUDP.getData());
 				function.parse(data);
 			}
-			
+			catch(SocketException se)
+			{
+				System.out.println("Client disconnected!");
+				inSocketUDP.close();
+			}			
 			catch (IOException e)
 			{
 				System.out.println("IOException: " + e);
+				inSocketUDP.close();
 			}
+
 		}
 	}
 }

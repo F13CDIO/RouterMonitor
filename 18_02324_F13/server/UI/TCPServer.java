@@ -38,4 +38,15 @@ public class TCPServer
 	       }
 		}
 	}
+	
+	public void Close()
+	{
+		try {
+			connectionSocket.close();
+			System.out.println("Connection closed");
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("close error");
+		}
+	}
 }
