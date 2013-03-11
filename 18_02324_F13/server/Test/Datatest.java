@@ -15,7 +15,7 @@ public class Datatest
 		try
 		{
 			//ret filepath
-			FileInputStream fstream = new FileInputStream("C:/Users/Mads/Dropbox/Grp 18/http_example_more_data.txt");
+			FileInputStream fstream = new FileInputStream("C:/Users/Gronex/Dropbox/Grp 18/http_example_more_data.txt");
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			String str;
@@ -46,7 +46,7 @@ public class Datatest
 			System.out.println(data.getData().getDataList().get(i).toString() + "\n");
 		}
 
-		System.out.println(data.getData().getDataList().size());
+		System.out.println(data.getData().getDataList().size() + " packages");
 		System.out.println("Time to real the data: " + calcTime + " ms.");
 		
 	}
