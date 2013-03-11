@@ -34,11 +34,13 @@ public class MainController {
 	}
 
 
+	@SuppressWarnings("unused")
 	private String parseInputStream()
 	{
 			return streamParser.parseString(br);
 	}
 	
+	@SuppressWarnings("unused")
 	private String get_IP()
 	{
 		String IP = "";
@@ -67,6 +69,7 @@ public class MainController {
 	}
 	
 
+	@SuppressWarnings("unused")
 	private void menuAction(int action)
 	{
 		
