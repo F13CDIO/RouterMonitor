@@ -23,6 +23,7 @@ public class ConnectionController {
 	BufferedReader inputFromServer = con.initTCPClient(SERVER_IP, DEFAULT_PORT);
 	
 	
+	
 	MainController mc = new MainController();
 	
 	public void connectToNetwork(String SSID)
