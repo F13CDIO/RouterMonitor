@@ -5,7 +5,7 @@ import server.data.IData;
 public class Function implements IFunction
 {
 	private ParseUdpPackage parseUdpPackage = new ParseUdpPackage(); 
-	private IData data = null;
+	private static IData data = null;
 	
 	public Function(IData data)
 	{
@@ -16,5 +16,9 @@ public class Function implements IFunction
 	public void parse(String input) 
 	{
 		parseUdpPackage.parse(input);
+	}
+
+	public static IData getData() {
+		return data;
 	}
 }

@@ -9,7 +9,9 @@ import server.function.*;
 public class Datatest 
 {
 	public static void main(String[] args) {
-		DataLayer data = new DataLayer(new Data());
+		IData data1 = new Data();
+		IFunction function = new Function(data1);
+		IData data = Function.getData();
 		IParseUdpPackage parse = new ParseUdpPackage();
 
 		long startTime = System.nanoTime();
@@ -42,12 +44,12 @@ public class Datatest
 		}
 		long calcTime =((System.nanoTime() - startTime)/ (long) Math.pow(10, 6));
 		
-		for(int i = 0; i < data.getData().getDataList().size(); i++)
+		for(int i = 0; i < data.getDataList().size(); i++)
 		{
-			System.out.println(data.getData().getDataList().get(i).toString() + "\n");
+			System.out.println(data.getDataList().get(i).toString() + "\n");
 		}
 
-		System.out.println(data.getData().getDataList().size() + " packages");
+		System.out.println(data.getDataList().size() + " packages");
 		System.out.println("Time to real the data: " + calcTime + " ms.");
 		
 	}

@@ -43,7 +43,7 @@ public class StreamParser
 	{
 		String command;
 		command = br.readLine();
-		if(command.contains("start"))
+		if(command.contains("Start"))
 		{
 			PORT_NUMBER = command.substring(command.indexOf("\\n"));
 			return "start";
@@ -62,7 +62,14 @@ public class StreamParser
 	// This method assumes that, parseTCPCommand had already been called.
 	public String praseTCP_PORT()
 	{
-		return PORT_NUMBER;
+		if(PORT_NUMBER == null)
+		{
+			return "No port";
+		}
+		else
+		{
+			return PORT_NUMBER;
+		}
 	}
 
 	public String parseNetworkData(String str)
