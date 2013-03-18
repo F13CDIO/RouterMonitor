@@ -4,11 +4,12 @@ import server.data.IData;
 
 public class Function implements IFunction
 {
-	private ParseUdpPackage parseUdpPackage = new ParseUdpPackage(); 
-	private static IData data = null;
+	private ParseUdpPackage parseUdpPackage; 
+	private static IData data;
 	
 	public Function(IData data)
 	{
+		parseUdpPackage = new ParseUdpPackage();
 		this.data = data;
 	}
 
