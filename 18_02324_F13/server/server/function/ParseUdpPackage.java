@@ -8,7 +8,7 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
 
 	//A number defining where in the string we are looking
     private int masterIndex;
-    private IData data = new DataLayer().getData();
+    private IData data = Function.getData();
 
     public ParseUdpPackage() 
     {
