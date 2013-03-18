@@ -1,9 +1,9 @@
-package Main;
+package server.main;
 
-import UI.UI;
-import Data.Data;
-import Data.IData;
-import Funktion.*;
+import server.boundary.UI;
+import server.data.Data;
+import server.data.IData;
+import server.function.*;
 
 public class MainServer 
 {

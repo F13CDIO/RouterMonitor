@@ -1,40 +1,46 @@
-package Funktion;
+package server.function;
 
-import Data.*;
 import java.util.Calendar;
+
+import server.data.*;
 
 public class ParseUdpPackage implements IParseUdpPackage, IFunction {
 
+	//A number defining where in the string we are looking
     private int masterIndex;
-    private IData data = new DataLayer().getData();
+    private IData data = Function.getData();
 
-    public ParseUdpPackage() {
+    public ParseUdpPackage() 
+    {
+    	//
     }
 
-    public void parse(String input) {
+    public void parse(String input) 
+    {
     	System.out.println(input);
         Calendar cal = Calendar.getInstance();
 
         /* Different 'get'-methods for the different types of info.
          * It is important that methods run in the right order, since they share
          * the same masterIndex variable, for better performance */
-        String ip1 = getIP1(input);
-        String ip2 = getIP2(input);
+        String sourceIP = getSourceIP(input);
+        String distinationIP = getDistinationIP(input);
         String subHost = getSubHost(input);
         String host = getHost(input);
         String userAgent = getUserAgent(input);
 
         /* Only save data if all the "important" information was found.
          * Useragent and subhost is not considered "important" */
-        if (ip1 != null && ip2 != null && host != null) {
-            data.addDataset(cal.getTime(), ip1, ip2, host, subHost, userAgent);
+        if (sourceIP != null && distinationIP != null && host != null) {
+            data.addDataset(cal.getTime(), sourceIP, distinationIP, host, subHost, userAgent);
         }
     }
 
-    private String getIP1(String input) {
+    private String getSourceIP(String input) {
         masterIndex = input.indexOf(":", 9);
 
         if (masterIndex < 2) {
+        	//if there is no ip
             return null;
         }
         else {
@@ -42,7 +48,7 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
         }
     }
 
-    private String getIP2(String input) {
+    private String getDistinationIP(String input) {
         int endIndex;
 
         masterIndex = input.indexOf(" ", masterIndex);
