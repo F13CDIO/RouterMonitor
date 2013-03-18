@@ -7,8 +7,8 @@ import server.data.Data.DataPackage;
 public interface IData 
 {
 	void addDataset(Date date, String inIP, String outIP, String host, String subHost, String userAgent);
-	void setInIP(String IP, int index); //Skal der kastes en NoDataException, eller noget lignende, i tilfælde af manglende data?
-	void setOutIP(String IP, int index);
+	void setScourceIP(String IP, int index); //Skal der kastes en NoDataException, eller noget lignende, i tilfï¿½lde af manglende data?
+	void setDestinationIP(String IP, int index);
 	void setHost(String host, int index);
 	void setSubHost(String subHost, int index);
 	void setUserAgent(String userAgent, int index);
