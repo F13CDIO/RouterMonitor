@@ -1,9 +1,10 @@
-package Test;
+package server.test;
 
 import java.io.*;
 
-import Funktion.*;
-import Data.*;
+import server.data.*;
+import server.function.*;
+
 
 public class Datatest 
 {

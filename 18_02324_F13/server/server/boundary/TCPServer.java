@@ -145,7 +145,6 @@ public class TCPServer
                 			
                 		else
                 			write("UDP server is already created");
-                		
                 	}
                 	
                 	else if (clientRequest.equals("Start"))
@@ -160,6 +159,8 @@ public class TCPServer
                 			write("A UDP server hasn't been created yet");
 
                 	}
+                	
+                	
                 	
                 	else if (clientRequest.equals("Stop"))
                 	{

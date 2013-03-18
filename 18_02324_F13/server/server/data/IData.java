@@ -1,7 +1,8 @@
-package Data;
+package server.data;
 
 import java.util.*;
-import Data.Data.DataPackage;
+
+import server.data.Data.DataPackage;
 
 public interface IData 
 {

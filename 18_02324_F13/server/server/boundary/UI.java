@@ -7,9 +7,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import server.boundary.TCPServer.Client;
+import server.function.IFunction;
 
 
-import Funktion.IFunction;
 
 public class UI
 {

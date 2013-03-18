@@ -1,7 +1,8 @@
-package Funktion;
+package server.function;
 
-import Data.*;
 import java.util.Calendar;
+
+import server.data.*;
 
 public class ParseUdpPackage implements IParseUdpPackage, IFunction {
 

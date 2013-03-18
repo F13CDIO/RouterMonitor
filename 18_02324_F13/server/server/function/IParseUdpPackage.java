@@ -1,4 +1,4 @@
-package Funktion;
+package server.function;
 
 public interface IParseUdpPackage {
 

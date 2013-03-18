@@ -2,7 +2,8 @@ package server.boundary;
 import java.io.*;
 import java.net.*;
 
-import Funktion.IFunction;
+import server.function.IFunction;
+
 
 public class UDPServer extends Thread
 {

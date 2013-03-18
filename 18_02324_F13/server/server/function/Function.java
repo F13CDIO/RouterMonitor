@@ -1,6 +1,6 @@
-package Funktion;
+package server.function;
 
-import Data.IData;
+import server.data.IData;
 
 public class Function implements IFunction
 {

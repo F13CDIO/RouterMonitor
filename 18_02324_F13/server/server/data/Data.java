@@ -1,4 +1,4 @@
-package Data;
+package server.data;
 
 import java.util.*;
 
