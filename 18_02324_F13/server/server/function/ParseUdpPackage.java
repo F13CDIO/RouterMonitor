@@ -17,7 +17,6 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
 
     public void parse(String input) 
     {
-    	System.out.println(input);
         Calendar cal = Calendar.getInstance();
 
         /* Different 'get'-methods for the different types of info.
@@ -33,6 +32,8 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
          * Useragent and subhost is not considered "important" */
         if (sourceIP != null && distinationIP != null && host != null) {
             data.addDataset(cal.getTime(), sourceIP, distinationIP, host, subHost, userAgent);
+            System.out.println(data.getDataList().toString());
+            System.out.println("Package count: " + data.getDataList().size());
         }
     }
 
