@@ -1,6 +1,11 @@
 package server.data;
 
 import java.util.*;
+/**
+ * 
+ * @author Mads
+ *
+ */
 
 public class Data implements IData
 {
@@ -11,7 +16,7 @@ public class Data implements IData
 	}
 	
 	@Override
-	public void setScourceIP(String IP, int index) {
+	public void setSourceIP(String IP, int index) {
 		dataPackageList.get(index).setInIP(IP);
 		
 	}
@@ -43,13 +48,13 @@ public class Data implements IData
 
 
 	@Override
-	public String getInIP(int index) {
+	public String getSourceIP(int index) {
 		return dataPackageList.get(index).getInIP();
 	}
 
 
 	@Override
-	public String getOutIP(int index) {
+	public String getDistinationIP(int index) {
 		return dataPackageList.get(index).getOutIP();
 	}
 
@@ -86,8 +91,6 @@ public class Data implements IData
 	public void addDataset(Date date, String inIP, String outIP, String host, String subHost, String userAgent) {
 		dataPackageList.add(new DataPackage(date ,inIP, outIP, host, subHost, userAgent));
 	}
-
-	
 	public class DataPackage
 	{
 		private String scourceIP;
@@ -97,11 +100,20 @@ public class Data implements IData
 		private String userAgent;
 		private Date timeStamp;
 		
-		private DataPackage(Date timeStamp, String inIP, String outIP, String host, String subHost, String userAgent)
+		/**
+		 * Sets all the values in the package at once
+		 * @param timeStamp
+		 * @param sourceIP
+		 * @param destinationIP
+		 * @param host
+		 * @param subHost
+		 * @param userAgent
+		 */
+		private DataPackage(Date timeStamp, String sourceIP, String destinationIP, String host, String subHost, String userAgent)
 		{
 			this.timeStamp = timeStamp;
-			this.scourceIP = inIP;
-			this.distinationIP = outIP;
+			this.scourceIP = sourceIP;
+			this.distinationIP = destinationIP;
 			this.host = host;
 			this.subHost = subHost;
 			this.userAgent = userAgent;
