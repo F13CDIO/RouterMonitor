@@ -88,13 +88,13 @@ public class Data implements IData
 
 	@Override
 	//Sets all the datavariabels, it is legal to set any or all of them as null
-	public void addDataset(Date date, String inIP, String outIP, String host, String subHost, String userAgent) {
-		dataPackageList.add(new DataPackage(date ,inIP, outIP, host, subHost, userAgent));
+	public void addDataset(Date date, String sourceIP, String destinationIP, String host, String subHost, String userAgent) {
+		dataPackageList.add(new DataPackage(date ,sourceIP, destinationIP, host, subHost, userAgent));
 	}
 	public class DataPackage
 	{
-		private String scourceIP;
-		private String distinationIP;
+		private String sourceIP;
+		private String destinationIP;
 		private String host;
 		private String subHost;
 		private String userAgent;
@@ -112,20 +112,20 @@ public class Data implements IData
 		private DataPackage(Date timeStamp, String sourceIP, String destinationIP, String host, String subHost, String userAgent)
 		{
 			this.timeStamp = timeStamp;
-			this.scourceIP = sourceIP;
-			this.distinationIP = destinationIP;
+			this.sourceIP = sourceIP;
+			this.destinationIP = destinationIP;
 			this.host = host;
 			this.subHost = subHost;
 			this.userAgent = userAgent;
 		}
 		
 		public void setInIP(String IP) {
-			this.scourceIP = IP;
+			this.sourceIP = IP;
 			
 		}
 	
 		public void setOutIP(String IP) {
-			this.distinationIP = IP;
+			this.destinationIP = IP;
 			
 		}
 	
@@ -145,11 +145,11 @@ public class Data implements IData
 		}
 	
 		public String getInIP() {
-			return scourceIP;
+			return sourceIP;
 		}
 	
 		public String getOutIP() {
-			return distinationIP;
+			return destinationIP;
 		}
 	
 		public String getHost() {
