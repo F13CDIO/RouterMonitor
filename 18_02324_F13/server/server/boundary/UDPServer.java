@@ -13,11 +13,12 @@ public class UDPServer extends Thread
 	private int bufferLength = bufferSize.length;
 	private DatagramPacket incommingPacket;
 	private DatagramSocket udpSocket;
-	private IFunction function = UI.getFunctionInstance();
+	private IFunction function = Boundary.getInstanceOfFunction();
+	private boolean keepRunning = true;
 	
 	public UDPServer() throws IOException
 	{
-		this.udpPort = availableUDPPort;
+		this.udpPort = UDPServer.availableUDPPort;
 		UDPServer.availableUDPPort++;
 	}
 	
@@ -26,13 +27,18 @@ public class UDPServer extends Thread
 		return udpPort;
 	}
 	
+	public void stopThread()
+	{
+		keepRunning = false;
+		udpSocket = null;
+	}
+	
 
 	public void run() // Start thread 
 	{
 		try 
 		{
 			udpSocket = new DatagramSocket(udpPort);
-			incommingPacket = new DatagramPacket(bufferSize, bufferLength);
 		} 
 		
 		catch (SocketException e1) 
@@ -41,18 +47,16 @@ public class UDPServer extends Thread
 		}
 			
 		// Keep listening
-		while (true)
+		while (keepRunning)
 		{
 			try
 			{
-				//String testData = "10.16.99.136:55751 -> 69.171.235.16:80 [AP]\nGET /ping?partition=236&cb=gks9 HTTP/1.1..Host: 3-pct.channel.facebook.com..Connection: keep-alive..User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/";
-				
+//				String testData = "10.16.99.136:55751 -> 69.171.235.16:80 [AP]\nGET /ping?partition=236&cb=gks9 HTTP/1.1..Host: 3-pct.channel.facebook.com..Connection: keep-alive..User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/";
+				String testData = "T  10.16.99.136:55751 -> 69.171.235.16:80 [AP]\nGET /ping?partition=236&cb=gks9 HTTP/1.1..Host: 3-pct.channel.facebook.com..C";			
 				incommingPacket = new DatagramPacket(new byte[1024], bufferLength);
-				
 				udpSocket.receive(incommingPacket);
 				String data = new String(incommingPacket.getData());
-				//function.parse(data);
-				System.out.println(data);
+				function.parse(testData);
 			}
 			
 			catch (IOException e)
