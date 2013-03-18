@@ -1,4 +1,4 @@
-package server.boundary;
+package server.test;
 	
 	import java.io.*;
 	import java.net.*;
@@ -10,7 +10,7 @@ package server.boundary;
 		private Socket clientSocket;
 		private BufferedReader inFromServer;
 		private DataOutputStream outToServer;
-		private String serverAddress = "10.16.130.207";
+		private String serverAddress = "127.0.0.1";
 		private int serverPort = 9000;
 
 		public testTCPClient() throws Exception
@@ -24,6 +24,17 @@ package server.boundary;
 			try {
 				outToServer = new DataOutputStream(clientSocket.getOutputStream());
 				outToServer.writeBytes(message);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+		
+		public void readLine()
+		{
+			try {
+				String input = inFromServer.readLine();
+				System.out.println(input);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

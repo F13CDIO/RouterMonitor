@@ -1,4 +1,4 @@
-package server.boundary;
+package server.test;
 
 public class MainTEst {
 
@@ -11,11 +11,11 @@ public class MainTEst {
 		try 
 		{
 			// TCP
-//			testServr = new testTCPClient();
-//			Thread.sleep(2000);
-//			testServr.sendLine("Create");
-//			Thread.sleep(2000);
-//			testServr.sendLine("Start");
+			testServr = new testTCPClient();
+			testServr.readLine();
+			testServr.sendLine("Create\n");
+			testServr.readLine();
+			testServr.sendLine("Start\n");
 		} 
 		
 		
