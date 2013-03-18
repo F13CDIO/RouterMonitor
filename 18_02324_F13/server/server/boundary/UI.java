@@ -1,14 +1,21 @@
-package UI;
+package server.boundary;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
+import server.boundary.TCPServer.Client;
+
 
 import Funktion.IFunction;
 
-public class UI 
+public class UI
 {
 	private static IFunction function;
 	private TCPServer tcpServer;
-	
+		
 	public UI()
 	{
 		
@@ -26,36 +33,15 @@ public class UI
 
 	public void initialize() 
 	{
-		System.out.println("TCP startet");
-		try 
-		{
-			tcpServer = new TCPServer();
-			
-			
 			try 
 			{
-				tcpServer.start();
+				tcpServer = new TCPServer(9000);		
+				tcpServer.go();
 			} 
 			
 			catch (IOException e) 
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			finally
-			{
-				tcpServer.Close();
+				System.out.println(e.getMessage());
 			}
 		} 
-		
-		catch (IOException e1) 
-		
-		{
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	
-	}
-	
-	
 }

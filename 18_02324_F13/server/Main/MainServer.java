@@ -1,6 +1,6 @@
 package Main;
 
-import UI.UI;
+import server.boundary.UI;
 import Data.Data;
 import Data.IData;
 import Funktion.*;
