@@ -7,6 +7,7 @@ public class Function implements IFunction
 	private ParseUdpPackage parseUdpPackage; 
 	private static IData data;
 	
+	@SuppressWarnings("static-access")
 	public Function(IData data)
 	{
 		this.data = data;

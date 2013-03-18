@@ -1,6 +1,5 @@
 package server.test;
 
-import java.io.BufferedReader;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;

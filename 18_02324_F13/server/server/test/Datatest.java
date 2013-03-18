@@ -13,14 +13,15 @@ public class Datatest
 		IFunction function = new Function(data1);
 		IData data = Function.getData();
 		IParseUdpPackage parse = new ParseUdpPackage();
+		BufferedReader reader = null;
 
 		long startTime = System.nanoTime();
 		try
 		{
 			//ret filepath
-			FileInputStream fstream = new FileInputStream("C:/Users/Gronex/Dropbox/Grp 18/http_example_more_data.txt");
+			FileInputStream fstream = new FileInputStream("C:/Users/Mads/Dropbox/Grp 18/http_example_more_data.txt");
 			DataInputStream in = new DataInputStream(fstream);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+			reader = new BufferedReader(new InputStreamReader(in));
 			String str;
 			String parseString = "";
 			while((str = reader.readLine()) != null)
@@ -37,6 +38,7 @@ public class Datatest
 					parseString = "";
 				}
 			}
+			reader.close();
 		}
 		catch(Exception e)
 		{
