@@ -9,8 +9,8 @@ public class Function implements IFunction
 	
 	public Function(IData data)
 	{
-		parseUdpPackage = new ParseUdpPackage();
 		this.data = data;
+		parseUdpPackage = new ParseUdpPackage();
 	}
 
 	@Override

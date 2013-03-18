@@ -11,9 +11,11 @@ public class MainTEst {
 		try 
 		{
 			// TCP
-			testServr = new testTCPClient();
-			testServr.sendLine("Create");
-			testServr.sendLine("Start");
+//			testServr = new testTCPClient();
+//			Thread.sleep(2000);
+//			testServr.sendLine("Create");
+//			Thread.sleep(2000);
+//			testServr.sendLine("Start");
 		} 
 		
 		

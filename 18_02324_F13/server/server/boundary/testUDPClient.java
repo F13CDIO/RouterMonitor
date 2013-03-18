@@ -8,7 +8,7 @@ import java.net.InetAddress;
 public class testUDPClient 
 {
 	private int destinationPort = 8001;
-	String destinationIpAddress = "127.0.0.1";
+	String destinationIpAddress = "10.16.130.207";
 	DatagramSocket serverSocket;
 	byte[] sendData = new byte[1024];
 	byte[] buf = new byte[1024];

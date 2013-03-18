@@ -10,7 +10,7 @@ package server.boundary;
 		private Socket clientSocket;
 		private BufferedReader inFromServer;
 		private DataOutputStream outToServer;
-		private String serverAddress = "127.0.0.1";
+		private String serverAddress = "10.16.130.207";
 		private int serverPort = 9000;
 
 		public testTCPClient() throws Exception
