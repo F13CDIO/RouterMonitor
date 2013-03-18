@@ -1,6 +1,6 @@
 package server.test;
 
-public class MainTEst {
+public class MainTest {
 
 	/**
 	 * @param args

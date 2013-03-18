@@ -27,7 +27,7 @@ public class testUDPClient
 			sendData = testPackage.getBytes();
 			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName(destinationIpAddress), destinationPort);
 			serverSocket.send(sendPacket);
-			Thread.sleep(1000L);
+			//Thread.sleep(1L);
 		}
 	}
 		
