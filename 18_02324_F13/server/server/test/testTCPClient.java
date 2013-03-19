@@ -10,13 +10,13 @@ package server.test;
 		private Socket clientSocket;
 		private BufferedReader inFromServer;
 		private DataOutputStream outToServer;
-		private String serverAddress = "127.0.0.1";
+		private String serverAddress = "10.16.135.44";
 		private int serverPort = 9000;
 
 		public testTCPClient() throws Exception
 		{
 			clientSocket = new Socket(serverAddress, serverPort);
-			inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));	
+			inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 		}
 		
 		public void sendLine(String message)
@@ -30,14 +30,15 @@ package server.test;
 			}	
 		}
 		
-		public void readLine()
+		public String readLine()
 		{
 			try {
 				String input = inFromServer.readLine();
-				System.out.println(input);
+				return input;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return null;
 			}	
 		}
 		
