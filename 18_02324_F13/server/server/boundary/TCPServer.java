@@ -45,7 +45,6 @@ public class TCPServer
         private UDPServer linkedUDPServer = null;
         private String ipAddress;
         private int port;
-     
 
         public Client(Socket socket) throws IOException
         {
@@ -77,15 +76,10 @@ public class TCPServer
             {    
                 dataFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String clientRequest = dataFromClient.readLine();
-                
-           
-                if (clientRequest != null)
-                {
-                	switch(clientRequest)
+               
+                switch(clientRequest)
                     {            		
-                		// 1. Create UDP server -----------------------------------------------------------------------------
-                	
-                    	case "Create":
+                    	case "Create": // -----------------------------------------------------------------------------
                     	if (linkedUDPServer == null)
                 		{
                 			linkedUDPServer = new UDPServer();
@@ -93,9 +87,8 @@ public class TCPServer
                 		}
                     	break;
                     	
-                    	// 2. Stop UDP server -----------------------------------------------------------------------------
-                    
-                    	case "Start":
+
+                    	case "Start": // -----------------------------------------------------------------------------
                     	if (linkedUDPServer != null)
                     	{
                     		linkedUDPServer.start();
@@ -107,9 +100,7 @@ public class TCPServer
                     	break;
                     	
                     	
-                    	// 3. Stop UDP server -----------------------------------------------------------------------------
-                    	
-                    	case "Stop":
+                    	case "Stop": // -----------------------------------------------------------------------------
                     	if (linkedUDPServer != null)
                     	{
                     		linkedUDPServer.stopThread();
@@ -124,28 +115,18 @@ public class TCPServer
                     	
                     	break;
                     	
-                    	default:
-                    	write("Invalid command");
-                    		break;
-                    	//  ----------------------------------------------------------------------------------------------
+                    	default: // -----------------------------------------------------------------------------
+                    		write("Invalid command");
+                    	break;
                     }
-                }
-                
-                
-                else 
-                {
-                	stopThread(); // Stop client thread
-                	if (linkedUDPServer != null)
-                		linkedUDPServer.stopThread(); // Stop linked UDP server thread
-                	
-                	
-                	System.out.println("Client at "+ ipAddress +" disconnected ");
-                }
             }
             
-            catch(IOException e)
+        	catch(Exception e) // IO and null pointer
             {
-                System.out.println("Error: " + e);
+        		System.out.println(client.ipAddress + ": " + client.port + " disconnected");
+                stopThread(); 
+            	if (linkedUDPServer != null)
+            		linkedUDPServer.stopThread(); // Stop linked UDP server thread
             }
         }
         
