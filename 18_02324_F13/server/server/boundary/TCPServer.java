@@ -31,7 +31,7 @@ public class TCPServer
                client = new Client(socket);
                System.out.println("Client at "+ client.getIpAddress() +": " + client.getPort()+" connected ");
                client.start(); // Thread start
-               client.write("Welcome");
+               //client.write("Welcome");
             }
         }
     }
@@ -76,19 +76,19 @@ public class TCPServer
             {    
                 dataFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String clientRequest = dataFromClient.readLine();
-               
+
                 switch(clientRequest)
                     {            		
-                    	case "Create": // -----------------------------------------------------------------------------
+                    	case "create": // -----------------------------------------------------------------------------
                     	if (linkedUDPServer == null)
                 		{
                 			linkedUDPServer = new UDPServer();
-                    		write("Start\n" + linkedUDPServer.getPort());
+                    		write("start\n" + linkedUDPServer.getPort()+"\n");
                 		}
                     	break;
                     	
 
-                    	case "Start": // -----------------------------------------------------------------------------
+                    	case "start": // -----------------------------------------------------------------------------
                     	if (linkedUDPServer != null)
                     	{
                     		linkedUDPServer.start();
@@ -100,7 +100,7 @@ public class TCPServer
                     	break;
                     	
                     	
-                    	case "Stop": // -----------------------------------------------------------------------------
+                    	case "stop": // -----------------------------------------------------------------------------
                     	if (linkedUDPServer != null)
                     	{
                     		linkedUDPServer.stopThread();
