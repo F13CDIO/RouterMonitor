@@ -15,6 +15,16 @@ public class mySqlConnect
 	
 	private boolean connected = false;
 	
+	public mySqlConnect()
+	{
+		try 
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+		} 
+		
+		catch (ClassNotFoundException e) {e.printStackTrace();}
+	}
+	
 	public void getAll()
 	{	
 		executeQuery("SELECT * FROM dataPackages");
