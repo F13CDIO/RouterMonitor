@@ -4,10 +4,10 @@ import java.sql.*;
 
 public class mySqlConnect 
 {
-	private String sqlURL = "jdbc:mysql://db4free.net:3306/";
-	private String sqlDbName = "dalgaard";
-	private String sqlUser = "redlaz"; 
-	private String sqlPassword = "kodetilsql";
+	private String sqlURL = "jdbc:mysql://bjqrn88.cloudns.org:3306/";
+	private String sqlDbName = "grp18";
+	private String sqlUser = "grp18"; 
+	private String sqlPassword = "123123";
 	
 	private Connection sqlConnection = null;
 	private PreparedStatement sqlStatement = null;

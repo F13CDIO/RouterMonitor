@@ -30,6 +30,7 @@ public class SaveToDB implements Runnable
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			if(!data.isEmpty())
 			{
 				//System.out.println("test");
@@ -50,5 +51,4 @@ public class SaveToDB implements Runnable
 			}
 		}
 	}
-	
 }
