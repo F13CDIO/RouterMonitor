@@ -34,7 +34,7 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
          * Useragent and subhost is not considered "important" */
         if (sourceIP != null && distinationIP != null && host != null) {
             data.addDataset(cal.getTime(), sourceIP, distinationIP, host, subHost, userAgent);
-            //System.out.println(data.getDataList().toString());
+            //System.out.println(data.getDataPackage().toString());
             dataAdded++;
             System.out.println("Package count: " + dataAdded);
             
