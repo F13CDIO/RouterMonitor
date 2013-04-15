@@ -20,7 +20,7 @@ public class SaveToDB implements Runnable
 	{
 		while(true)
 		{
-			System.out.println(data.isEmpty());
+			//System.out.println(data.isEmpty());
 			if(!data.isEmpty())
 			{
 				System.out.println("isempty");

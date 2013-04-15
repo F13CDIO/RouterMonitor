@@ -17,12 +17,17 @@ public class mySqlConnect
 	
 	public mySqlConnect()
 	{
-		try 
+		try
 		{
-			Class.forName("com.mysql.jdbc.Driver");
-		} 
-		
-		catch (ClassNotFoundException e) {e.printStackTrace();}
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		}
+		catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	public void getAll()
