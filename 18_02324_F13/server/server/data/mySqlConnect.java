@@ -13,15 +13,15 @@ public class mySqlConnect
 	private PreparedStatement sqlStatement = null;
 	private ResultSet sqlOutput = null;
 	
+	private boolean connected = false;
+	
 	public void getAll()
 	{	
 		executeQuery("SELECT * FROM dataPackages");
 	}
 	
 	public void addDataPackage(String sourceIP, String destinationIP, String host, String subHost, String userAgent)
-	{
-		connect();
-		
+	{	
 		try 
 		{
 			sqlStatement = sqlConnection.prepareStatement("INSERT INTO dataPackages VALUES (?, ?, ?, ?, ? , ?)");
@@ -35,14 +35,12 @@ public class mySqlConnect
 		} 
 		
 		catch (SQLException e) { System.out.println(e.getMessage()); }
-		
-		closeConnection();
 	}
 	
 	private void executeQuery(String query) 
 	{
 		
-		if (connect())
+		if (connected)
 		{
 			try 
 			{
@@ -57,27 +55,25 @@ public class mySqlConnect
 			
 			catch (SQLException e) { System.out.println(e.getMessage()); }
 		}
-				
-		closeConnection();
 	}
 	
-	private boolean connect()
+	public void connect()
 	{
 		try 
 		{
 			sqlConnection = DriverManager.getConnection(sqlURL + sqlDbName, sqlUser, sqlPassword);
 			System.out.println("Connected to mySql database");
-			return true;
+			connected =  true;
 		} 
 		
 		catch (SQLException e1) 
 		{
 			System.out.println(e1.getMessage());
-			return false;
+			connected =  false;
 		}
 	}
 	
-	private boolean closeConnection()
+	public void closeConnection()
 	{
 		try 
 		{
@@ -87,12 +83,11 @@ public class mySqlConnect
 				{
 					sqlConnection.close();
 					System.out.println("Disconnected from mySql database");
-					return true;
+					connected = false;
 				}
 			}
 		} 
 		 
 		catch (Exception e) { System.out.println(e.getMessage()); }
-		return false;
 	}
 }
