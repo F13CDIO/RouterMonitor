@@ -14,22 +14,7 @@ public class mySqlConnect
 	private ResultSet sqlOutput = null;
 	
 	private boolean connected = false;
-	
-	public mySqlConnect()
-	{
-		try
-		{
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		}
-		catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-		}
-	}
-	
+		
 	public void getAll()
 	{	
 		executeQuery("SELECT * FROM dataPackages");
