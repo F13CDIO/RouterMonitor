@@ -17,6 +17,7 @@ class UDPClient
 	
 	public void initUDP(int portToSendFrom, int destinationPort, InetAddress destinationIpAddress) throws Exception
 	{
+		System.out.println("dest port"+ destinationPort);
 		serverSocket = new DatagramSocket(portToSendFrom);
 		this.destinationPort = destinationPort;
 		this.destinationIpAddress = destinationIpAddress;
@@ -27,10 +28,13 @@ class UDPClient
 		assert serverSocket != null;
 		while(true)
 		{
-			String thisLine = outputFromPi.readLine();
-			sendData = thisLine.getBytes();
-			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, destinationIpAddress, destinationPort);
-			serverSocket.send(sendPacket);
+			String line = outputFromPi.readLine();
+			if(line.startsWith("T") || line.startsWith("GET") || line.startsWith("POST")){
+				System.out.println(line);
+				sendData =line.getBytes();
+				DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, destinationIpAddress, destinationPort);
+				serverSocket.send(sendPacket);
+			}
 		}
 	}
 			
