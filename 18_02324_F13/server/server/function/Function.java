@@ -6,12 +6,15 @@ public class Function implements IFunction
 {
 	private ParseUdpPackage parseUdpPackage; 
 	private static IData data;
+	private Thread saveToDB;
 	
 	@SuppressWarnings("static-access")
 	public Function(IData data)
 	{
 		this.data = data;
 		parseUdpPackage = new ParseUdpPackage();
+		saveToDB = new Thread(new SaveToDB());
+		saveToDB.start();
 	}
 
 	@Override
@@ -20,7 +23,7 @@ public class Function implements IFunction
 		parseUdpPackage.parse(input);
 	}
 
-	public static IData getData() {
+	public static IData getDatalayer() {
 		return data;
 	}
 }

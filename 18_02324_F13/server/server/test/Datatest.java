@@ -11,7 +11,7 @@ public class Datatest
 	public static void main(String[] args) {
 		IData data1 = new Data();
 		IFunction function = new Function(data1);
-		IData data = Function.getData();
+		IData data = Function.getDatalayer();
 		IParseUdpPackage parse = new ParseUdpPackage();
 		BufferedReader reader = null;
 
