@@ -67,7 +67,9 @@ public class TCPServer
         public void run() // Thread start method
         {
 				while(!clientDisconnected)
+				{
 					read();
+				}
         }
         
         private void read() 
@@ -76,8 +78,9 @@ public class TCPServer
             {    
                 dataFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String clientRequest = dataFromClient.readLine();
-
-                switch(clientRequest)
+                
+                System.out.println(clientRequest);
+                switch(clientRequest.toLowerCase())
                     {            		
                     	case "create": // -----------------------------------------------------------------------------
                     	if (linkedUDPServer == null)
@@ -89,6 +92,7 @@ public class TCPServer
                     	
 
                     	case "start": // -----------------------------------------------------------------------------
+                    	System.out.println("modtaget start");
                     	if (linkedUDPServer != null)
                     	{
                     		linkedUDPServer.start();
