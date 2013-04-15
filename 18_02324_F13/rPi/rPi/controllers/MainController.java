@@ -9,37 +9,6 @@ import java.net.UnknownHostException;
 public class MainController {
 	
 	
-	private static int BUFFER_SIZE = 10; // Buffer size in bytes
-	Process thisProcess = null;
-	BufferedReader br = null;
-	StreamParser streamParser = new StreamParser();
-
-	public void exec(String pathToScriptOrTheCommand)
-	{
-		try {
-			thisProcess = Runtime.getRuntime().exec(pathToScriptOrTheCommand);
-			convertStdoutToBufferedReader();
-		} catch (IOException e) {
-			System.out.println("Could not execute command");
-			e.printStackTrace();
-		}
-	}
-	
-	// This method is called from exec and "listens" to the terminal output
-	private BufferedReader convertStdoutToBufferedReader()
-	{
-		br = new BufferedReader(
-					new InputStreamReader(thisProcess.getInputStream() ), BUFFER_SIZE);
-		return br;
-	}
-
-
-	@SuppressWarnings("unused")
-	private String parseInputStream()
-	{
-			return streamParser.parseString(br);
-	}
-	
 	@SuppressWarnings("unused")
 	private String get_IP()
 	{
@@ -68,12 +37,4 @@ public class MainController {
 		
 	}
 	
-
-	@SuppressWarnings("unused")
-	private void menuAction(int action)
-	{
-		
-	}
-	
-
 }

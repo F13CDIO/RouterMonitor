@@ -13,19 +13,42 @@ import rPi.connectors.Connector;
 public class ConnectionController {
 
 	//====== THE CONSTANTS YOU MIGHT WANNA CHANGE ======//
-	
 	private static InetAddress SERVER_IP; // Hard code IP for now
-	private static short DEFAULT_PORT = 0; // the TCP port the server listens on
+	private static short DEFAULT_PORT = 9000; // the TCP port the server listens on
+	private static int UDP_PORT_TO_SEND_FROM = 15000;
 	
 	//=================================================//
 	
 	Connector con = new Connector();
-	BufferedReader inputFromServer = con.initTCPClient(SERVER_IP, DEFAULT_PORT);
+	BufferedReader inputFromServer;
+	String fromServer;
 	StreamParser parser = new StreamParser();
+	DataHandler dHandler;
 	
-	String fromServer = parser.parseString(inputFromServer);
-	MainController mc = new MainController();
+	public ConnectionController() throws Exception{
+		SERVER_IP = InetAddress.getByName("10.16.128.87");
+		dHandler = new DataHandler(); // this instance executes the sniffing program in a terminal
+		inputFromServer = con.initTCPClient(SERVER_IP, DEFAULT_PORT); 
+		System.out.println("her sendes create");
+		con.sendTCP("create\n");
+		con.sendTCP("start");
+		con.initUDP(UDP_PORT_TO_SEND_FROM, extractPortNumber(),SERVER_IP);  // extractportnumber skal fejltjekkes for port 0
+		con.sendUDP(dHandler.startSniffing()); // The start sniffing method returns a buffered reader with output from ngrep
+		
+	}
 	
+	// This method extracts the UDP port the  server listens on
+	private int extractPortNumber() throws IOException{
+		String command = inputFromServer.readLine();
+		System.out.println(command);
+		int port = 0;
+		if(command.startsWith("start")){
+			String portStr = inputFromServer.readLine();
+			port = Integer.parseInt(portStr);
+		}
+		return port;
+	}
+	 
 	public void connectToNetwork(String SSID)
 	{
 		//Sprøger lasse om hvordan man køre script... 
