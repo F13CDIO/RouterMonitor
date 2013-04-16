@@ -9,88 +9,102 @@ import java.util.*;
 
 public class Data implements IData
 {
-	private List<DataPackage> dataPackageList;
+	private Queue<DataPackage> dataPackageList;
 	public Data()
 	{
-		dataPackageList = new ArrayList<DataPackage>();
+		dataPackageList = new LinkedList<DataPackage>();
 	}
 	
-	@Override
-	public void setSourceIP(String IP, int index) {
-		dataPackageList.get(index).setInIP(IP);
-		
-	}
-
-
-	@Override
-	public void setDestinationIP(String IP, int index) {
-		dataPackageList.get(index).setOutIP(IP);
-		
-	}
-
-
-	@Override
-	public void setHost(String host, int index) {
-		dataPackageList.get(index).setHost(host);
-	}
-
-
-	@Override
-	public void setSubHost(String subHost, int index) {
-		dataPackageList.get(index).setSubHost(subHost);
-	}
-
-
-	@Override
-	public void setUserAgent(String userAgent, int index) {
-		dataPackageList.get(index).setUserAgent(userAgent);
-	}
-
-
-	@Override
-	public String getSourceIP(int index) {
-		return dataPackageList.get(index).getInIP();
-	}
-
-
-	@Override
-	public String getDistinationIP(int index) {
-		return dataPackageList.get(index).getOutIP();
-	}
-
-
-	@Override
-	public String getHost(int index) {
-		return dataPackageList.get(index).getHost();
-	}
-
-
-	@Override
-	public String getSubHost(int index) {
-		return dataPackageList.get(index).getSubHost();
-	}
-
-
-	@Override
-	public String getUserAgent(int index) {
-		return dataPackageList.get(index).getUserAgent();
-	}
-
-	@Override
-	public Date getTimeStamp(int index) {
-		return dataPackageList.get(index).getTimeStamp();
-	}
-
-	@Override
-	public List<DataPackage> getDataList() {
-		return dataPackageList;
-	}
+//	@Override
+//	public void setSourceIP(String IP, int index) {
+//		dataPackageList.get(index).setInIP(IP);
+//		
+//	}
+//
+//
+//	@Override
+//	public void setDestinationIP(String IP, int index) {
+//		dataPackageList.get(index).setOutIP(IP);
+//		
+//	}
+//
+//
+//	@Override
+//	public void setHost(String host, int index) {
+//		dataPackageList.get(index).setHost(host);
+//	}
+//
+//
+//	@Override
+//	public void setSubHost(String subHost, int index) {
+//		dataPackageList.get(index).setSubHost(subHost);
+//	}
+//
+//
+//	@Override
+//	public void setUserAgent(String userAgent, int index) {
+//		dataPackageList.get(index).setUserAgent(userAgent);
+//	}
+//
+//
+//	@Override
+//	public String getSourceIP(int index) {
+//		return dataPackageList.get(index).getInIP();
+//	}
+//
+//
+//	@Override
+//	public String getDistinationIP(int index) {
+//		return dataPackageList.get(index).getOutIP();
+//	}
+//
+//
+//	@Override
+//	public String getHost(int index) {
+//		return dataPackageList.get(index).getHost();
+//	}
+//
+//
+//	@Override
+//	public String getSubHost(int index) {
+//		return dataPackageList.get(index).getSubHost();
+//	}
+//
+//
+//	@Override
+//	public String getUserAgent(int index) {
+//		return dataPackageList.get(index).getUserAgent();
+//	}
+//
+//	@Override
+//	public Date getTimeStamp(int index) {
+//		return dataPackageList.get(index).getTimeStamp();
+//	}
+//
+//	@Override
+//	public Queue<DataPackage> getDataList() {
+//		return dataPackageList;
+//	}
 
 	@Override
 	//Sets all the datavariabels, it is legal to set any or all of them as null
 	public void addDataset(Date date, String sourceIP, String destinationIP, String host, String subHost, String userAgent) {
 		dataPackageList.add(new DataPackage(date ,sourceIP, destinationIP, host, subHost, userAgent));
 	}
+	
+	@Override
+	public DataPackage getDataPackage()
+	{
+		return dataPackageList.poll();
+	}
+	
+	@Override
+	public boolean isEmpty()
+	{
+		return dataPackageList.isEmpty();
+	}
+	
+	
 	public class DataPackage
 	{
 		private String sourceIP;

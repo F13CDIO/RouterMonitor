@@ -9,10 +9,12 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
 	//A number defining where in the string we are looking
     private int masterIndex;
     private IData data;
+    private int dataAdded;
 
     public ParseUdpPackage() 
     {
-    	data = Function.getData();
+    	data = Function.getDatalayer();
+    	dataAdded = 0;
     }
 
     public void parse(String input) 
@@ -32,8 +34,9 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
          * Useragent and subhost is not considered "important" */
         if (sourceIP != null && distinationIP != null && host != null) {
             data.addDataset(cal.getTime(), sourceIP, distinationIP, host, subHost, userAgent);
-            //System.out.println(data.getDataList().toString());
-            System.out.println("Package count: " + data.getDataList().size());
+            //System.out.println(data.getDataPackage().toString());
+            dataAdded++;
+            System.out.println("Package count: " + dataAdded);
             
         }
     }
