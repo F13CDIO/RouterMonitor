@@ -33,10 +33,8 @@ public class SaveToDB implements Runnable
 			
 			if(!data.isEmpty())
 			{
-				//System.out.println("test");
 				if(!connected)
 				{
-					//System.out.println("not connected");
 					mySQL.connect();
 					connected = true;
 				}
