@@ -26,13 +26,16 @@ public class ConnectionController {
 	DataHandler dHandler;
 	
 	public ConnectionController() throws Exception{
-		SERVER_IP = InetAddress.getByName("10.16.128.87");
+		SERVER_IP = InetAddress.getByName("10.16.132.164");
 		dHandler = new DataHandler(); // this instance executes the sniffing program in a terminal
+		
 		inputFromServer = con.initTCPClient(SERVER_IP, DEFAULT_PORT); 
 		System.out.println("her sendes create");
+		
 		con.sendTCP("create\n");
-		con.sendTCP("start");
+		
 		con.initUDP(UDP_PORT_TO_SEND_FROM, extractPortNumber(),SERVER_IP);  // extractportnumber skal fejltjekkes for port 0
+		con.sendTCP("start\n");
 		con.sendUDP(dHandler.startSniffing()); // The start sniffing method returns a buffered reader with output from ngrep
 		
 	}
