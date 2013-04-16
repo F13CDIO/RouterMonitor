@@ -39,7 +39,7 @@ public class SaveToDB implements Runnable
 					connected = true;
 				}
 				DataPackage dataPackage = data.getDataPackage();
-				mySQL.addDataPackage(dataPackage.getInIP(), dataPackage.getOutIP(), dataPackage.getHost(), dataPackage.getSubHost(), dataPackage.getUserAgent());
+				mySQL.addDataPackage(dataPackage.getInIP(), dataPackage.getOutIP(), dataPackage.getHost(), dataPackage.getSubHost(), dataPackage.getUserAgent(), dataPackage.getTimeStamp());
 				System.out.println(dataPackage.toString());
 			}
 			else if(connected)

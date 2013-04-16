@@ -1,6 +1,10 @@
 package server.data;
 
 import java.sql.*;
+import java.util.Date;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class mySqlConnect 
 {
@@ -11,50 +15,48 @@ public class mySqlConnect
 	
 	private Connection sqlConnection = null;
 	private PreparedStatement sqlStatement = null;
-	private ResultSet sqlOutput = null;
-	
 	private boolean connected = false;
-		
-	public void getAll()
-	{	
-		executeQuery("SELECT * FROM dataPackages");
+	
+	public JSONArray getTop10()
+	{
+		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) FROM dataPackages GROUP BY host ORDER BY COUNT(*) DESC LIMIT 10;");
+		return parseResultsetToJSONArray("top10", mySqlOutput);
 	}
 	
-	public void addDataPackage(String sourceIP, String destinationIP, String host, String subHost, String userAgent)
-	{	
+	
+	public void addDataPackage(String sourceIP, String destinationIP, String host, String subHost, String userAgent, Date timestamp)
+	{		
+		java.sql.Timestamp mySqlTimestamp = new java.sql.Timestamp(timestamp.getTime());
+		
 		try 
 		{
-			sqlStatement = sqlConnection.prepareStatement("INSERT INTO dataPackages VALUES (?, ?, ?, ?, ? , ?)");
+			sqlStatement = sqlConnection.prepareStatement("INSERT INTO dataPackages VALUES (?, ?, ?, ?, ? , ?, ?)");
 			sqlStatement.setString(1, "0");
 			sqlStatement.setString(2, sourceIP);
 			sqlStatement.setString(3, destinationIP);
 			sqlStatement.setString(4, host);
 			sqlStatement.setString(5, subHost);
 			sqlStatement.setString(6, userAgent);
+			sqlStatement.setTimestamp(7, mySqlTimestamp);
 			sqlStatement.executeUpdate();
 		} 
-		
 		catch (SQLException e) { System.out.println(e.getMessage()); }
 	}
 	
-	private void executeQuery(String query) 
+	private ResultSet executeQuery(String query) 
 	{
+		ResultSet output = null;
 		
 		if (connected)
 		{
 			try 
 			{
 				sqlStatement = sqlConnection.prepareStatement(query);
-				sqlOutput = sqlStatement.executeQuery();
-			
-				while (sqlOutput.next())
-				{
-					System.out.println(sqlOutput.getString("host") + ", " + sqlOutput.getString("sourceIP"));
-				}
+				output = sqlStatement.executeQuery();
 			} 
-			
 			catch (SQLException e) { System.out.println(e.getMessage()); }
 		}
+		return output;
 	}
 	
 	public void connect()
@@ -87,7 +89,40 @@ public class mySqlConnect
 				}
 			}
 		} 
-		 
 		catch (Exception e) { System.out.println(e.getMessage()); }
+	}
+	
+	@SuppressWarnings("unchecked")
+	private JSONArray parseResultsetToJSONArray(String function, ResultSet mySqlOutput)
+	{
+		JSONArray jsonObjects = new JSONArray();
+		int count = 1;
+		
+		try 
+		{
+			while (mySqlOutput.next())
+			{
+				switch(function)
+				{
+					case "top10":
+						JSONObject jsonObject = new JSONObject();
+						jsonObject.put("host", mySqlOutput.getString("host"));
+						jsonObject.put("rank", count);
+						jsonObject.put("numRequests", new Integer(mySqlOutput.getInt("COUNT(*)")));
+						jsonObjects.add(jsonObject);
+						count++;
+						break;
+					
+					default:
+						break;
+				}
+			}
+		} 
+		
+		catch (SQLException e) 
+		{
+			System.out.println(e.getMessage());
+		}
+		return jsonObjects;
 	}
 }
