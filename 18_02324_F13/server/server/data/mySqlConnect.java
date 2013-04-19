@@ -27,50 +27,44 @@ public class mySqlConnect
 	
 	public JSONArray getTop10()
 	{
+		ResultSet mySqlOutput = executeQuery("SELECT host, timestamp, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
+		return parseResultsetToJSONArray("top10", mySqlOutput);
+	}
+	
+	public JSONArray getTop10(int lastNumHours)
+	{
 		ResultSet mySqlOutput = executeQuery("SELECT host, timestamp, COUNT(*) FROM dataPackages GROUP BY host ORDER BY COUNT(*) DESC LIMIT 10;");
 		return parseResultsetToJSONArray("top10", mySqlOutput);
 	}
 	
 	public JSONArray get10SecondTraffic(Date date, String host)
 	{
-		JSONArray counts = new JSONArray();
-		counts = getData(date, second, host);
-		return counts;
+		return getData(date, second, host);
 	}
 	
 	public JSONArray get1MinuteTraffic(Date date, String host)
 	{
-		JSONArray counts = new JSONArray();
-		counts = getData(date, minute, host);
-		return counts;
+		return getData(date, minute, host);
 	}
 	
 	public JSONArray get1HourTraffic(Date date, String host)
 	{
-		JSONArray counts = new JSONArray();
-		counts = getData(date, hour, host);
-		return counts;
+		return getData(date, hour, host);
 	}
 	
 	public JSONArray get1DayTraffic(Date date, String host)
 	{
-		JSONArray counts = new JSONArray();
-		counts = getData(date, day, host);
-		return counts;
+		return getData(date, day, host);
 	}
 	
 	public JSONArray get1WeekTraffic(Date date, String host)
 	{
-		JSONArray counts = new JSONArray();
-		counts = getData(date, week, host);
-		return counts;
+		return getData(date, week, host);
 	}
 	
 	public JSONArray get1MonthTraffic(Date date, String host)
 	{
-		JSONArray counts = new JSONArray();
-		counts = getData(date, month, host);
-		return counts;
+		return getData(date, month, host);
 	}
 	
 	public JSONArray getData(Date date, int choice, String host) 
@@ -272,5 +266,4 @@ public class mySqlConnect
 		}
 		return jsonObjects;
 	}
-
 }

@@ -19,9 +19,10 @@ public class testMySQL
 				cal.set(2013, 03, 17, 14, 15, 27);
 			 
 				String host = "facebook.com";
-				JSONArray test = mySql.get10SecondTraffic(cal.getTime(), "");
+				//JSONArray test = mySql.get10SecondTraffic(cal.getTime(), "");
+				
+				JSONArray test = mySql.getTop10();
 				System.out.println(test);
-				//JSONArray test = mySql.getTop10();
 		mySql.closeConnection();
 		
 		
