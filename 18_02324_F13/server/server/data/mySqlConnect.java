@@ -25,7 +25,13 @@ public class mySqlConnect
 	final int week = 5;
 	final int month = 6;
 	
-	public JSONArray getTop10()
+	public JSONObject getTop10()
+	{
+		ResultSet mySqlOutput = executeQuery("SELECT host, timestamp, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
+		return parseResultsetToJSONArray("top10", mySqlOutput);
+	}
+	
+	public JSONObject getTop10(Date from, Date to)
 	{
 		ResultSet mySqlOutput = executeQuery("SELECT host, timestamp, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
 		return parseResultsetToJSONArray("top10", mySqlOutput);
@@ -77,8 +83,6 @@ public class mySqlConnect
 		if (!host.equals(""))
 			host = "host = '" +host+ "' AND ";
 	
-	
-	
 		numIterate = setIterate(choice);
 
 		for (int i = 0; i < numIterate; i++) 
@@ -88,7 +92,6 @@ public class mySqlConnect
 			java.sql.Timestamp mySqlTimestamp1 = new java.sql.Timestamp(cal1.getTime().getTime()); // Get time from Date instance)
 			java.sql.Timestamp mySqlTimestamp2 = new java.sql.Timestamp(cal2.getTime().getTime()); 
 			
-			//System.out.println("SELECT timestamp, COUNT(timestamp) AS count FROM dataPackages WHERE "+host+" timestamp >= '" + mySqlTimestamp1 + "' AND timestamp < '" + mySqlTimestamp2 + "'");
 			ResultSet mySqlOutput = executeQuery("SELECT timestamp, COUNT(timestamp) AS count FROM dataPackages WHERE "+host+" timestamp >= '" + mySqlTimestamp1 + "' AND timestamp < '" + mySqlTimestamp2 + "'");
 			
 			try 
@@ -223,9 +226,9 @@ public class mySqlConnect
 		catch (Exception e) { System.out.println(e.getMessage()); }
 	}
 	
-	private JSONArray parseResultsetToJSONArray(String function, ResultSet mySqlOutput)
+	private JSONObject parseResultsetToJSONArray(String function, ResultSet mySqlOutput)
 	{
-		JSONArray jsonObjects = new JSONArray();
+		JSONObject jsonObject = new JSONObject();
 		int count = 1;
 		
 		try 
@@ -235,10 +238,7 @@ public class mySqlConnect
 				switch(function)
 				{
 					case "top10":
-						JSONObject jsonObject = new JSONObject();
-						jsonObject.put("host", mySqlOutput.getString("host"));
-						jsonObject.put("rank", count);
-						jsonObjects.add(jsonObject);
+						jsonObject.put(count, mySqlOutput.getString("host"));
 						count++;
 						break;
 					
@@ -252,6 +252,6 @@ public class mySqlConnect
 		{
 			System.out.println(e.getMessage());
 		}
-		return jsonObjects;
+		return jsonObject;
 	}
 }
