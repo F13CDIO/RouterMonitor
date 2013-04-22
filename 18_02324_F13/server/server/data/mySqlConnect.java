@@ -4,7 +4,6 @@ import java.sql.*;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class mySqlConnect 
@@ -28,24 +27,34 @@ public class mySqlConnect
 	public JSONObject getTop10()
 	{
 		ResultSet mySqlOutput = executeQuery("SELECT host, timestamp, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
-		return parseResultsetToJSONArray("top10", mySqlOutput);
+		return parseResultsetToJSONObject("top10", mySqlOutput);
 	}
 	
-	public JSONObject getTop10(Date from, Date to)
+	
+	
+	public JSONObject getTop10(Calendar from)
 	{
-		ResultSet mySqlOutput = executeQuery("SELECT host, timestamp, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
-		return parseResultsetToJSONArray("top10", mySqlOutput);
+		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(from.getTime().getTime());		
+		ResultSet mySqlOutput = executeQuery("SELECT host, timestamp, COUNT(*) as count FROM dataPackages WHERE timestamp >= '" + mySqlFrom + "' GROUP BY host ORDER BY count DESC LIMIT 10");
+		return parseResultsetToJSONObject("top10", mySqlOutput);
 	}
 	
-		
+	
+	
 	public JSONObject get10SecondTraffic(Date date, String host)
 	{
-		return getData(date, second, host);
+		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
+		ResultSet mySqlOutput = executeQuery("SELECT timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN '"+mySqlTimestampTo+"' - INTERVAL 10 second and '"+mySqlTimestampTo+"' and host = 'facebook.com' GROUP BY UNIX_TIMESTAMP(timestamp) DIV 1 limit 10");
+		return parseResultsetToJSONObject("trafficMinute", mySqlOutput);
 	}
 	
 	public JSONObject get1MinuteTraffic(Date date, String host)
 	{
-		return getData(date, minute, host);
+		
+		
+		java.sql.Timestamp mySqlTimestamp = new java.sql.Timestamp(date.getTime());
+		ResultSet mySqlOutput = executeQuery("SELECT timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN '"+ mySqlTimestamp +"' - INTERVAL 1 MINUTE and NOW() and host = 'facebook.com' GROUP BY UNIX_TIMESTAMP(timestamp) DIV 60");
+		return parseResultsetToJSONObject("trafficMinute", mySqlOutput);
 	}
 	
 	public JSONObject get1HourTraffic(Date date, String host)
@@ -79,7 +88,6 @@ public class mySqlConnect
 		cal2.setTime(date);
 		cal2.set(Calendar.MILLISECOND,0);
 		
-		
 		if (!host.equals(""))
 			host = "host = '" +host+ "' AND ";
 	
@@ -92,7 +100,12 @@ public class mySqlConnect
 			java.sql.Timestamp mySqlTimestamp1 = new java.sql.Timestamp(cal1.getTime().getTime()); // Get time from Date instance)
 			java.sql.Timestamp mySqlTimestamp2 = new java.sql.Timestamp(cal2.getTime().getTime()); 
 			
+			System.out.println("SELECT timestamp, COUNT(timestamp) AS count FROM dataPackages WHERE "+host+" timestamp >= '" + mySqlTimestamp1 + "' AND timestamp < '" + mySqlTimestamp2 + "'");
 			ResultSet mySqlOutput = executeQuery("SELECT timestamp, COUNT(timestamp) AS count FROM dataPackages WHERE "+host+" timestamp >= '" + mySqlTimestamp1 + "' AND timestamp < '" + mySqlTimestamp2 + "'");
+			
+			
+			 
+
 			
 			try 
 			{
@@ -226,25 +239,42 @@ public class mySqlConnect
 		catch (Exception e) { System.out.println(e.getMessage()); }
 	}
 	
-	private JSONObject parseResultsetToJSONArray(String function, ResultSet mySqlOutput)
+	private JSONObject parseResultsetToJSONObject(String function, ResultSet mySqlOutput)
 	{
 		JSONObject jsonObject = new JSONObject();
 		int count = 1;
+		int trafficCount = 0;
 		
 		try 
 		{
 			while (mySqlOutput.next())
-			{				
+			{			
+				
+				
 				switch(function)
 				{
 					case "top10":
 						jsonObject.put(count, mySqlOutput.getString("host"));
 						count++;
 						break;
-					
+						
+						
+					case "trafficMinute":
+				
+						//cal.setTime(mySqlOutput.getTimestamp("timestamp"));
+						//cal.set(Calendar.MILLISECOND,0);
+						trafficCount = mySqlOutput.getInt("count");
+						//jsonObject.put(cal.getTime().toString(),trafficCount);
+						jsonObject.put(mySqlOutput.getString("timestamp"),trafficCount);
+						
+						break;
+						
+	
 					default:
 						break;
 				}
+				
+				
 			}
 		} 
 		
