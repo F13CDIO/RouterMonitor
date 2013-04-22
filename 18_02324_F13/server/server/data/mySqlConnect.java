@@ -31,45 +31,40 @@ public class mySqlConnect
 		return parseResultsetToJSONArray("top10", mySqlOutput);
 	}
 	
-	public JSONArray getTop10(int lastNumHours)
-	{
-		ResultSet mySqlOutput = executeQuery("SELECT host, timestamp, COUNT(*) FROM dataPackages GROUP BY host ORDER BY COUNT(*) DESC LIMIT 10;");
-		return parseResultsetToJSONArray("top10", mySqlOutput);
-	}
-	
-	public JSONArray get10SecondTraffic(Date date, String host)
+		
+	public JSONObject get10SecondTraffic(Date date, String host)
 	{
 		return getData(date, second, host);
 	}
 	
-	public JSONArray get1MinuteTraffic(Date date, String host)
+	public JSONObject get1MinuteTraffic(Date date, String host)
 	{
 		return getData(date, minute, host);
 	}
 	
-	public JSONArray get1HourTraffic(Date date, String host)
+	public JSONObject get1HourTraffic(Date date, String host)
 	{
 		return getData(date, hour, host);
 	}
 	
-	public JSONArray get1DayTraffic(Date date, String host)
+	public JSONObject get1DayTraffic(Date date, String host)
 	{
 		return getData(date, day, host);
 	}
 	
-	public JSONArray get1WeekTraffic(Date date, String host)
+	public JSONObject get1WeekTraffic(Date date, String host)
 	{
 		return getData(date, week, host);
 	}
 	
-	public JSONArray get1MonthTraffic(Date date, String host)
+	public JSONObject get1MonthTraffic(Date date, String host)
 	{
 		return getData(date, month, host);
 	}
 	
-	public JSONArray getData(Date date, int choice, String host) 
+	public JSONObject getData(Date date, int choice, String host) 
 	{	
-		JSONArray counts = new JSONArray();
+		JSONObject count = new JSONObject();
 		int numIterate = 0;
 		Calendar cal1 = Calendar.getInstance();
 		cal1.setTime(date);
@@ -93,26 +88,21 @@ public class mySqlConnect
 			java.sql.Timestamp mySqlTimestamp1 = new java.sql.Timestamp(cal1.getTime().getTime()); // Get time from Date instance)
 			java.sql.Timestamp mySqlTimestamp2 = new java.sql.Timestamp(cal2.getTime().getTime()); 
 			
-			System.out.println("SELECT timestamp, COUNT(timestamp) AS count FROM dataPackages WHERE "+host+" timestamp >= '" + mySqlTimestamp1 + "' AND timestamp < '" + mySqlTimestamp2 + "'");
+			//System.out.println("SELECT timestamp, COUNT(timestamp) AS count FROM dataPackages WHERE "+host+" timestamp >= '" + mySqlTimestamp1 + "' AND timestamp < '" + mySqlTimestamp2 + "'");
 			ResultSet mySqlOutput = executeQuery("SELECT timestamp, COUNT(timestamp) AS count FROM dataPackages WHERE "+host+" timestamp >= '" + mySqlTimestamp1 + "' AND timestamp < '" + mySqlTimestamp2 + "'");
 			
 			try 
 			{
 				while (mySqlOutput.next())
 				{
-					int countValue = mySqlOutput.getInt("count");
-					JSONObject count = new JSONObject();
-					count.put("count", countValue);
-					count.put("timestamp", mySqlTimestamp1);
-					counts.add(count);
-					System.out.println(countValue);
+					count.put(cal1.getTime().toString(), mySqlOutput.getInt("count"));
 				}
 			} 
 			
 			catch (SQLException e1){System.out.println(e1.getMessage());}
 			cal1 = incrementCalendar(choice, cal1);
 		}
-		return counts;
+		return count;
 	}
 	
 	
@@ -177,9 +167,7 @@ public class mySqlConnect
 	}
 	
 	private Calendar incrementCalendar(int choice, Calendar cal1)
-	{
-		Calendar cal = Calendar.getInstance();
-		cal = cal1;
+	{	
 		
 		if (choice == second)
 			cal1.add(Calendar.SECOND, 1);
@@ -199,7 +187,7 @@ public class mySqlConnect
 		else if (choice == month)
 			cal1.add(Calendar.HOUR, 24);
 		
-		return cal;
+		return cal1;
 	}
 	
 	public void connect()

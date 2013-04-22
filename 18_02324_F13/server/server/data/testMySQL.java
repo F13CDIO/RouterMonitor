@@ -12,17 +12,19 @@ public class testMySQL
 	{
 		mySqlConnect mySql = new mySqlConnect();
 		mySql.connect();
-		//JSONArray test = mySql.getTop10();
 		
 		
-				Calendar cal = Calendar.getInstance();
-				cal.set(2013, 03, 17, 14, 15, 27);
-			 
-				String host = "facebook.com";
-				//JSONArray test = mySql.get10SecondTraffic(cal.getTime(), "");
+		Calendar cal = Calendar.getInstance();
+		cal.set(2013, 03, 17, 14, 15, 27);
+		 
+		String host = "facebook.com";
+		JSONObject test = mySql.get10SecondTraffic(cal.getTime(), "");
 				
-				JSONArray test = mySql.getTop10();
-				System.out.println(test);
+		//System.out.println(test.get("2013-04-17 14:15:36.0"));
+		System.out.println(test);
+		
+		cal.set(2013, 03, 17, 14, 15, 29);
+		System.out.println(test.get(cal.getTime().toString()));
 		mySql.closeConnection();
 		
 		
