@@ -15,10 +15,16 @@ public class testMySQL
 		
 		
 		Calendar cal = Calendar.getInstance();
-		cal.set(2013, 03, 17, 14, 15, 34);
+		cal.set(2013, 03, 16, 14, 34, 23);
 		 
 		
-		JSONObject test = mySql.get10SecondTraffic(cal.getTime(), "");
+		//JSONObject test = mySql.get10SecondTraffic(cal.getTime(), "");
+		//JSONObject test = mySql.get1MinuteTraffic(cal.getTime(), "");
+//		JSONObject test = mySql.get10MinuteTraffic(cal.getTime(), "");
+		//JSONObject test = mySql.get1HourTraffic(cal.getTime(), "");
+		//JSONObject test = mySql.get1DayTraffic(cal.getTime(), "");
+		//JSONObject test = mySql.get1MonthTraffic(cal.getTime(), "");
+		JSONObject test = mySql.getTop10(cal.getTime());
 		
 				
 		//System.out.println(test.get("2013-04-17 14:15:36.0"));
@@ -27,13 +33,6 @@ public class testMySQL
 		cal.set(2013, 03, 17, 14, 15, 29);
 		//System.out.println(test.get(cal.getTime().toString()));
 		
-	
-		
-		for (int i = 1; i <= 10; i++) 
-		{
-			if (test.containsKey(i))
-				System.out.println("" + i + ". " + test.get(i));
-		}
 		
 		mySql.closeConnection();
 		
