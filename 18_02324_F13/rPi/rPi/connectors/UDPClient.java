@@ -29,8 +29,9 @@ class UDPClient
 		while(true)
 		{
 			String line = outputFromPi.readLine();
-			//System.out.println(line);
-			if(line.startsWith("T") || line.startsWith("  GET") || line.startsWith("  POST")){
+			if(line == null)
+				System.out.println("det er null");
+			if(line != null){
 				System.out.println(line);
 					//break;
 				sendData =line.getBytes();
