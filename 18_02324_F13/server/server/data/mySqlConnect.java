@@ -152,7 +152,6 @@ public class mySqlConnect
 	
 	private ResultSet executeQuery(String query) 
 	{
-		System.out.println(query);
 		ResultSet output = null;
 		
 		if (connected)
