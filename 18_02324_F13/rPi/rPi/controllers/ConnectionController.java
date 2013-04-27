@@ -13,7 +13,7 @@ import rPi.connectors.Connector;
 public class ConnectionController {
 
 	//====== THE CONSTANTS YOU MIGHT WANNA CHANGE ======//
-	private static InetAddress SERVER_IP; // Hard code IP for now
+	private static InetAddress SERVER_IP	; // Hard code IP for now
 	private static short DEFAULT_PORT = 9000; // the TCP port the server listens on
 	private static int UDP_PORT_TO_SEND_FROM = 15000;
 	
@@ -26,7 +26,7 @@ public class ConnectionController {
 	DataHandler dHandler;
 	
 	public ConnectionController() throws Exception{
-		SERVER_IP = InetAddress.getByName("10.16.132.164");
+		SERVER_IP = InetAddress.getByName("10.16.171.97");
 		dHandler = new DataHandler(); // this instance executes the sniffing program in a terminal
 		
 		inputFromServer = con.initTCPClient(SERVER_IP, DEFAULT_PORT); 
@@ -59,7 +59,7 @@ public class ConnectionController {
 	}
 	private String scanLocalNetworks()
 	{
-		//mc.exec("iw wlan0 scan");
+		//following works on linux/android but we need to find solutions to osx and winslows mc.exec("iw wlan0 scan");
 		return "";
 	}
 }
