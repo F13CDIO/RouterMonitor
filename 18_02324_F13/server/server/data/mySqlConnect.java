@@ -3,7 +3,6 @@ package server.data;
 import java.sql.*;
 import java.util.Date;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class mySqlConnect 
@@ -17,12 +16,86 @@ public class mySqlConnect
 	private PreparedStatement sqlStatement = null;
 	private boolean connected = false;
 	
-	public JSONArray getTop10()
+	final int second = 1;
+	final int minute = 2;
+	final int hour = 3;
+	final int day = 4;
+	final int week = 5;
+	final int month = 6;
+	
+	public JSONObject getTop10()
 	{
-		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) FROM dataPackages GROUP BY host ORDER BY COUNT(*) DESC LIMIT 10;");
-		return parseResultsetToJSONArray("top10", mySqlOutput);
+		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) as count, @curRow := @curRow + 1 AS rank FROM dataPackages, (SELECT @curRow := 0) r GROUP BY host ORDER BY count DESC LIMIT 10");
+		return parseResultsetToJSONObject("top10", mySqlOutput);
+	}
+
+	public JSONObject getTop10(Date dateFrom)
+	{
+		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());		
+		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) as count,@curRow := @curRow + 1 AS rank FROM dataPackages , (SELECT @curRow := 0) r WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
+		return parseResultsetToJSONObject("top10", mySqlOutput);
 	}
 	
+
+	public JSONObject get10SecondTraffic(Date date, String host)
+	{
+		if(!host.equals(""))
+			host = "and host = '"+host+"'";
+		
+		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
+		ResultSet mySqlOutput = executeQuery("SELECT timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 10 SECOND) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 1 LIMIT 10");
+		return parseResultsetToJSONObject("traffic", mySqlOutput);
+	}
+	
+	public JSONObject get1MinuteTraffic(Date date, String host)
+	{
+		if(!host.equals(""))
+			host = "and host = '"+host+"'";
+		
+		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
+		ResultSet mySqlOutput = executeQuery("SELECT timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 1 MINUTE) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 1 LIMIT 60");
+		return parseResultsetToJSONObject("traffic", mySqlOutput);
+	}
+	
+	public JSONObject get10MinuteTraffic(Date date, String host)
+	{
+		if(!host.equals(""))
+			host = "and host = '"+host+"'";
+		
+		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
+		ResultSet mySqlOutput = executeQuery("SELECT timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 10 MINUTE) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 60 LIMIT 10");
+		return parseResultsetToJSONObject("traffic", mySqlOutput);
+	}
+	
+	public JSONObject get1HourTraffic(Date date, String host)
+	{
+		if(!host.equals(""))
+			host = "and host = '"+host+"'";
+		
+		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
+		ResultSet mySqlOutput = executeQuery("SELECT timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 1 HOUR) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 60 LIMIT 60");
+		return parseResultsetToJSONObject("traffic", mySqlOutput);
+	}
+	
+	public JSONObject get1DayTraffic(Date date, String host)
+	{
+		if(!host.equals(""))
+			host = "and host = '"+host+"'";
+		
+		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
+		ResultSet mySqlOutput = executeQuery("SELECT timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 1 DAY) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 3600 LIMIT 24");
+		return parseResultsetToJSONObject("traffic", mySqlOutput);
+	}
+	
+	public JSONObject get1MonthTraffic(Date date, String host)
+	{
+		if(!host.equals(""))
+			host = "and host = '"+host+"'";
+		
+		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
+		ResultSet mySqlOutput = executeQuery("SELECT timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 1 MONTH) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 86400 LIMIT 31");
+		return parseResultsetToJSONObject("traffic", mySqlOutput);
+	}
 	
 	public void addDataPackage(String sourceIP, String destinationIP, String host, String subHost, String userAgent, Date timestamp)
 	{		
@@ -41,6 +114,40 @@ public class mySqlConnect
 			sqlStatement.executeUpdate();
 		} 
 		catch (SQLException e) { System.out.println(e.getMessage()); }
+	}
+	
+
+
+	@SuppressWarnings("unchecked")
+	private JSONObject parseResultsetToJSONObject(String function, ResultSet mySqlOutput)
+	{
+		JSONObject jsonObject = new JSONObject();
+		
+		try 
+		{
+			while (mySqlOutput.next())
+			{			
+				switch(function)
+				{
+					case "top10":
+						jsonObject.put(mySqlOutput.getInt("rank"), mySqlOutput.getString("host"));
+						break;
+						
+					case "traffic":
+						jsonObject.put(mySqlOutput.getString("timestamp"),mySqlOutput.getInt("count"));
+						break;
+
+					default:
+						break;
+				}
+			}
+		} 
+		
+		catch (SQLException e) 
+		{
+			System.out.println(e.getMessage());
+		}
+		return jsonObject;
 	}
 	
 	private ResultSet executeQuery(String query) 
@@ -90,39 +197,5 @@ public class mySqlConnect
 			}
 		} 
 		catch (Exception e) { System.out.println(e.getMessage()); }
-	}
-	
-	@SuppressWarnings("unchecked")
-	private JSONArray parseResultsetToJSONArray(String function, ResultSet mySqlOutput)
-	{
-		JSONArray jsonObjects = new JSONArray();
-		int count = 1;
-		
-		try 
-		{
-			while (mySqlOutput.next())
-			{
-				switch(function)
-				{
-					case "top10":
-						JSONObject jsonObject = new JSONObject();
-						jsonObject.put("host", mySqlOutput.getString("host"));
-						jsonObject.put("rank", count);
-						jsonObject.put("numRequests", new Integer(mySqlOutput.getInt("COUNT(*)")));
-						jsonObjects.add(jsonObject);
-						count++;
-						break;
-					
-					default:
-						break;
-				}
-			}
-		} 
-		
-		catch (SQLException e) 
-		{
-			System.out.println(e.getMessage());
-		}
-		return jsonObjects;
 	}
 }

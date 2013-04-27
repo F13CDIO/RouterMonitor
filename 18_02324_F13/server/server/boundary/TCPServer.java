@@ -79,7 +79,6 @@ public class TCPServer
                 dataFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String clientRequest = dataFromClient.readLine();
                 
-                System.out.println(clientRequest);
                 switch(clientRequest.toLowerCase())
                     {            		
                     	case "create": // -----------------------------------------------------------------------------
@@ -92,7 +91,6 @@ public class TCPServer
                     	
 
                     	case "start": // -----------------------------------------------------------------------------
-                    	System.out.println("modtaget start");
                     	if (linkedUDPServer != null)
                     	{
                     		linkedUDPServer.start();
