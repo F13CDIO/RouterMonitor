@@ -26,13 +26,8 @@ public class ConnectionController {
 	DataHandler dHandler;
 	
 	public ConnectionController() throws Exception{
-<<<<<<< HEAD
 		SERVER_IP = InetAddress.getByName("10.16.171.97");
 		dHandler = new DataHandler(); // this instance executes the sniffing program in a terminal
-=======
-		SERVER_IP = InetAddress.getByName("10.16.170.117");
-		dHandler = new DataHandler(); // this instan	ce executes the sniffing program in a terminal
->>>>>>> 4654b643d91065ef535d5a98f6c1f46550f048a3
 		
 		inputFromServer = con.initTCPClient(SERVER_IP, DEFAULT_PORT); 
 		System.out.println("her sendes create");
