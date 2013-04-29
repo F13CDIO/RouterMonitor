@@ -25,14 +25,14 @@ public class mySqlConnect
 	
 	public JSONObject getTop10()
 	{
-		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) as count, @curRow := @curRow + 1 AS rank FROM dataPackages, (SELECT @curRow := 0) r GROUP BY host ORDER BY count DESC LIMIT 10");
+		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
 		return parseResultsetToJSONObject("top10", mySqlOutput);
 	}
 
 	public JSONObject getTop10(Date dateFrom)
 	{
 		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());		
-		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) as count,@curRow := @curRow + 1 AS rank FROM dataPackages , (SELECT @curRow := 0) r WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
+		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
 		return parseResultsetToJSONObject("top10", mySqlOutput);
 	}
 	
@@ -130,7 +130,7 @@ public class mySqlConnect
 				switch(function)
 				{
 					case "top10":
-						jsonObject.put(mySqlOutput.getInt("rank"), mySqlOutput.getString("host"));
+						jsonObject.put(mySqlOutput.getRow(), mySqlOutput.getString("host"));
 						break;
 						
 					case "traffic":
