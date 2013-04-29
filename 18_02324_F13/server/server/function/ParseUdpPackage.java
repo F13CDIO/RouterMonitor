@@ -31,7 +31,7 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
         	return;
         String sourceIP = sniffedData[0];
         String distinationIP = sniffedData[1];
-        String userAgent = sniffedData[3].substring(10);
+        String userAgent = sniffedData[3].replaceAll("\0", "");
 
         /* Only save data if all the "important" information was found.
          * Useragent and subhost is not considered "important" */
@@ -39,7 +39,7 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
             data.addDataset(cal.getTime(), sourceIP, distinationIP, host, userAgent);
             //System.out.println(data.getDataPackage().toString());
             dataAdded++;
-            System.out.println("Package count: " + dataAdded);
+            //System.out.println("Package count: " + dataAdded);
             
         }
     }
