@@ -8,7 +8,7 @@ public class DataHandler {
 	
 	// the following command requires tshark opened in sudoers file or the java program executed with su rights
 	// the script saves the tshark process id in process1.pid for later implementation of multiple tshark processes
-	String startScript = "bash startScript.sh";
+	String startScript = "/Applications/Wireshark.app/Contents/Resources/bin/tshark -T fields -e ip.src -e ip.dst -e http.host -e http.user_agent -I -l -R http.request tcp port 80 and ip";//"bash startScript.sh";
 	//the command executed in startScript is "/usr/local/bin/tshark -T fields -e ip.src -e ip.dst -e http.host -e http.user_agent -i en0 -I -R http.request tcp port 80 and ip &";
 
 	public BufferedReader br = null;

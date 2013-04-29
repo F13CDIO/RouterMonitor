@@ -29,8 +29,6 @@ class UDPClient
 		while(true)
 		{
 			String line = outputFromPi.readLine();
-			if(line == null)
-				System.out.println("det er null");
 			if(line != null){
 				System.out.println(line);
 					//break;
