@@ -3,6 +3,7 @@ package server.data;
 import java.sql.*;
 import java.util.Date;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class mySqlConnect 
@@ -25,18 +26,46 @@ public class mySqlConnect
 	
 	public JSONObject getTop10()
 	{
-		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) as count, @curRow := @curRow + 1 AS rank FROM dataPackages, (SELECT @curRow := 0) r GROUP BY host ORDER BY count DESC LIMIT 10");
+		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
 		return parseResultsetToJSONObject("top10", mySqlOutput);
 	}
 
 	public JSONObject getTop10(Date dateFrom)
 	{
 		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());		
-		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) as count,@curRow := @curRow + 1 AS rank FROM dataPackages , (SELECT @curRow := 0) r WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
+		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
 		return parseResultsetToJSONObject("top10", mySqlOutput);
 	}
 	
 
+	public JSONArray getTop102()
+	{
+		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
+
+		JSONArray hosts = new JSONArray();
+		
+		try 
+		{
+			while (mySqlOutput.next())
+			{			
+				JSONObject jo = new JSONObject();
+				jo.put("rank", mySqlOutput.getRow());
+				jo.put("count", mySqlOutput.getInt("count"));
+				jo.put("host", mySqlOutput.getString("host"));
+				hosts.add(jo);
+			}
+		} 
+		
+		catch (SQLException e) 
+		
+		{
+		System.out.println(e.getMessage());
+		}
+		
+		return hosts;
+	}
+
+	
 	public JSONObject get10SecondTraffic(Date date, String host)
 	{
 		if(!host.equals(""))
@@ -108,10 +137,12 @@ public class mySqlConnect
 			sqlStatement.setString(2, sourceIP);
 			sqlStatement.setString(3, destinationIP);
 			sqlStatement.setString(4, host);
-			sqlStatement.setString(5, subHost);
+			sqlStatement.setString(5, "");//skal fjernes?
 			sqlStatement.setString(6, userAgent);
 			sqlStatement.setTimestamp(7, mySqlTimestamp);
 			sqlStatement.executeUpdate();
+			
+			System.out.println(sqlStatement.toString());
 		} 
 		catch (SQLException e) { System.out.println(e.getMessage()); }
 	}
