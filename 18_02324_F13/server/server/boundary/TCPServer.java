@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -18,10 +19,10 @@ public class TCPServer
 		this.serverPort = serverPort;
 	}
 	
-    public void startServer() throws IOException  
+    public void startServer() throws IOException
     {
         serverSocket = new ServerSocket(serverPort);
-        System.out.println("TCP server online");
+        System.out.println("TCP server online on ip: " + Inet4Address.getLocalHost().getHostAddress());
  
         while(true) // Keep listening for new clients
         {
@@ -29,7 +30,7 @@ public class TCPServer
             if (socket != null)
             {
                client = new Client(socket);
-               System.out.println("Client at "+ client.getIpAddress() +": " + client.getPort()+" connected ");
+               System.out.println("Client at "+ client.getIpAddress() +":" + client.getPort()+" connected ");
                client.start(); // Thread start
                //client.write("Welcome");
             }

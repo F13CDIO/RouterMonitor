@@ -108,10 +108,12 @@ public class mySqlConnect
 			sqlStatement.setString(2, sourceIP);
 			sqlStatement.setString(3, destinationIP);
 			sqlStatement.setString(4, host);
-			sqlStatement.setString(5, subHost);
+			sqlStatement.setString(5, "");//skal fjernes?
 			sqlStatement.setString(6, userAgent);
 			sqlStatement.setTimestamp(7, mySqlTimestamp);
 			sqlStatement.executeUpdate();
+			
+			System.out.println(sqlStatement.toString());
 		} 
 		catch (SQLException e) { System.out.println(e.getMessage()); }
 	}
