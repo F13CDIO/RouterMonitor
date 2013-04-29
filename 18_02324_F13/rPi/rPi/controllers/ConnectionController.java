@@ -26,7 +26,7 @@ public class ConnectionController {
 	DataHandler dHandler;
 	
 	public ConnectionController() throws Exception{
-		SERVER_IP = InetAddress.getByName("10.16.171.97");
+		SERVER_IP = InetAddress.getByName("10.16.99.177");
 		dHandler = new DataHandler(); // this instance executes the sniffing program in a terminal
 		
 		inputFromServer = con.initTCPClient(SERVER_IP, DEFAULT_PORT); 
