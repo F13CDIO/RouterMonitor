@@ -17,8 +17,8 @@ public class Data implements IData
 
 	@Override
 	//Sets all the datavariabels, it is legal to set any or all of them as null
-	public void addDataset(Date date, String sourceIP, String destinationIP, String host, String userAgent) {
-		dataPackageList.add(new DataPackage(date ,sourceIP, destinationIP, host, userAgent));
+	public void addDataset(Date date, String sourceIP, String destinationIP, String host, String subHost, String userAgent) {
+		dataPackageList.add(new DataPackage(date ,sourceIP, destinationIP, host, subHost, userAgent));
 	}
 	
 	@Override
@@ -52,13 +52,13 @@ public class Data implements IData
 		 * @param subHost
 		 * @param userAgent
 		 */
-		private DataPackage(Date timeStamp, String sourceIP, String destinationIP, String host, String userAgent)
+		private DataPackage(Date timeStamp, String sourceIP, String destinationIP, String host, String subHost, String userAgent)
 		{
 			this.timeStamp = timeStamp;
 			this.sourceIP = sourceIP;
 			this.destinationIP = destinationIP;
 			this.host = host;
-			this.subHost = null;  // skal slettes på et tidspunkt når databasen 
+			this.subHost = subHost;
 			this.userAgent = userAgent;
 		}
 		
