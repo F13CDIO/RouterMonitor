@@ -1,6 +1,8 @@
 package server.function;
 
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import server.data.*;
 
@@ -13,6 +15,9 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
     private String subHost;
     private String distinationIP;
     private String sourceIP;
+    private RegexFromFile fileReader = new RegexFromFile();
+    private String userAgenrRegex = fileReader.ReadLine("userAgent");
+    
 
     public ParseUdpPackage() 
     {
@@ -27,17 +32,14 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
         /* Different 'get'-methods for the different types of info.
          * It is important that methods run in the right order, since they share
          * the same masterIndex variable, for better performance */
-        if(!sniffedData[2].toLowerCase().contains("dropbox")) //fjerner dropbox
-        	host = formatHost(sniffedData[2]);
-        else
-        	return;
-        
+        host = formatHost(sniffedData[2]);
         subHost = formatSubHost(sniffedData[2]);
         sourceIP = sniffedData[0];
         distinationIP = sniffedData[1];
         
-    	//removes avast and steam, and more?
-        if(!sniffedData[3].toLowerCase().contains("Avast")||!sniffedData[3].toLowerCase().contains("steam")) //Optimize
+        Pattern agentPattern = Pattern.compile(userAgenrRegex);
+        Matcher agentMatcher = agentPattern.matcher(sniffedData[3]);
+        if(agentMatcher.find())
         {	
         	userAgent = sniffedData[3].replaceAll("\0", "");
         	if(userAgent.length() > 300)
@@ -89,15 +91,22 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
 	{
 		hostString = hostString.toLowerCase();
 		String[] domains = hostString.split("\\.");
-
+		String domain = "";
 		int index = domains.length-1;
-		if(domains[index].equals("uk")) // removes .??.uk
+		
+		try
 		{
-			return domains[index -2];
+			if(domains[index].equals("uk")) // removes .??.uk
+			{
+				domain += domains[index -2] + "." +domains[index -1] + "."  + domains[index];
+				return domain;
+			}
+			else
+			{
+				domain += domains[index -1] + "."  + domains[index];
+				return domain;
+			}
 		}
-		else
-		{
-			return domains[index-1];
-		}
+		catch(ArrayIndexOutOfBoundsException e){return null;}
 	}
 }
