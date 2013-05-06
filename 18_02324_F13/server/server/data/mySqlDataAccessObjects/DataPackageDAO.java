@@ -1,4 +1,4 @@
-package server.data.mySqlDataObjects;
+package server.data.mySqlDataAccessObjects;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
