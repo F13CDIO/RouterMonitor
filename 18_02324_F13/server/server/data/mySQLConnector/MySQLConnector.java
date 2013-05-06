@@ -19,7 +19,7 @@ public class MySQLConnector
 	private static PreparedStatement sqlPreparedStatement = null;
 	private static Statement sqlStatement = null;
 	
-	public MySQLConnector() throws InstantiationException, IllegalAccessException, ClassNotFoundException
+	public MySQLConnector() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
 	{
 		connect();
 	}
@@ -34,20 +34,10 @@ public class MySQLConnector
 		return sqlStatement.executeUpdate(cmd);
 	}
 	
-	public static boolean connect() throws InstantiationException, IllegalAccessException, ClassNotFoundException
+	public static void connect() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
 	{			
-		try 
-		{
 			sqlConnection = DriverManager.getConnection(sqlURL + sqlDbName, sqlUser, sqlPassword);
 			sqlStatement = sqlConnection.createStatement();
-			return true;
-		} 
-		
-		catch (SQLException e1) 
-		{
-			System.out.println(e1.getMessage());
-			return false;
-		}
 	}
 	
 	public static void closeConnection()
