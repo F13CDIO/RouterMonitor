@@ -14,8 +14,8 @@ public class testMySQL
 		mySql.connect();
 		
 		
-		Calendar cal = Calendar.getInstance();
-		cal.set(2013, 03, 16, 14, 34, 23);
+		Calendar cal = Calendar.getInstance();	
+		cal.set(2013, 03, 29, 14, 34, 23);
 		 
 		
 		//JSONObject test = mySql.get10SecondTraffic(cal.getTime(), "");
@@ -24,7 +24,7 @@ public class testMySQL
 		//JSONObject test = mySql.get1HourTraffic(cal.getTime(), "");
 		//JSONObject test = mySql.get1DayTraffic(cal.getTime(), "");
 		//JSONObject test = mySql.get1MonthTraffic(cal.getTime(), "");
-		JSONObject test = mySql.getTop10(cal.getTime());
+		JSONArray test = mySql.getTop10(cal.getTime());
 		
 				
 		//System.out.println(test.get("2013-04-17 14:15:36.0"));
