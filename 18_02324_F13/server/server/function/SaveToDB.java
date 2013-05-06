@@ -9,6 +9,7 @@ public class SaveToDB implements Runnable
 	private IData data;
 	private mySqlConnect mySQL;
 	private boolean connected = false;
+	private DataPackage dataPackage = null;
 	
 	public SaveToDB()
 	{
@@ -38,9 +39,19 @@ public class SaveToDB implements Runnable
 					mySQL.connect();
 					connected = true;
 				}
-				DataPackage dataPackage = data.getDataPackage();
+				try
+				{
+				dataPackage= data.getDataPackage();
 				mySQL.addDataPackage(dataPackage.getInIP(), dataPackage.getOutIP(), dataPackage.getHost(), dataPackage.getSubHost(), dataPackage.getUserAgent(), dataPackage.getTimeStamp());
 				System.out.println(dataPackage.toString());
+				}
+				catch(Exception e)
+				{
+					System.out.println(e.getStackTrace());
+					System.out.println(e.getMessage());
+					System.out.println(mySQL);
+					System.out.println(dataPackage);
+				}
 			}
 			else if(connected)
 			{

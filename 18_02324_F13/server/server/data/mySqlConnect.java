@@ -24,48 +24,21 @@ public class mySqlConnect
 	final int week = 5;
 	final int month = 6;
 	
-	public JSONObject getTop10()
+
+	public JSONArray getTop10()
 	{
 		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
-		return parseResultsetToJSONObject("top10", mySqlOutput);
+		return parseResultsetToJSONArray(mySqlOutput);
 	}
-
-	public JSONObject getTop10(Date dateFrom)
+	
+	public JSONArray getTop10(Date dateFrom)
 	{
 		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());		
 		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
-		return parseResultsetToJSONObject("top10", mySqlOutput);
+		return parseResultsetToJSONArray(mySqlOutput);
 	}
-	
+		
 
-	public JSONArray getTop102()
-	{
-		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
-
-		JSONArray hosts = new JSONArray();
-		
-		try 
-		{
-			while (mySqlOutput.next())
-			{			
-				JSONObject jo = new JSONObject();
-				jo.put("rank", mySqlOutput.getRow());
-				jo.put("count", mySqlOutput.getInt("count"));
-				jo.put("host", mySqlOutput.getString("host"));
-				hosts.add(jo);
-			}
-		} 
-		
-		catch (SQLException e) 
-		
-		{
-		System.out.println(e.getMessage());
-		}
-		
-		return hosts;
-	}
-
-	
 	public JSONObject get10SecondTraffic(Date date, String host)
 	{
 		if(!host.equals(""))
@@ -148,7 +121,31 @@ public class mySqlConnect
 	}
 	
 
-
+	private JSONArray parseResultsetToJSONArray(ResultSet mySqlOutput) 
+	{
+		JSONArray hosts = new JSONArray();
+		
+		try 
+		{
+			while (mySqlOutput.next())
+			{			
+				JSONObject jo = new JSONObject();
+				jo.put("rank", mySqlOutput.getRow());
+				jo.put("count", mySqlOutput.getInt("count"));
+				jo.put("host", mySqlOutput.getString("host"));
+				hosts.add(jo);
+			}
+		} 
+		
+		catch (SQLException e) 
+		
+		{
+			System.out.println(e.getMessage());
+		}
+		
+		return hosts;
+	}
+	
 	@SuppressWarnings("unchecked")
 	private JSONObject parseResultsetToJSONObject(String function, ResultSet mySqlOutput)
 	{
