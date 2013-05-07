@@ -5,10 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-
-	<jsp:setProperty property="*" name="login"></jsp:setProperty>
 	<jsp:useBean id="login" class="logbean.LoginBean" scope="session"></jsp:useBean>
 	<jsp:useBean id="sql" class="logbean.sqlConn" scope="session" ></jsp:useBean>
+	<jsp:setProperty property="*" name="login"></jsp:setProperty>
 
 </head>
 <body>
@@ -28,8 +27,8 @@
 		}
 		*/
 			
-		System.out.println("login username:"+login.getUsername());		
-		System.out.println("login password:"+login.getPassword());
+		System.out.println("javabean login username:"+login.getUsername());		
+		System.out.println("javabean login password:"+login.getPassword());
 		
 		if(sql.valid())
 		{

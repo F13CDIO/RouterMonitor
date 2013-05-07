@@ -13,7 +13,7 @@
 			<fieldset>
 				<ul>
 					<li>
-						<form action="connect.jsp" method="get" id="login" >
+						<form action="connect.java" method=post id="login" >
 							<p>
 								<label>User:</label> <input name="username" type="text"
 									placeholder="Type username"  />
