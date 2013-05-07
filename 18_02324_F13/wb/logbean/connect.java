@@ -17,7 +17,7 @@ public class connect extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException{
 		
-			System.out.println("doPOST    ="+request.getAttributeNames());
+			System.out.println("doPOST    ="+request.getParameter("username"));
 		
 		
 		this.request = request;
