@@ -16,7 +16,6 @@ public class MySQLConnector
 	private static String sqlPassword = "123123";
 	
 	private static Connection sqlConnection = null;
-	private static PreparedStatement sqlPreparedStatement = null;
 	private static Statement sqlStatement = null;
 	
 	public MySQLConnector() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
@@ -26,11 +25,13 @@ public class MySQLConnector
 	
 	public static ResultSet execQuery(String query) throws SQLException 
 	{		  
-		  return sqlStatement.executeQuery(query);
+		System.out.println(query);
+		return sqlStatement.executeQuery(query);
 	}
 	
 	public static int update(String cmd) throws SQLException
 	{
+		System.out.println(cmd);
 		return sqlStatement.executeUpdate(cmd);
 	}
 	

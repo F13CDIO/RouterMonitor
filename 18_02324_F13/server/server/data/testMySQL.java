@@ -9,45 +9,36 @@ import org.json.simple.JSONObject;
 
 import server.data.Data.DataPackage;
 import server.data.mySQLConnector.MySQLConnector;
-import server.data.mySqlDataObjects.DataPackageDAO;
+import server.data.mySqlDataAccessObjects.DataPackageDAO;
 
 public class testMySQL 
 {
 
 	public static void main(String[] args) 
 	{
-//		mySqlConnect mySql = new mySqlConnect();
-//		mySql.connect();
-//		
-//		
-Calendar cal = Calendar.getInstance();	
-cal.set(2013, 03, 29, 14, 34, 23);
-//		 
-//		
-//		JSONArray test = mySql.getTop10(cal.getTime());
-//		
-//				
-//		//System.out.println(test.get("2013-04-17 14:15:36.0"));
-//		System.out.println(test);
-//		
-//		cal.set(2013, 03, 17, 14, 15, 29);
-//		//System.out.println(test.get(cal.getTime().toString()));
-//		
-//		
-//		mySql.closeConnection();
+		// Calendar
+		Calendar cal = Calendar.getInstance();	
+		cal.set(2013, 04, 06, 16, 34, 23);
+
+//		Add packet
+//		Data data = new Data();
+//		data.addDataset(cal.getTime(), "src", "dst", "host", "sub", "user");
+//		DataPackage dp = data.getDataPackage();
 		
-		DataPackageDAO dat = new DataPackageDAO();
+		// Packet DAO
+		DataPackageDAO dataPackageDAO = new DataPackageDAO();
 		
 		
-		IData data = new Data();
-		data.addDataset(cal.getTime(), "src", "dst", "host", "sub", "user");
-		DataPackage dp = data.getDataPackage();
+		// Test
 		try 
 		{
 			MySQLConnector.connect();
-			//JSONObject test = dat.get10SecondTraffic(cal.getTime(), "");
-			dat.addDataPackage(dp);
-			//System.out.println(test);
+			//JSONObject jo = dataPackageDAO.get1MonthTraffic(cal.getTime(), "");
+			
+			//JSONObject jo = dataPackageDAO.get1HourTraffic(cal.getTime(), "");
+			//JSONObject jo = dataPackageDAO.get1DayTraffic(cal.getTime(), "");
+			JSONObject jo = dataPackageDAO.get1MonthTraffic(cal.getTime(), "");
+			System.out.println("\nJSON: " + jo);
 		} 
 		
 		catch (SQLException | InstantiationException | IllegalAccessException | ClassNotFoundException e) 
