@@ -20,7 +20,7 @@ public class RegexFromFile
 			FileInputStream stream = new FileInputStream("RegEx files/"+file);
 			DataInputStream in = new DataInputStream(stream);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			line = br.readLine();
+			line = br.readLine(); //reads the first line
 			br.close();
 		}
 		catch(Exception e)

@@ -16,7 +16,8 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
     private String distinationIP;
     private String sourceIP;
     private RegexFromFile fileReader = new RegexFromFile();
-    private String userAgenrRegex = fileReader.ReadLine("userAgent");
+    //reads the first line from the file "userAgent"
+    private String userAgenrRegex = fileReader.ReadLine("userAgent"); 
     
 
     public ParseUdpPackage() 
@@ -63,14 +64,14 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
 	private String formatSubHost(String hostString)
 	{
 		hostString = hostString.toLowerCase();
-		String[] domains = hostString.split("\\.");
+		String[] domains = hostString.split("\\."); //splits the host string om dots
 
 		int index = domains.length-1;
 		try
 		{
 			if(domains[index].equals("uk")) // removes .??.uk
 			{
-				if(domains[index-2].equals("www"))
+				if(domains[index-2].equals("www")) //if the subhost is www we set it to null
 					return null;
 				return domains[index -3];
 			}
@@ -83,6 +84,7 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
 		}
 		catch(ArrayIndexOutOfBoundsException e)
 		{
+			//in case of no subhost
 			return null;
 		}
 	}
@@ -107,6 +109,6 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
 				return domain;
 			}
 		}
-		catch(ArrayIndexOutOfBoundsException e){return null;}
+		catch(ArrayIndexOutOfBoundsException e){return null;} //in case of no dots
 	}
 }
