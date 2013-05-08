@@ -75,7 +75,7 @@ public class mySqlConnect
 			host = "and host = '"+host+"'";
 		
 		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
-		ResultSet mySqlOutput = executeQuery("SELECT timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 1 HOUR) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 60 LIMIT 60");
+		ResultSet mySqlOutput = executeQuery("SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(60))*(60)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 1 HOUR) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 60 LIMIT 60");
 		return parseResultsetToJSONObject("traffic", mySqlOutput);
 	}
 	

@@ -20,7 +20,7 @@ public class MySQLConnector
 	
 	public MySQLConnector() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
 	{
-		connect();
+		
 	}
 	
 	public static ResultSet execQuery(String query) throws SQLException 
