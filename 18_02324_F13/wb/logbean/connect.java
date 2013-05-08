@@ -17,16 +17,16 @@ public class connect extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException{
 		
-			System.out.println("doPOST    ="+request.getParameter("username"));
-		
-		
+			System.out.println("doPOST = "+request.getParameter("username"));
 		this.request = request;
+		
+		
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException{
-		System.out.println("doGET ="+request.getAttributeNames());
+		System.out.println("doGET = "+request.getAttributeNames());
 		this.request = request;
 	}
 }
