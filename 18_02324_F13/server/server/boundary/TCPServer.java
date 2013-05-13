@@ -79,6 +79,7 @@ public class TCPServer
             {    
                 dataFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String clientRequest = dataFromClient.readLine();
+                System.out.println("Pi command: " + clientRequest);
                 
                 switch(clientRequest.toLowerCase())
                     {            		
@@ -86,7 +87,8 @@ public class TCPServer
                     	if (linkedUDPServer == null)
                 		{
                 			linkedUDPServer = new UDPServer();
-                    		write("start\n" + linkedUDPServer.getPort()+"\n");
+                    		write("start\n" + linkedUDPServer.getPort());
+                    		System.out.println("Server: Start on UDP port " + linkedUDPServer.getPort());
                 		}
                     	break;
                     	
@@ -96,6 +98,40 @@ public class TCPServer
                     	{
                     		linkedUDPServer.start();
                     		write("UDP server started");
+                    		
+                    		// test comm with pi
+                    		write("scanNetworks\n");
+                    		System.out.println("Server: Scan networks");
+                    		while (dataFromClient.read() > 0)
+                    		{
+                    			System.out.println("Pi: " + dataFromClient.readLine());
+                    		}
+                    		
+                    		Thread.sleep(1000);
+                    		
+                    		write("getWifiStatus");
+                    		System.out.println("Server: Get wifi status");
+                    		while (dataFromClient.read() > 0)
+                    		{
+                    			System.out.println("Pi: " + dataFromClient.readLine());
+                    		}
+                    		Thread.sleep(1000);
+                    		                    		
+                    		write("setChannel");
+                    		write("5");
+                    		System.out.println("Server: Set channel 5");
+                    		
+                    		while (dataFromClient.read() > 0)
+                    			System.out.println("Pi: " + dataFromClient.readLine());
+                    		
+                    		write("getWifiStatus");
+                    		System.out.println("Command to rPi: Get wifi status");
+                    		while (dataFromClient.read() > 0)
+                    		{
+                    			System.out.println("Pi: " + dataFromClient.readLine());
+                    		}
+                    		// End test
+
                     	}
                     		
                     	else
@@ -120,6 +156,7 @@ public class TCPServer
                     	
                     	default: // -----------------------------------------------------------------------------
                     		write("Invalid command");
+                    		
                     	break;
                     }
             }
