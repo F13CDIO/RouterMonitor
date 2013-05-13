@@ -17,9 +17,11 @@ public class Connector implements IConnector {
 	{
 		tcp = new TCPClient();
 		try {
+			System.out.println("trying to connect to server over tcp");
 			return tcp.createConnection(serverAddress, serverPort);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			System.out.println("Failed to init tcp client");
 			e.printStackTrace();
 		} 
 		return null;
@@ -34,6 +36,8 @@ public class Connector implements IConnector {
 	public void initUDP(int portToSendFrom, int destinationPort, InetAddress destinationIP)
 	{
 		udp = new UDPClient();
+
+
 		try {
 			udp.initUDP(portToSendFrom, destinationPort, destinationIP);
 		} catch (Exception e){

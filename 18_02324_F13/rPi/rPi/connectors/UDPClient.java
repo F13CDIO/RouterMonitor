@@ -7,7 +7,7 @@ import java.net.*;
  *  written 01-03-2013 by Niclas Falck
  */
 
-class UDPClient
+class UDPClient extends Thread
 {
 	private int destinationPort;
 	InetAddress destinationIpAddress;
@@ -30,7 +30,7 @@ class UDPClient
 		{
 			String line = outputFromPi.readLine();
 			if(line == null)
-				System.out.println("det er null");
+				System.out.println("output in sendData is null");
 			if(line != null){
 				System.out.println(line);
 					//break;
@@ -42,8 +42,5 @@ class UDPClient
 				}
 			}
 		}
-	}
-			
-
- 
+	} 
 }
