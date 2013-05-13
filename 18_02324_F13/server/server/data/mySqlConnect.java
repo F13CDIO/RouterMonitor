@@ -28,14 +28,22 @@ public class mySqlConnect
 	public JSONArray getTop10()
 	{
 		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
+<<<<<<< HEAD
+		return parseResultsetToJSONObject("top10", mySqlOutput);
+=======
 		return parseResultsetToJSONArray(mySqlOutput);
+>>>>>>> fa0ae1da46e2bf89e798c503770cc7a62603170e
 	}
 	
 	public JSONArray getTop10(Date dateFrom)
 	{
 		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());		
 		ResultSet mySqlOutput = executeQuery("SELECT host, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
+<<<<<<< HEAD
+		return parseResultsetToJSONObject("top10", mySqlOutput);
+=======
 		return parseResultsetToJSONArray(mySqlOutput);
+>>>>>>> fa0ae1da46e2bf89e798c503770cc7a62603170e
 	}
 		
 
