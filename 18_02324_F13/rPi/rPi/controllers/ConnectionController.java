@@ -36,23 +36,36 @@ public class ConnectionController {
 		
 		System.out.println("tcp initialized, now sending create"); // useless shit protocol HAVE TO BE MITIGATED!!! 
 		con.sendTCP("create\n");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			System.out.println("gimme sleeping pills xD");
+			e.printStackTrace();
+		}
 		con.sendTCP("start\n");
 		return inputFromServer;
 	}
 	public void initAndSendUDP(BufferedReader outputStream, int portnr){
 		con.initUDP(UDP_PORT_TO_SEND_FROM, portnr,SERVER_IP);  // extractportnumber skal fejltjekkes for port 0
-		
 		con.sendUDP(outputStream); // The start sniffing method returns a buffered reader with output from ngrep
 	}
+	public void stopUDP(){
+		con.stopUDP();
+	}
+	
 	public void sendStringTCP(String str){
 		con.sendTCP(str);
+		con.sendTCP("\r\n");
 	}
 	public void sendArrayTCP(ArrayList<String[]> arrList){
 		for (String[] array : arrList){
 			for (String str : array){
-				con.sendTCP(str);
+				System.out.println("array string sent : " + str);
+				con.sendTCP(str + "\n");
 			}
 		}
+		System.out.println("TCParray sent");
+		con.sendTCP("\0");
 	}
 		 
 	public void connectToNetwork(String SSID)

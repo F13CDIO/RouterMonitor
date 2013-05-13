@@ -36,7 +36,7 @@ public class Connector implements IConnector {
 	public void initUDP(int portToSendFrom, int destinationPort, InetAddress destinationIP)
 	{
 		udp = new UDPClient();
-
+		
 
 		try {
 			udp.initUDP(portToSendFrom, destinationPort, destinationIP);
@@ -47,8 +47,9 @@ public class Connector implements IConnector {
 	public void sendUDP(BufferedReader bf)
 	{
 		if (udp != null){
+			udp.setBufferedReader(bf);
 			try {
-				udp.sendData(bf);
+				udp.start();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -56,5 +57,8 @@ public class Connector implements IConnector {
 		} else {
 			// udp not initialized or broken
 		}
+	}
+	public void stopUDP(){
+		udp.stopUDP();
 	}
 }

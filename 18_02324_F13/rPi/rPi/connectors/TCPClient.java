@@ -25,7 +25,7 @@ class TCPClient
 			outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			outToServer.writeBytes(message);
 			outToServer.flush();
-			System.out.println("hejsa jeg flsuher");
+			System.out.println("hejsa jeg flusher");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -15,15 +15,37 @@ class UDPClient extends Thread
 	byte[] sendData = new byte[2048];
 	byte[] buf = new byte[2048];
 	
+	BufferedReader outputFromPi;
+	boolean RUNNING;
+	
+	public void run(){
+		while (RUNNING)
+			try {
+				sendData();
+			} catch (Exception e) {
+				System.out.println("problem in udp client");
+				e.printStackTrace();
+			}
+	}
+	
+	public void stopUDP(){
+		this.RUNNING = false;
+	}
+	
+	public void setBufferedReader(BufferedReader outputFromPi){
+		this.outputFromPi = outputFromPi;
+	}
+	
 	public void initUDP(int portToSendFrom, int destinationPort, InetAddress destinationIpAddress) throws Exception
 	{
+		RUNNING = true;
 		System.out.println("dest port"+ destinationPort);
 		serverSocket = new DatagramSocket(portToSendFrom);
 		this.destinationPort = destinationPort;
 		this.destinationIpAddress = destinationIpAddress;
 	}
 	
-	public void sendData(BufferedReader outputFromPi) throws Exception
+	public void sendData() throws Exception
 	{
 		assert serverSocket != null;
 		while(true)

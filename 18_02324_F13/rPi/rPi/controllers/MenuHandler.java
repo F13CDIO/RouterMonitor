@@ -48,11 +48,25 @@ public class MenuHandler {
 	// Get the command from 2C server
 	public void handleCommand() throws Exception{
 		try {
+			boolean validCommand = false;
+			
+			
 			String command = inputFromServer.readLine();
 			System.out.println("command :" + command);
-			Command cmd = Command.valueOf(command); // enum to avoid mistakes, see below
-			System.out.println("command recieved : " + cmd);
-			switchMenu(cmd);
+			
+			// check if command is valid
+			for (Command c : Command.values()){
+				if (c.name().equals(command)){
+					validCommand = true;
+				}
+			}
+			// execute command
+			if (validCommand)
+			{
+				Command cmd = Command.valueOf(command); // enum to avoid mistakes, see below
+				System.out.println("command recieved : " + cmd);
+				switchMenu(cmd);
+			}
 		} catch (IOException e) {
 			System.out.println("Could not read command from server");
 			e.printStackTrace();
@@ -88,8 +102,10 @@ public class MenuHandler {
 		case getWifiStatus:
 			System.out.println("");
 			cc.sendArrayTCP(getWifiStatus());
+			break;
 		case getMacAddress:
 			cc.sendStringTCP( getMacAddress() );
+			break;
 		}
 		
 	}
@@ -107,6 +123,7 @@ public class MenuHandler {
 	
 	// This method requires the start script is run, and not just tshark invoked since pid needs to be saved
 	public void stopSniffing(){
+		cc.stopUDP();
 		// stopping the process is easy to do in one line, so here it goes with some bash-fu (linux/osx compatible)
 		if (this.currentOS == supportedOS.Mac || this.currentOS == supportedOS.Linux){
 			tc.exec("kill $(cat process1.pid)");	
@@ -134,8 +151,10 @@ public class MenuHandler {
 	    String[] aNetwork = new String[7]; // SSID | BSSID | RSSI | CHANNEL | HT | CC | SECURITY
 	    for (int i = 0; i < 20; i++){
 	    	String line = br.readLine();
-	    	aNetwork = line.split("^S"); // Split on first non whitespace character
-	    	networks.add(aNetwork);
+	    	if (line.length() > 0){
+	    		aNetwork = line.split("^S"); // Split on first non whitespace character
+	    		networks.add(aNetwork);
+	    	}
 	    }
 	    return networks;
 	}
@@ -146,9 +165,23 @@ public class MenuHandler {
 		if (this.currentOS == supportedOS.Mac){
 			// Dissociate from current network
 			tc.exec("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -z");
+			System.out.println("Dissociated from access point");
 			// set channel
 			String chanCmd = "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --channel=";
-			tc.exec(chanCmd + chan);
+			System.out.println("setting channel to " +chanCmd + chan);
+			BufferedReader response = tc.exec(chanCmd + chan);
+			try {
+				String rootRequired = response.readLine();
+				System.out.println(rootRequired);
+				if (rootRequired.length() > 0){
+					cc.sendStringTCP(rootRequired);
+				} else {
+					cc.sendStringTCP("\0");
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else if (this.currentOS == supportedOS.Windows){
 			
 		}
@@ -200,7 +233,7 @@ public class MenuHandler {
 			String line;
 		    while ( (line = br.readLine()) != null){
 		    	System.out.println(line);
-		    	if (line.indexOf("Osysical Address") >= 0){
+		    	if (line.indexOf("Psysical Address") >= 0){
 		    		addr = line.substring(line.indexOf(" ")+1 );
 			   	}
 		    }	
@@ -214,7 +247,13 @@ public class MenuHandler {
 	
 	// This method extracts the UDP port the  server listens on
 	private int extractNumber() throws IOException{
-		String command = inputFromServer.readLine();
+		String command = "";
+		// making it more robust because server maight not respect protocol and send several newlines
+		while (command.length() < 1){
+			command = inputFromServer.readLine();
+			System.out.println("Reading number");
+		}
+		
 		System.out.println("port number : " + command);
 		int port = 0;
 		port = Integer.parseInt(command);

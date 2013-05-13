@@ -8,4 +8,5 @@ public interface IConnector {
 	void sendTCP(String message);
 	void initUDP(int portToSendFrom, int destinationPort, InetAddress destinationIP);
 	void sendUDP(BufferedReader bf);
+	void stopUDP();
 }
