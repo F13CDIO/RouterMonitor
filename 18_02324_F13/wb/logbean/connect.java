@@ -36,6 +36,7 @@ public class connect extends HttpServlet{
 	}
 
 	@Override
+<<<<<<< HEAD
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException
 	{
@@ -58,11 +59,21 @@ public class connect extends HttpServlet{
 		}
 		// Redirects to home if 	
 //		System.out.println("doPOST = "+request.getParameter("username"));
+=======
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException{
+		
+			System.out.println("doPOST = "+request.getParameter("username"));
+		this.request = request;
+		
+		
+>>>>>>> 31ad492901fbf0e223b55a1e14018d7253e1aad2
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException{
+<<<<<<< HEAD
 		System.out.println("doGET = "+req.getAttributeNames());
 		this.request = req;
 	}
@@ -87,5 +98,9 @@ public class connect extends HttpServlet{
 		}
 		return false;
 		
+=======
+		System.out.println("doGET = "+request.getAttributeNames());
+		this.request = request;
+>>>>>>> 31ad492901fbf0e223b55a1e14018d7253e1aad2
 	}
 }
