@@ -14,10 +14,10 @@ class UDPClient extends Thread
 	DatagramSocket serverSocket;
 	byte[] sendData = new byte[2048];
 	byte[] buf = new byte[2048];
-
+	
 	BufferedReader outputFromPi;
 	boolean RUNNING;
-
+	
 	public void run(){
 		while (RUNNING)
 			try {
@@ -27,15 +27,15 @@ class UDPClient extends Thread
 				e.printStackTrace();
 			}
 	}
-
+	
 	public void stopUDP(){
 		this.RUNNING = false;
 	}
-
+	
 	public void setBufferedReader(BufferedReader outputFromPi){
 		this.outputFromPi = outputFromPi;
 	}
-
+	
 	public void initUDP(int portToSendFrom, int destinationPort, InetAddress destinationIpAddress) throws Exception
 	{
 		RUNNING = true;
@@ -44,15 +44,18 @@ class UDPClient extends Thread
 		this.destinationPort = destinationPort;
 		this.destinationIpAddress = destinationIpAddress;
 	}
-
+	
 	public void sendData() throws Exception
 	{
 		assert serverSocket != null;
 		while(true)
 		{
 			String line = outputFromPi.readLine();
+<<<<<<< HEAD
 			if(line == null)
 				System.out.println("output in sendData is null");
+=======
+>>>>>>> fa0ae1da46e2bf89e798c503770cc7a62603170e
 			if(line != null){
 				System.out.println(line);
 					//break;
@@ -60,7 +63,7 @@ class UDPClient extends Thread
 				DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, destinationIpAddress, destinationPort);
 				if(sendPacket != null){
 				serverSocket.send(sendPacket);
-
+				
 				}
 			}
 		}
