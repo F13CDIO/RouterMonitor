@@ -1,5 +1,6 @@
 package rPi.controllers;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 
@@ -12,27 +13,33 @@ import rPi.connectors.Connector;
 public class ConnectionController {
 
 	//====== THE CONSTANTS YOU MIGHT WANNA CHANGE ======//
-
+	
 	private static InetAddress SERVER_IP	; // Hard code IP for now
 	private static short DEFAULT_PORT = 9000; // the TCP port the server listens on
 	private static int UDP_PORT_TO_SEND_FROM = 15000;
-
+	
 	//=================================================//
-
+	
 	Connector con = new Connector();
 	BufferedReader inputFromServer;
 	String fromServer;
 	StreamParser parser = new StreamParser();
-
+	
 	public ConnectionController() throws Exception{
+<<<<<<< HEAD
 		SERVER_IP = InetAddress.getByName("10.16.167.8");	
 		System.out.println("Connectionscontroller constructor init'd");
 	}
-
+	
 	public BufferedReader connectToServer(){
 		// from here we get the command from the C&C server
+=======
+		SERVER_IP = InetAddress.getByName("10.16.99.177");
+		dHandler = new DataHandler(); // this instance executes the sniffing program in a terminal
+		
+>>>>>>> fa0ae1da46e2bf89e798c503770cc7a62603170e
 		inputFromServer = con.initTCPClient(SERVER_IP, DEFAULT_PORT); 
-
+		
 		System.out.println("tcp initialized, now sending create"); // useless shit protocol HAVE TO BE MITIGATED!!! 
 		con.sendTCP("create\n");
 		try {
@@ -51,7 +58,7 @@ public class ConnectionController {
 	public void stopUDP(){
 		con.stopUDP();
 	}
-
+	
 	public void sendStringTCP(String str){
 		con.sendTCP(str);
 		con.sendTCP("\r\n");
@@ -66,10 +73,10 @@ public class ConnectionController {
 		System.out.println("TCParray sent");
 		con.sendTCP("\0");
 	}
-
+		 
 	public void connectToNetwork(String SSID)
 	{
 		//Spr��ger lasse om hvordan man k��re script... 
-
+		
 	}
 }
