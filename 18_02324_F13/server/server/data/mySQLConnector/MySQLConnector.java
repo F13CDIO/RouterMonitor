@@ -36,7 +36,9 @@ public class MySQLConnector
 	}
 	
 	public static void connect() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
-	{			
+	{		
+		Class.forName("com.mysql.jdbc.Driver"); //TEST LINE
+
 			sqlConnection = DriverManager.getConnection(sqlURL + sqlDbName, sqlUser, sqlPassword);
 			sqlStatement = sqlConnection.createStatement();
 	}
