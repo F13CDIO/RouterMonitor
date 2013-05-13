@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -19,10 +20,10 @@ public class TCPServer
 		this.serverPort = serverPort;
 	}
 	
-    public void startServer() throws IOException  
+    public void startServer() throws IOException
     {
         serverSocket = new ServerSocket(serverPort);
-        System.out.println("TCP server online");
+        System.out.println("TCP server online on ip: " + Inet4Address.getLocalHost().getHostAddress());
  
         while(true) // Keep listening for new clients
         {
@@ -30,7 +31,7 @@ public class TCPServer
             if (socket != null)
             {
                client = new Client(socket);
-               System.out.println("Client at "+ client.getIpAddress() +": " + client.getPort()+" connected ");
+               System.out.println("Client at "+ client.getIpAddress() +":" + client.getPort()+" connected ");
                client.start(); // Thread start
                //client.write("Welcome");
             }
@@ -79,6 +80,7 @@ public class TCPServer
             {    
                 dataFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String clientRequest = dataFromClient.readLine();
+                System.out.println("Pi command: " + clientRequest);
                 
                 switch(clientRequest.toLowerCase())
                     {            		
@@ -86,7 +88,8 @@ public class TCPServer
                     	if (linkedUDPServer == null)
                 		{
                 			linkedUDPServer = new UDPServer();
-                    		write("start\n" + linkedUDPServer.getPort()+"\n");
+                    		write("start\n" + linkedUDPServer.getPort());
+                    		System.out.println("Server: Start on UDP port " + linkedUDPServer.getPort());
                 		}
                     	break;
                     	
@@ -96,6 +99,40 @@ public class TCPServer
                     	{
                     		linkedUDPServer.start();
                     		write("UDP server started");
+                    		
+                    		// test comm with pi
+                    		write("scanNetworks\n");
+                    		System.out.println("Server: Scan networks");
+                    		while (dataFromClient.read() > 0)
+                    		{
+                    			System.out.println("Pi: " + dataFromClient.readLine());
+                    		}
+                    		
+                    		Thread.sleep(1000);
+                    		
+                    		write("getWifiStatus");
+                    		System.out.println("Server: Get wifi status");
+                    		while (dataFromClient.read() > 0)
+                    		{
+                    			System.out.println("Pi: " + dataFromClient.readLine());
+                    		}
+                    		Thread.sleep(1000);
+                    		                    		
+                    		write("setChannel");
+                    		write("5");
+                    		System.out.println("Server: Set channel 5");
+                    		
+                    		while (dataFromClient.read() > 0)
+                    			System.out.println("Pi: " + dataFromClient.readLine());
+                    		
+                    		write("getWifiStatus");
+                    		System.out.println("Command to rPi: Get wifi status");
+                    		while (dataFromClient.read() > 0)
+                    		{
+                    			System.out.println("Pi: " + dataFromClient.readLine());
+                    		}
+                    		// End test
+
                     	}
                     		
                     	else
@@ -120,6 +157,7 @@ public class TCPServer
                     	
                     	default: // -----------------------------------------------------------------------------
                     		write("Invalid command");
+                    		
                     	break;
                     }
             }

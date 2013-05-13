@@ -3,7 +3,7 @@ package Main;
 import Users.*;
 import Presentation.FrameMain;
 
-public class Main 
+public class D1Main 
 {
 
 	public static void main(String[] args)

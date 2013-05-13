@@ -39,7 +39,7 @@ public class Data implements IData
 		private String sourceIP;
 		private String destinationIP;
 		private String host;
-		private String subHost;
+		private String subHost; //skal slettes
 		private String userAgent;
 		private Date timeStamp;
 		

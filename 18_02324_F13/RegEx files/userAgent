@@ -1,0 +1,7 @@
+(?i)(Firefox)|(Chrome)|(Safari)|(MSIE)|(Opera)|(Netscape)|(Chromium)
+
+Whitelist over acceptet useragents, if updatet the server has to be restartet
+
+The whitelist is there to remove programs updating such as eclipse, Avast, Steam, Dropbox etc.
+
+(?i) makes it case insensitive
