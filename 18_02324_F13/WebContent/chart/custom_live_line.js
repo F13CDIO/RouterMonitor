@@ -1,3 +1,5 @@
+var LIVE_FEED_PATH = './chart/custom_live_get10SecondTraffic.jsp';
+
 var bufferIndex = -1;
 var activeBuffer = 1;
 var liveTrafficBuffer = [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]];
@@ -6,6 +8,7 @@ var currentDate = new Date();
 /* Set starttime. Even when running "live", there should be af few seconds
  * delay to allow the data to reach the database, before beeing requested */
 addSeconds(-5);
+//currentDate = new Date(2013, 03, 16, 14, 34, 23);
 
 /* Takes care of the "static" datapoint as well as the first 10 seconds of live data */
 fillBuffers();
@@ -72,7 +75,7 @@ function liveUpdate() {
 
 function get10SecondTraffic(doOnFinish) {
     /* Get string with JSON Object from JSP page */
-    $.get('js/custom_live_get10SecondTraffic.jsp?date=' + currentDate.getTime(), function(data) {
+    $.get(LIVE_FEED_PATH + '?date=' + currentDate.getTime(), function(data) {
         var i;
         
         /* Parse input string to JSON Object */
@@ -140,7 +143,7 @@ $(function () {
                 }
             },
             title: {
-                text: 'Live random data'
+                text: 'Live traffic overview'
             },
             xAxis: {
                 type: 'datetime',
@@ -160,17 +163,17 @@ $(function () {
                 formatter: function() {
                         return '<b>'+ this.series.name +'</b><br/>'+
                         Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
-                        Highcharts.numberFormat(this.y, 2);
+                        Highcharts.numberFormat(this.y, 0);
                 }
             },
             legend: {
                 enabled: false
             },
             exporting: {
-                enabled: false
+                enabled: true
             },
             series: [{
-                name: 'Random data',
+                name: 'Live traffic data',
                 data: (function() {
                     // generate an array of random data
                     var data = [],
