@@ -6,7 +6,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import server.data.mySqlConnect;
 
-public class customCharts {
+public class CustomCharts {
     private static String SCRIPT_PATH = "./chart/";
     
     
