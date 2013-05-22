@@ -1,13 +1,23 @@
 package server.function;
 
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import server.data.mySqlConnect;
+import server.data.mySQLConnector.MySQLConnector;
+import server.data.mySQLInterfaces.IDataPackageDAO;
+import server.data.mySqlDataAccessObjects.DataPackageDAO;
 
 public class CustomCharts {
+    /* The Javascript files for jQuery, Highchart etc. can be placed in a subfolder */
     private static String SCRIPT_PATH = "./chart/";
+    
+    /* The DAO is used by almost all of the methods, so it is instantiated once, globally */
+    private IDataPackageDAO DAO = new DataPackageDAO();
+    
+    /* An integer to increment for each new chart, to make multiple charts possible */
+    private int uniqeHtmlId = 0;
     
     
     public String importScripts() {
@@ -17,6 +27,34 @@ public class CustomCharts {
         end = "\"></script>\n  ";
         
         return begin + SCRIPT_PATH + "jquery.min.js" + end + begin + SCRIPT_PATH + "highcharts.js" + end + begin + SCRIPT_PATH + "modules/exporting.js" + end;
+    }
+    
+    public String generateJspLiveFeed(String timestamp) {
+        try {
+            /* A Java Calender, so the starttime can be set and sent as "Date"-type */
+            Calendar cal = Calendar.getInstance();
+
+            /* Get date from the timestamp string, converts to Long, and sets the Calendar date from this */
+            Long input = new Long(timestamp);
+            cal.setTimeInMillis(input);
+
+            /* Connects to mySQL database, to be able to get data */
+            MySQLConnector.connect();
+
+            /* Gets data and saves in temp var, so the MySQL connection can be closed before return */
+            String output = DAO.get10SecondTraffic(cal.getTime(), "").toString();
+
+            /* Close mySQL database connection */
+            MySQLConnector.closeConnection();
+
+            return output;
+        }
+        catch (Exception e) {
+            return "";
+        }
+        finally {
+            MySQLConnector.closeConnection();
+        }
     }
     
     
@@ -143,34 +181,41 @@ public class CustomCharts {
     }
     
     
-    
     private String top10Bar(Date offset, String title) {
-        int i;
+        try {
+            int i;
 
-        /* Connects to mySQL database, to be able to get data */
-        mySqlConnect mySql = databaseConnect();
+            /* Connects to mySQL database, to be able to get data */
+            MySQLConnector.connect();
 
-        /* Get data */
-        JSONArray data = mySql.getTop10(offset);
-        JSONObject temp;
-        
-        /* Creates array with size according to actual number of pages in top10 */
-        String[] mainValues = new String[data.size()];
-        String[] mainCategories = new String[data.size()];
-        String[][] subValues = new String[data.size()][10]; //Not implementet
-        String[][] subCategories = new String[data.size()][10]; //Not implementet
+            /* Get data */
+            JSONArray data = DAO.getTop10(offset);
+            JSONObject temp;
+            
+            /* Creates array with size according to actual number of pages in top10 */
+            String[] mainValues = new String[data.size()];
+            String[] mainCategories = new String[data.size()];
+            String[][] subValues = new String[data.size()][10]; //Not implementet
+            String[][] subCategories = new String[data.size()][10]; //Not implementet
 
-        for (i = 0; i < data.size(); i++) {
-            temp = (JSONObject) data.get(i);
+            for (i = 0; i < data.size(); i++) {
+                temp = (JSONObject) data.get(i);
 
-            mainValues[i] = temp.get("count").toString();
-            mainCategories[i] = temp.get("host").toString();
+                mainValues[i] = temp.get("count").toString();
+                mainCategories[i] = temp.get("host").toString();
+            }
+
+            /* Close mySQL database connection */
+            MySQLConnector.closeConnection();
+
+            return generateBar(mainCategories, mainValues, subCategories, subValues, title);
         }
-
-        /* Close mySQL database connection */
-        mySql.closeConnection();
-
-        return generateBar(mainCategories, mainValues, subCategories, subValues, title);
+        catch (Exception e) {
+            return "Database error occurred. <br /><br />Error: " + e.getMessage() + "<br />";
+        }
+        finally {
+            MySQLConnector.closeConnection();
+        }
     } //OBS - subhost not implemented
     
     private String generateBar(String[] mainCategories, String[] mainValues, String[][] subCategories, String[][] subValues, String title) {
@@ -181,7 +226,7 @@ public class CustomCharts {
 	String SUB_TITLE = "Click the columns to view sub-sites. Click again to view main-sites.";
 	String Y_AXIS_DESCRIPTION = "Number of hits";
 	String DATA_LABEL_UNIT = "";
-	String HTML_ID = "top10_container";
+	String HTML_ID = "top10_container_" + uniqeHtmlId++;
 	String MIN_WIDTH = "400px";
 	String HEIGHT = "400px";
 	String MAIN_PAGE_DESCRIPTION = "main-sites";
@@ -229,87 +274,94 @@ public class CustomCharts {
 }
     
     private String top5Line(String title, int numberOfPoints, int secondsBack) {
-        int NUMBER_OF_DOMAINS = 5;
+        try {
+            int NUMBER_OF_DOMAINS = 5;
 
-        /* Declarations */
-        int i, iSub, interval, actualDomains, numberOfZeros;
-        JSONArray top10Data;
-        JSONObject temp;
-        Calendar dateOffset, dateNow;
-        String dateString;
-        String categories[] = new String[numberOfPoints];
-        String series[];
-        String values[][];
-        
-        /* Sets dates */
-        dateNow = Calendar.getInstance();
-        dateOffset = Calendar.getInstance();
-        dateOffset.add(Calendar.SECOND, -secondsBack);
-        
-        /* Sets interval for iteration and numberOfZeros for zeroing of date */
-        interval = secondsBack / numberOfPoints;
-        numberOfZeros = numberOfZeros(secondsBack);
-
-        /* Connect to database */
-        mySqlConnect mySql = databaseConnect();
-
-        /* Get top10 data */
-        top10Data = mySql.getTop10(dateOffset.getTime());
-        System.out.println(top10Data);
-        
-        /* Check if the top10 has enough elements to get the requested number of domains */
-        if(top10Data.size() < NUMBER_OF_DOMAINS) {
-            actualDomains = top10Data.size();
-        }
-        else {
-            actualDomains = NUMBER_OF_DOMAINS;
-        }
-        
-        /* Declares the value-arrays whith size according to the acutal number of domains */
-        series = new String[actualDomains];
-        values = new String[actualDomains][numberOfPoints];
-
-        for (i = 0; i < actualDomains; i++) {
-            /* Get series name */
-            temp = (JSONObject) top10Data.get(i);
-            series[i] = temp.get("host").toString();
-
-            /* Get series data */
-            temp = getTraffic(mySql, secondsBack, dateNow.getTime(), series[i]);
-            System.out.println(temp);
+            /* Declarations */
+            int i, iSub, interval, actualDomains, numberOfZeros;
+            JSONArray top10Data;
+            JSONObject temp;
+            Calendar dateOffset, dateNow;
+            String dateString;
+            String categories[] = new String[numberOfPoints];
+            String series[];
+            String values[][];
             
-            /* Process series data */
-            for(iSub = 0; iSub < numberOfPoints; iSub++) {
-                /* Sets categories if its the first run*/
-                if(i == 0) {
-                    categories[iSub] = categoriesDate(dateOffset);
-                }
-                
-                /* Generate date-key-string */
-                dateString = javaDateString(dateOffset, numberOfZeros);
-                System.out.println(dateString);
-                
-                /* Get data from date-key */
-                if(temp.get(dateString) != null) {
-                    values[i][iSub] = temp.get(dateString).toString();
-                }
-                else {
-                    /* If no data read, set to 0 */
-                    values[i][iSub] = "0";
-                }
-                
-                /* Add seconds according to interval, to get next datapoint */
-                dateOffset.add(Calendar.SECOND, interval);
+            /* Sets dates */
+            dateNow = Calendar.getInstance();
+            dateOffset = Calendar.getInstance();
+            dateOffset.add(Calendar.SECOND, -secondsBack);
+            
+            /* Sets interval for iteration and numberOfZeros for zeroing of date */
+            interval = secondsBack / numberOfPoints;
+            numberOfZeros = numberOfZeros(secondsBack);
+
+            /* Connect to database */
+            MySQLConnector.connect();
+
+            /* Get top10 data */
+            top10Data = DAO.getTop10(dateOffset.getTime());
+            System.out.println(top10Data);
+            
+            /* Check if the top10 has enough elements to get the requested number of domains */
+            if(top10Data.size() < NUMBER_OF_DOMAINS) {
+                actualDomains = top10Data.size();
+            }
+            else {
+                actualDomains = NUMBER_OF_DOMAINS;
             }
             
-            /* Sets back the offset-date to what it was before the iteration */
-            dateOffset.add(Calendar.SECOND, -secondsBack);
+            /* Declares the value-arrays whith size according to the acutal number of domains */
+            series = new String[actualDomains];
+            values = new String[actualDomains][numberOfPoints];
+
+            for (i = 0; i < actualDomains; i++) {
+                /* Get series name */
+                temp = (JSONObject) top10Data.get(i);
+                series[i] = temp.get("host").toString();
+
+                /* Get series data */
+                temp = getTraffic(secondsBack, dateNow.getTime(), series[i]);
+                System.out.println(temp);
+                
+                /* Process series data */
+                for(iSub = 0; iSub < numberOfPoints; iSub++) {
+                    /* Sets categories if its the first run*/
+                    if(i == 0) {
+                        categories[iSub] = categoriesDate(dateOffset);
+                    }
+                    /* Generate date-key-string */
+                    dateString = javaDateString(dateOffset, numberOfZeros);
+                    System.out.println(dateString);
+                    
+                    /* Get data from date-key */
+                    if(temp.get(dateString) != null) {
+                        values[i][iSub] = temp.get(dateString).toString();
+                    }
+                    else {
+                        /* If no data read, set to 0 */
+                        values[i][iSub] = "0";
+                    }
+                    
+                    /* Add seconds according to interval, to get next datapoint */
+                    dateOffset.add(Calendar.SECOND, interval);
+                }
+                
+                /* Sets back the offset-date to what it was before the iteration */
+                dateOffset.add(Calendar.SECOND, -secondsBack);
+            }
+
+            /* Close mySQL database connection */
+            MySQLConnector.closeConnection();
+
+            return generateLine(categories, series, values, title);
         }
-
-        /* Close mySQL database connection */
-        mySql.closeConnection();
-
-        return generateLine(categories, series, values, title);
+        catch (Exception e) {
+            return "Database error occurred. <br /><br />Error: " + e.getMessage() + "<br />";
+        }
+        finally {
+            MySQLConnector.closeConnection();
+        }
     }
     
     private String generateLine(String categories[], String series[], String values[][], String title) {
@@ -319,7 +371,7 @@ public class CustomCharts {
 	String TITLE = title;
 	String SUB_TITLE = "";
 	String Y_AXIS_DESCRIPTION = "Number of visits";
-	String HTML_ID = "line_container";
+	String HTML_ID = "line_container_" + uniqeHtmlId++;
 	String MIN_WIDTH = "400px";
 	String HEIGHT = "400px";
 	String UNIT = "";
@@ -362,31 +414,39 @@ public class CustomCharts {
 }
     
     private String top10Pie(Date offset, String title) {
-        int i;
+        try {
+            int i;
 
-        /* Connects to mySQL database, to be able to get data */
-        mySqlConnect mySql = databaseConnect();
+            /* Connects to mySQL database, to be able to get data */
+            MySQLConnector.connect();
 
-        /* Get data */
-        JSONArray data = mySql.getTop10(offset);
-        JSONObject temp;
-        
-        /* Creates array with size according to actual number of pages in top10 */
-        String[] pieValues = new String[data.size()];
-        String[] pieCategories = new String[data.size()];
+            /* Get data */
+            JSONArray data = DAO.getTop10(offset);
+            JSONObject temp;
+            
+            /* Creates array with size according to actual number of pages in top10 */
+            String[] pieValues = new String[data.size()];
+            String[] pieCategories = new String[data.size()];
 
 
-        for (i = 0; i < data.size(); i++) {
-            temp = (JSONObject) data.get(i);
+            for (i = 0; i < data.size(); i++) {
+                temp = (JSONObject) data.get(i);
 
-            pieValues[i] = temp.get("count").toString();
-            pieCategories[i] = temp.get("host").toString();
+                pieValues[i] = temp.get("count").toString();
+                pieCategories[i] = temp.get("host").toString();
+            }
+
+            /* Close mySQL database connection */
+            MySQLConnector.closeConnection();
+
+            return generatePie(pieCategories, pieValues, title);
         }
-
-        /* Close mySQL database connection */
-        mySql.closeConnection();
-
-        return generatePie(pieCategories, pieValues, title);
+        catch (Exception e) {
+            return "Database error occurred. <br /><br />Error: " + e.getMessage() + "<br />";
+        }
+        finally {
+            MySQLConnector.closeConnection();
+        }
     }
     
     private String generatePie(String[] categories, String[] values, String title) {
@@ -394,7 +454,7 @@ public class CustomCharts {
 	
 	/* Constants */
 	String TITLE = title;
-	String HTML_ID = "pie_container";
+	String HTML_ID = "pie_container_" + uniqeHtmlId++;
 	String MIN_WIDTH = "400px";
 	String HEIGHT = "400px";
 	
@@ -416,41 +476,28 @@ public class CustomCharts {
 }
     
     
-    
-    private mySqlConnect databaseConnect() {
-        /* IMPORTANT! Loads the driver for mySQL interface. Not needed in Java, but IS needed in JSP! */
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (Exception e) {
-            return null;
-        }
-
-        /* Create new mySQL object, and connects to mySQL database */
-        mySqlConnect mySql = new mySqlConnect();
-        mySql.connect();
-        
-        /* Return the mySQL object, to be able to get data */
-        return mySql;
-    }
-    
-    private JSONObject getTraffic(mySqlConnect mySql, int secondsBack, Date date, String host) {
+    private JSONObject getTraffic(int secondsBack, Date date, String host) throws SQLException {
         if(secondsBack == 10) {
-            return mySql.get10SecondTraffic(date, host);
+            return DAO.get10SecondTraffic(date, host);
         }
         else if(secondsBack == 60) {
-            return mySql.get1MinuteTraffic(date, host);
+            //get1MinuteTraffic er fjernet det nye interface?!?
+            //return DAO.get1MinuteTraffic(date, host);
+            return DAO.get1HourTraffic(date, host);
         }
         else if(secondsBack == 600) {
-            return mySql.get10MinuteTraffic(date, host);
+            //get10MinuteTraffic er fjernet det nye interface?!?
+            //return DAO.get10MinuteTraffic(date, host);
+            return DAO.get1HourTraffic(date, host);
         }
         else if(secondsBack == 3600) {
-            return mySql.get1HourTraffic(date, host);
+            return DAO.get1HourTraffic(date, host);
         }
         else if(secondsBack == 86400) {
-            return mySql.get1DayTraffic(date, host);
+            return DAO.get1DayTraffic(date, host);
         }
         else if(secondsBack == 2678400) {
-            return mySql.get1MonthTraffic(date, host);
+            return DAO.get1MonthTraffic(date, host);
         }
         
         return null;
