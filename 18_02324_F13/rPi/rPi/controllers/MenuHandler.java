@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import rPi.connectors.Connector;
 
 
-/*
- *  This class has the main menu plus some OS differentiation as this is the only class that invokes external programs
- *  Niclas 2013
+/**
+ *  This class has the main menu plus some OS differentiation as this is the only class that invokes external programs.
+ *  
+ *  @author Niclas
  */
 
 public class MenuHandler {
@@ -26,14 +27,21 @@ public class MenuHandler {
 		inputFromServer = cc.connectToServer();
 	}
 	
-	// Supported OS'es. Type-safety wins
+	/**
+	 *  Supported OS'es. Type-safety wins.
+	 */
 	private enum supportedOS {
 		Windows, Mac, Linux
 	}
 	
-	// We need to invoke different terminal programs for different OS'es
+	/**
+	 *  We need to invoke different terminal programs for different OS'es, so this
+	 *  method checks current OS.
+	 * @return Current OS of enum type 'supportedOS'
+	 */
 	private supportedOS checkOS(){
 		supportedOS OS = null;
+		// Get current OS
 		final String OSstring = System.getProperty("os.name").toLowerCase(); // Name of OS
 		if (OSstring.indexOf("win") >= 0){
 			OS = supportedOS.Windows;
@@ -45,12 +53,14 @@ public class MenuHandler {
 		return OS;
 	}
 	
-	// Get the command from 2C server
-	public void handleCommand() throws Exception{
+	/**
+	 *  Get the command from C&C server
+	 * @throws Exception
+	 */
+	public void handleCommand()
+	{
+		boolean validCommand = false;
 		try {
-			boolean validCommand = false;
-			
-			
 			String command = inputFromServer.readLine();
 			System.out.println("command :" + command);
 			
@@ -65,19 +75,31 @@ public class MenuHandler {
 			{
 				Command cmd = Command.valueOf(command); // enum to avoid mistakes, see below
 				System.out.println("command recieved : " + cmd);
-				switchMenu(cmd);
+				try {
+					switchMenu(cmd);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		} catch (IOException e) {
 			System.out.println("Could not read command from server");
 			e.printStackTrace();
 		}	
-	}
+	} // end handleCommand()
 	
-	// Supported commands
+	/**
+	 *  Supported commands from server as enumerated type
+	 */
 	private enum Command {
 		start, stop, scanNetworks, setChannel, getWifiStatus, getMacAddress;
 	}
-	// The obvious switch case
+	
+	/**
+	 *  The obvious switch case with possible commands from server
+	 * @param cmd command from server as enum type
+	 * @throws Exception
+	 */
 	private void switchMenu(Command cmd) throws Exception{
 		switch (cmd) {
 		case start: // start sniffing
@@ -110,9 +132,13 @@ public class MenuHandler {
 		
 	}
 	
-	// the following command requires tshark opened in sudoers file or the java program executed with su rights
-	// the script saves the tshark process id in process1.pid for later implementation of multiple tshark processes
-	//the command executed in startScript is "/usr/local/bin/tshark -T fields -e ip.src -e ip.dst -e http.host -e http.user_agent -i en0 -I -R http.request tcp port 80 and ip &";
+	/**
+	 *  The following command requires tshark opened in sudoers file or the java program executed with su rights.
+	 *  The script saves the tshark process id in process1.pid for later implementation of multiple tshark processes.
+	 *  The command executed in startScript is "/usr/local/bin/tshark -T fields -e ip.src -e ip.dst -e http.host -e http.user_agent -i en0 -I -R http.request tcp port 80 and ip &";
+	 * 
+	 * @param UDP port on server to send to as sniffing uses out-of-band communication
+	 */
 	public void startSniffing(int portToSendTo){
 		String startScript = "bash /usr/local/bin/tshark -T fields -e ip.src -e ip.dst -e http.host -e http.user_agent -i en0 -I -l -R http.request tcp port 80 and ip";
 		//String startScript = "bash startScript.sh"; // the startscript automatically appends the right path to tshark
@@ -121,7 +147,9 @@ public class MenuHandler {
 		cc.initAndSendUDP(br, portToSendTo);
 	}
 	
-	// This method requires the start script is run, and not just tshark invoked since pid needs to be saved
+	/**
+	 *  This method requires the start script has been run, and not just tshark, invoked since pid needs to have been saved
+	 */
 	public void stopSniffing(){
 		cc.stopUDP();
 		// stopping the process is easy to do in one line, so here it goes with some bash-fu (linux/osx compatible)
@@ -132,6 +160,12 @@ public class MenuHandler {
 		}
 	}
 	
+	/**
+	 * This method scans local networks depending on host OS.
+	 * 
+	 * @return ArrayList with strings from the scan of nearby networks
+	 * @throws Exception
+	 */
 	private ArrayList<String[]> scanNetworks() throws Exception{
 		assert(this.currentOS != null);
 		
@@ -159,6 +193,11 @@ public class MenuHandler {
 	    return networks;
 	}
 	
+	/**
+	 * This method changes the channel of the netcard, by invoking different external programs depending on host OS.
+	 * 
+	 * @param chan channel to switch the NIC to
+	 */
 	private void setChannel(int chan){
 		assert(this.currentOS != null);
 		
@@ -187,6 +226,11 @@ public class MenuHandler {
 		}
 	}
 	
+	/**
+	 * This method gets info about current NIC, ie channel, from different external terminal programs depending on host OS.
+	 * 
+	 * @return ArrayList of strings
+	 */
 	private ArrayList<String[]> getWifiStatus(){
 		assert(this.currentOS != null);
 		
@@ -212,6 +256,12 @@ public class MenuHandler {
 		return statusList;
 	}
 	
+	/**
+	 * Method to get host MAC address for identification purposes
+	 * 
+	 * @return String with MAC addr.
+	 * @throws Exception
+	 */
 	private String getMacAddress() throws Exception{
 		assert(this.currentOS != null);
 		
@@ -245,7 +295,11 @@ public class MenuHandler {
 		return addr;
 	}
 	
-	// This method extracts the UDP port the  server listens on
+	/**
+	 *  This method extracts the UDP port the  server listens on
+	 * @return
+	 * @throws IOException
+	 */
 	private int extractNumber() throws IOException{
 		String command = "";
 		// making it more robust because server maight not respect protocol and send several newlines

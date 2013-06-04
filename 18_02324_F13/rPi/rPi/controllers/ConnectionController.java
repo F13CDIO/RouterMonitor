@@ -2,6 +2,7 @@ package rPi.controllers;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import rPi.connectors.Connector;
@@ -32,8 +33,13 @@ public class ConnectionController {
 	
 	public BufferedReader connectToServer(){
 		// from here we get the command from the C&C server
-		SERVER_IP = InetAddress.getByName("10.16.99.177");
-		dHandler = new DataHandler(); // this instance executes the sniffing program in a terminal
+		try {
+			SERVER_IP = InetAddress.getByName("10.16.99.177");
+		} catch (UnknownHostException e1) {
+			System.out.println("Could not resolve server ip to InetAddress");
+			e1.printStackTrace();
+		}
+		DataHandler dHandler = new DataHandler(); // this instance executes the sniffing program in a terminal
 		inputFromServer = con.initTCPClient(SERVER_IP, DEFAULT_PORT); 
 		
 		System.out.println("tcp initialized, now sending create"); // useless shit protocol HAVE TO BE MITIGATED!!! 
@@ -68,11 +74,5 @@ public class ConnectionController {
 		}
 		System.out.println("TCParray sent");
 		con.sendTCP("\0");
-	}
-		 
-	public void connectToNetwork(String SSID)
-	{
-		//Spr��ger lasse om hvordan man k��re script... 
-		
 	}
 }

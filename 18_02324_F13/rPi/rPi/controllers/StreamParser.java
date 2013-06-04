@@ -4,6 +4,13 @@ import java.io.BufferedReader;
 
 import java.io.IOException;
 
+/**
+ * This class reads the server input from tcp (out-of-band connection)
+ * and 'listens' for the trigger
+ * 
+ * @author Niclas
+ *
+ */
 
 public class StreamParser 
 {
@@ -12,7 +19,12 @@ public class StreamParser
 	byte NUMBER_OF_LINES = 2;
 
 
-	// Method for parsing the command from server currently "start\nPORT_NUMBER" to start sending network traffic over udp and "stop" to stop
+	/**
+	 *  Method for parsing the command from server currently "start\nPORT_NUMBER" to start sending network traffic over udp and "stop" to stop
+	 * @param br The BufferedReader with commandstream from server
+	 * @return the command from server
+	 * @throws Exception
+	 */		
 	public String parseTCPCommand(BufferedReader br) throws Exception
 	{
 		String command;
@@ -37,20 +49,12 @@ public class StreamParser
 
 	}
 
-	// port number getter
+	/**
+	 * This method returns the class variable PORT_NUMBER if not <code>null</code> else an empty string
+	 * 
+	 * @return the port number as saved in the class from previous method
+	 */
 	public String getPort(){
 		return (PORT_NUMBER != null) ? PORT_NUMBER : "" ;
 	}
-
-
-	public String parseNetworkData(String str)
-	{
-		return str;
-	}
-
-	//	public String parsePing(String str) 
-	//	{
-	//		return str;
-	//	}
-
 }

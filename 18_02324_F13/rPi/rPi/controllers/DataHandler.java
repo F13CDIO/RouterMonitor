@@ -2,6 +2,13 @@ package rPi.controllers;
 
 import java.io.BufferedReader;
 
+/**
+ * TODO write doc
+ * 
+ * @author Niclas
+ *
+ */
+
 public class DataHandler {
 	
 	TerminalExecutor tc = new TerminalExecutor();
