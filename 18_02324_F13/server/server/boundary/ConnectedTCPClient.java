@@ -58,8 +58,9 @@ public class ConnectedTCPClient extends Thread
         {    
             dataFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             
-            while (dataFromClient.read() > 0)
+           // while (dataFromClient.read() > 0)
             {
+				System.out.println("run!!");
             	clientRequest += dataFromClient.readLine();
             }
             
@@ -105,6 +106,10 @@ public class ConnectedTCPClient extends Thread
             	{
             		write("A UDP server hasn't been created yet");
             	}
+
+
+	   			TCPclientCommandBean test = new TCPclientCommandBean();
+	   			test.test();
             	break;
             	
             	

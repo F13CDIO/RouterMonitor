@@ -103,9 +103,6 @@ public class TCPServer
                ConnectedTCPClient client = new ConnectedTCPClient(socket);               
                System.out.println("Client at "+ client.getIpAddress() +":" + client.getPort()+" connected ");
                client.start(); // Thread start
-               
-   			TCPServer.testLortet();
-            
             }
         }
     }
