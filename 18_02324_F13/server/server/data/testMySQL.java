@@ -32,13 +32,33 @@ public class testMySQL
 		// Test
 		try 
 		{
-			MySQLConnector.connect();
-			//JSONObject jo = dataPackageDAO.get1MonthTraffic(cal.getTime(), "");
 			
-			//JSONObject jo = dataPackageDAO.get1HourTraffic(cal.getTime(), "");
-			//JSONObject jo = dataPackageDAO.get1DayTraffic(cal.getTime(), "");
-			JSONObject jo = dataPackageDAO.get1MonthTraffic(cal.getTime(), "");
-			System.out.println("\nJSON: " + jo);
+			MySQLConnector.connect();
+			
+			System.out.println("10 seconds");
+			JSONObject jo = dataPackageDAO.get10SecondTraffic(cal.getTime(), "");
+			System.out.println("JSON: " + jo);
+			
+			System.out.println("10 minutes");
+			JSONObject jo5 = dataPackageDAO.get10Minute(cal.getTime(), "");
+			System.out.println("JSON: " + jo5);
+			
+			System.out.println();
+			System.out.println("1 hour");
+			JSONObject jo2 = dataPackageDAO.get1HourTraffic(cal.getTime(), "");
+			System.out.println("JSON: " + jo2);
+			
+			System.out.println();
+			System.out.println("1 day");
+			JSONObject jo3 = dataPackageDAO.get1DayTraffic(cal.getTime(), "");
+			System.out.println("JSON: " + jo3);
+			
+			System.out.println();
+			System.out.println("1 month");
+			JSONObject jo4 = dataPackageDAO.get1MonthTraffic(cal.getTime(), "");
+			System.out.println("JSON: " + jo4);
+			
+			
 		} 
 		
 		catch (SQLException | InstantiationException | IllegalAccessException | ClassNotFoundException e) 

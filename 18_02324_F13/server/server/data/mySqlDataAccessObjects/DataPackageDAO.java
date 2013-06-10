@@ -38,7 +38,18 @@ public class DataPackageDAO implements IDataPackageDAO
 			host = "and host = '"+host+"'";
 		
 		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
-		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 10 SECOND) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 1 LIMIT 10");
+		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(10))*(10)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 10 SECOND) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 1 LIMIT 10");
+		return parseResultsetToJSONObject("traffic", mySqlOutput);
+	}
+	
+	@Override
+	public JSONObject get10Minute(Date date, String host) throws SQLException 
+	{
+		if(!host.equals(""))
+			host = "and host = '"+host+"'";
+		
+		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
+		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(60))*(60)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 10 MINUTE) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 60 LIMIT 10");
 		return parseResultsetToJSONObject("traffic", mySqlOutput);
 	}
 
@@ -150,5 +161,7 @@ public class DataPackageDAO implements IDataPackageDAO
 		}
 		return jsonObject;
 	}
+
+	
 
 }
