@@ -1,20 +1,27 @@
 package server.function;
 
+import java.sql.SQLException;
+
 import server.data.Data.DataPackage;
+import server.data.mySQLConnector.MySQLConnector;
+import server.data.mySqlDataAccessObjects.DataPackageDAO;
 import server.data.IData;
-import server.data.mySqlConnect;
+//import server.data.mySqlConnect;
 
 public class SaveToDB implements Runnable
 {
 	private IData data;
-	private mySqlConnect mySQL;
 	private boolean connected = false;
 	private DataPackage dataPackage = null;
+	private DataPackageDAO dataPackageDAO;
+	
+	
+	
 	
 	public SaveToDB()
 	{
 		data = Function.getDatalayer();
-		mySQL = new mySqlConnect();
+		dataPackageDAO = new DataPackageDAO();
 	}
 	
 	@Override
@@ -24,38 +31,49 @@ public class SaveToDB implements Runnable
 		{
 			try
 			{
-				Thread.sleep(1); //sleep for at lade køen kunne følge med
+				Thread.sleep(1); 
 			}
 			catch (InterruptedException e)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 			
 			if(!data.isEmpty())
 			{
 				if(!connected)
 				{
-					mySQL.connect();
-					connected = true;
+					try 
+					{
+						MySQLConnector.connect();
+						connected = true;
+					} 
+					
+					catch (InstantiationException e) {e.printStackTrace();} 
+					catch (IllegalAccessException e) {e.printStackTrace();} 
+					catch (ClassNotFoundException e) {e.printStackTrace();}
+					catch (SQLException e) {e.printStackTrace();}
+					
 				}
+				
 				try
 				{
-				dataPackage= data.getDataPackage();
-				mySQL.addDataPackage(dataPackage.getInIP(), dataPackage.getOutIP(), dataPackage.getHost(), dataPackage.getSubHost(), dataPackage.getUserAgent(), dataPackage.getTimeStamp());
-				System.out.println(dataPackage.toString());
+					dataPackage= data.getDataPackage();
+					dataPackageDAO.addDataPackage(dataPackage);
+					//mySQL.addDataPackage(dataPackage.getInIP(), dataPackage.getOutIP(), dataPackage.getHost(), dataPackage.getSubHost(), dataPackage.getUserAgent(), dataPackage.getTimeStamp());
+					System.out.println(dataPackage.toString());
 				}
+				
 				catch(Exception e)
 				{
 					System.out.println(e.getStackTrace());
 					System.out.println(e.getMessage());
-					System.out.println(mySQL);
+					System.out.println(dataPackageDAO);
 					System.out.println(dataPackage);
 				}
 			}
 			else if(connected)
 			{
-				mySQL.closeConnection();
+				MySQLConnector.closeConnection();
 				connected = false;
 			}
 		}

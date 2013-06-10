@@ -33,6 +33,12 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
         /* Different 'get'-methods for the different types of info.
          * It is important that methods run in the right order, since they share
          * the same masterIndex variable, for better performance */
+        
+        if (sniffedData.length <= 1)
+        {
+        	return;
+        }
+        
         host = formatHost(sniffedData[2]);
         subHost = formatSubHost(sniffedData[2]);
         sourceIP = sniffedData[0];

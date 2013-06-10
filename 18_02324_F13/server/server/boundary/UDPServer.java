@@ -53,10 +53,10 @@ public class UDPServer extends Thread
 			{
 				incommingPacket = new DatagramPacket(new byte[1024], 1024);
 				udpSocket.receive(incommingPacket);
-				String data = new String(incommingPacket.getData());
+				//String data = new String(incommingPacket.getData());
 				//String data = "T 10.16.99.136:55751 -> 69.171.235.123:80 [AP]\n GET /ping?partition=236&cb=gks9 HTTP/1.1..Host: 3-pct.channel.facebook.com..Connection: keep-alive..User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/";
+				String data = "10.16.98.67	74.82.51.6	www.damnlol.com	Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31";
 				function.parse(data);
-				//System.out.println(data);
 			}
 			
 			catch (IOException e)
