@@ -55,12 +55,14 @@ public class TCPServer
 //	}
 //	// End test
 	
-	public String doClientCommand(String mac, String command, int channelNumber)
+	public static String doClientCommand(String mac, String command, int channelNumber)
 	{
+		System.out.println("doCommand");
 		String data = "";
 		
 		ConnectedTCPClient client = getClient(mac);
 		
+		System.out.println(client.getMac());
 		try 
 		{
 			client.write(command);
@@ -76,10 +78,11 @@ public class TCPServer
 			System.out.println(e.getMessage());
 		}
 		
+		System.out.println("data returned: " + data);
 		return data;
 	}
 	
-	private ConnectedTCPClient getClient(String mac)
+	private static ConnectedTCPClient getClient(String mac)
 	{
 		return clients.get(mac);
 	}
@@ -100,12 +103,15 @@ public class TCPServer
                ConnectedTCPClient client = new ConnectedTCPClient(socket);               
                System.out.println("Client at "+ client.getIpAddress() +":" + client.getPort()+" connected ");
                client.start(); // Thread start
-               //client.write("Welcome");
+               
+   			TCPServer.testLortet();
+            
             }
         }
     }
 
-	
-    
-    
+	public static void testLortet() 
+	{
+		doClientCommand("1234", "scanNetworks\n", -1);
+	}
 }

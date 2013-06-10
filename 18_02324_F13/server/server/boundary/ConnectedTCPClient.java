@@ -66,65 +66,68 @@ public class ConnectedTCPClient extends Thread
             
             
             switch(clientRequest.toLowerCase())
-                {            
-            
-                	case "mac":
-                		System.out.println("Pi command: " + clientRequest);
-                		macAddress = dataFromClient.readLine();
-                		System.out.println("Pi MAC: " + macAddress);
-                		
-                		break;
-                		
-                	case "create": // -----------------------------------------------------------------------------
-                	if (linkedUDPServer == null && !macAddress.equals(""))
-            		{
-            			linkedUDPServer = new UDPServer();
-                		write("start\n" + linkedUDPServer.getPort());
-                		System.out.println("Pi command: " + clientRequest);
-                		System.out.println("Server: Start on UDP port " + linkedUDPServer.getPort());
-                		System.out.println("MAC: " + macAddress);
-                		
-                		TCPServer.addClient(this);
-            		}
-                	break;
-                	
+            {            
+            	case "test":
+            		
+            		break;
+            	
+            	case "mac":
+            		System.out.println("Pi command: " + clientRequest);
+            		macAddress = dataFromClient.readLine();
+            		System.out.println("Pi MAC: " + macAddress);
+            		
+            		break;
+            		
+            	case "create": // -----------------------------------------------------------------------------
+            	if (linkedUDPServer == null && !macAddress.equals(""))
+        		{
+        			linkedUDPServer = new UDPServer();
+            		write("start\n" + linkedUDPServer.getPort());
+            		System.out.println("Pi command: " + clientRequest);
+            		System.out.println("Server: Start on UDP port " + linkedUDPServer.getPort());
+            		System.out.println("MAC: " + macAddress);
+            		
+            		TCPServer.addClient(this);
+        		}
+            	break;
+            	
 
-                	case "start": // -----------------------------------------------------------------------------
-                	
-                	System.out.println("Pi command: " + clientRequest);
-                	if (linkedUDPServer != null)
-                	{
-                		linkedUDPServer.start();
-                		write("UDP server started");
-                	}
-                		
-                	else
-                	{
-                		write("A UDP server hasn't been created yet");
-                	}
-                	break;
-                	
-                	
-                	case "stop": // -----------------------------------------------------------------------------
-                	System.out.println("Pi command: " + clientRequest);
-                	if (linkedUDPServer != null)
-                	{
-                		linkedUDPServer.stopThread();
-                		linkedUDPServer = null;
-                		write("UDP server terminated");
-                	}
+            	case "start": // -----------------------------------------------------------------------------
+            	
+            	System.out.println("Pi command: " + clientRequest);
+            	if (linkedUDPServer != null)
+            	{
+            		linkedUDPServer.start();
+            		write("UDP server started");
+            	}
+            		
+            	else
+            	{
+            		write("A UDP server hasn't been created yet");
+            	}
+            	break;
+            	
+            	
+            	case "stop": // -----------------------------------------------------------------------------
+            	System.out.println("Pi command: " + clientRequest);
+            	if (linkedUDPServer != null)
+            	{
+            		linkedUDPServer.stopThread();
+            		linkedUDPServer = null;
+            		write("UDP server terminated");
+            	}
 
-                	else
-                	{
-                		write("No UDP server is running");
-                	}
-                	
-                	break;
-                	
-                	default: // -----------------------------------------------------------------------------
-                		//write("Invalid command");
-                		break;
-                }
+            	else
+            	{
+            		write("No UDP server is running");
+            	}
+            	
+            	break;
+            	
+            	default: // -----------------------------------------------------------------------------
+            		//write("Invalid command");
+            		break;
+            }
         }
         
     	catch(Exception e) // IO and null pointer

@@ -23,7 +23,7 @@ public class Boundary
 	{
 		try 
 		{		
-			TCPServer.startServer(9000);
+			TCPServer.startServer(9000);			
 		} 
 			
 		catch (IOException e) 
