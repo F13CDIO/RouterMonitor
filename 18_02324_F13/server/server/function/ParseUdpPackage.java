@@ -30,10 +30,6 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
         Calendar cal = Calendar.getInstance();
         String[] sniffedData = input.split("\t");
         
-        /* Different 'get'-methods for the different types of info.
-         * It is important that methods run in the right order, since they share
-         * the same masterIndex variable, for better performance */
-        
         if (sniffedData.length <= 1)
         {
         	return;
@@ -48,7 +44,8 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
         Matcher agentMatcher = agentPattern.matcher(sniffedData[3]);
         if(agentMatcher.find())
         {	
-        	userAgent = sniffedData[3].replaceAll("\0", "");
+        	//userAgent = sniffedData[3].replaceAll("\0", "");
+        	userAgent = agentMatcher.group();
         	if(userAgent.length() > 300)
         	{
         		return;
