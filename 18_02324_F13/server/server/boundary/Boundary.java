@@ -6,7 +6,6 @@ import server.function.IFunction;
 public class Boundary
 {
 	private static IFunction function;
-	private TCPServer tcpServer;
 		
 	public Boundary(){}
 	
@@ -23,9 +22,8 @@ public class Boundary
 	public void startServer() 
 	{
 		try 
-		{
-			tcpServer = new TCPServer(9000);		
-			tcpServer.startServer();
+		{		
+			TCPServer.startServer(9000);
 		} 
 			
 		catch (IOException e) 
