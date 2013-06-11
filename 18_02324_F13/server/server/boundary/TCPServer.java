@@ -22,38 +22,10 @@ public class TCPServer
 		clients.remove(client.getMac());
 	}
 	
-//	// test comm with pi
-//	write("scanNetworks\n");
-//	System.out.println("Server: Scan networks");
-//	while (dataFromClient.read() > 0)
-//	{
-//		System.out.println("Pi: " + dataFromClient.readLine());
-//	}
-//	
-//	Thread.sleep(1000);
-//	
-//	write("getWifiStatus");
-//	System.out.println("Server: Get wifi status");
-//	while (dataFromClient.read() > 0)
-//	{
-//		System.out.println("Pi: " + dataFromClient.readLine());
-//	}
-//	Thread.sleep(1000);
-//	                    		
-//	write("setChannel");
-//	write("5");
-//	System.out.println("Server: Set channel 5");
-//	
-//	while (dataFromClient.read() > 0)
-//		System.out.println("Pi: " + dataFromClient.readLine());
-//	
-//	write("getWifiStatus");
-//	System.out.println("Command to rPi: Get wifi status");
-//	while (dataFromClient.read() > 0)
-//	{
-//		System.out.println("Pi: " + dataFromClient.readLine());
-//	}
-//	// End test
+	private static ConnectedTCPClient getClient(String mac)
+	{
+		return clients.get(mac);
+	}
 	
 	public static String doClientCommand(String mac, String command, int channelNumber)
 	{
@@ -83,11 +55,6 @@ public class TCPServer
 		return data;
 	}
 	
-	private static ConnectedTCPClient getClient(String mac)
-	{
-		return clients.get(mac);
-	}
-	
     public static void startServer(int serverPortNum) throws IOException
     {
     	serverPort = serverPortNum;
@@ -96,20 +63,15 @@ public class TCPServer
         
         System.out.println("TCP server online on ip: " + Inet4Address.getLocalHost().getHostAddress());
  
-        while(true) // Keep listening for new clients
+        while(true) 
         {
-            Socket socket = serverSocket.accept(); // Create new client if new connection is established
+            Socket socket = serverSocket.accept(); 
             if (socket != null)
             {
                ConnectedTCPClient client = new ConnectedTCPClient(socket);               
                System.out.println("Client at "+ client.getIpAddress() +":" + client.getPort()+" connected ");
-               client.start(); // Thread start
+               client.start(); 
             }
         }
     }
-
-	public static void testLortet() 
-	{
-		doClientCommand("1234", "scanNetworks", -1);
-	}
 }

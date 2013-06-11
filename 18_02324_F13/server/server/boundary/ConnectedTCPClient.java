@@ -16,8 +16,6 @@ public class ConnectedTCPClient extends Thread
     private String ipAddress;
     private int port;
     private String macAddress = "";
-    
-    private int testint = 0;
 
     public ConnectedTCPClient(Socket socket) throws IOException
     {
@@ -48,7 +46,6 @@ public class ConnectedTCPClient extends Thread
 			while(!clientDisconnected)
 			{
 				readCommand();
-				System.out.println("running");
 			}
     }
     
@@ -66,45 +63,35 @@ public class ConnectedTCPClient extends Thread
     
     public String readCommand() 
     {
-    	String clientRequest = "";
+    	String clientCommand = "";
     	
     	try
         {    
-
-        	
-            
-            clientRequest = dataFromClient.readLine();
-            
-            switch(clientRequest.toLowerCase())
+            clientCommand = dataFromClient.readLine();
+            System.out.println("rPi command: " + clientCommand);
+            switch(clientCommand.toLowerCase())
             {            
             	case "data":
-            		System.out.println("rPi command: data");
             		return readData(dataFromClient);
             	
             	case "mac":
-            		System.out.println("Pi command: " + clientRequest);
             		macAddress = dataFromClient.readLine();
-            		System.out.println("Pi MAC: " + macAddress);
+            		System.out.println("rPi MAC: " + macAddress);
             		
             		break;
             		
             	case "create": // -----------------------------------------------------------------------------
-            	if (linkedUDPServer == null && !macAddress.equals(""))
-        		{
-        			linkedUDPServer = new UDPServer();
-            		write("start\n" + linkedUDPServer.getPort());
-            		System.out.println("Pi command: " + clientRequest);
-            		System.out.println("Server: Start on UDP port " + linkedUDPServer.getPort());
-            		System.out.println("MAC: " + macAddress);
-            		
-            		TCPServer.addClient(this);
-        		}
-            	break;
+	            	if (linkedUDPServer == null && !macAddress.equals(""))
+	        		{
+	        			linkedUDPServer = new UDPServer();
+	            		write("start\n" + linkedUDPServer.getPort());
+	            		System.out.println("Server: Start on UDP port " + linkedUDPServer.getPort());
+	            		TCPServer.addClient(this);
+	        		}
+	            	break;
             	
-
-            	case "start": // -----------------------------------------------------------------------------
+            	case "start": 
             	
-            	System.out.println("Pi command: " + clientRequest);
             	if (linkedUDPServer != null)
             	{
             		linkedUDPServer.start();
@@ -118,31 +105,29 @@ public class ConnectedTCPClient extends Thread
             	break;
             	
             	
-            	case "stop": // -----------------------------------------------------------------------------
-            	System.out.println("Pi command: " + clientRequest);
-            	if (linkedUDPServer != null)
-            	{
-            		linkedUDPServer.stopThread();
-            		linkedUDPServer = null;
-            		write("UDP server terminated");
-            	}
-
-            	else
-            	{
-            		write("No UDP server is running");
-            	}
+            	case "stop": 
+	            	if (linkedUDPServer != null)
+	            	{
+	            		linkedUDPServer.stopThread();
+	            		linkedUDPServer = null;
+	            		write("UDP server terminated");
+	            	}
+	
+	            	else
+	            	{
+	            		write("No UDP server is running");
+	            	}
+	            	
+	            	break;
             	
-            	break;
-            	
-            	default: // -----------------------------------------------------------------------------
-            		testint ++;
-            		write( testint + "Invalid command");
+            	default: 
+            		write("Invalid command");
             		System.out.println("Invalid command");
             		break;
             }
         }
         
-    	catch(Exception e) // IO and null pointer
+    	catch(Exception e) 
         {
     		System.out.println(this.ipAddress + ": " + this.port + " disconnected");
             stopThread();
@@ -151,7 +136,7 @@ public class ConnectedTCPClient extends Thread
         		linkedUDPServer.stopThread(); // Stop linked UDP server thread
         }
     	
-   	return clientRequest;
+   	return clientCommand;
     }
     
     public void write(String message) throws IOException
