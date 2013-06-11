@@ -49,7 +49,7 @@ public class ConnectedTCPClient extends Thread
 			}
     }
     
-    private String readData(BufferedReader reader) throws IOException
+    public String readData() throws IOException
     {
     	String data = "";
 		while(dataFromClient.read() > 0)
@@ -70,10 +70,7 @@ public class ConnectedTCPClient extends Thread
             clientCommand = dataFromClient.readLine();
             System.out.println("rPi command: " + clientCommand);
             switch(clientCommand.toLowerCase())
-            {            
-            	case "data":
-            		return readData(dataFromClient);
-            	
+            {            	
             	case "mac":
             		macAddress = dataFromClient.readLine();
             		System.out.println("rPi MAC: " + macAddress);
@@ -96,6 +93,9 @@ public class ConnectedTCPClient extends Thread
             	{
             		linkedUDPServer.start();
             		write("UDP server started");
+            		
+            		TCPclientCommandBean test = new TCPclientCommandBean();
+            		test.getClients();
             	}
             		
             	else
@@ -105,20 +105,20 @@ public class ConnectedTCPClient extends Thread
             	break;
             	
             	
-            	case "stop": 
-	            	if (linkedUDPServer != null)
-	            	{
-	            		linkedUDPServer.stopThread();
-	            		linkedUDPServer = null;
-	            		write("UDP server terminated");
-	            	}
-	
-	            	else
-	            	{
-	            		write("No UDP server is running");
-	            	}
-	            	
-	            	break;
+//            	case "stop": 
+//	            	if (linkedUDPServer != null)
+//	            	{
+//	            		linkedUDPServer.stopThread();
+//	            		linkedUDPServer = null;
+//	            		write("UDP server terminated");
+//	            	}
+//	
+//	            	else
+//	            	{
+//	            		write("No UDP server is running");
+//	            	}
+//	            	
+//	            	break;
             	
             	default: 
             		write("Invalid command");

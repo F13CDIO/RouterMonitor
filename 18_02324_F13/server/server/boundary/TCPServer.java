@@ -12,6 +12,11 @@ public class TCPServer
 	private static int serverPort;
 	private static HashMap<String, ConnectedTCPClient> clients;	
 	
+	public static String[] getClients()
+	{
+		return clients.keySet().toArray(new String[0]);
+	}
+	
 	public static void addClient(ConnectedTCPClient client)
 	{
 		clients.put(client.getMac(), client);
@@ -43,7 +48,7 @@ public class TCPServer
 			{
 				client.write("" + channelNumber);
 			}
-			data = client.readCommand();
+			data = client.readData();
 		} 
 		
 		catch (IOException e)

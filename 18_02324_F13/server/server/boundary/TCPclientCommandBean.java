@@ -2,21 +2,40 @@ package server.boundary;
 
 public class TCPclientCommandBean
 {
-	private String[] command = {"getWifiStatus", "setChannel", "scanNetworks"};
 	private int channelNumber = -1;
 	
-	public String getWikiStatus(String mac)
+	public String getWifiStatus(String mac)
 	{
-		return TCPServer.doClientCommand(mac, command[0], channelNumber);
+		return TCPServer.doClientCommand(mac, "getWifiStatus", channelNumber);
 	}
 	
 	public String setChannel(String mac, int channelNumber)
 	{
-		return TCPServer.doClientCommand(mac, command[1], channelNumber);
+		return TCPServer.doClientCommand(mac, "setChannel", channelNumber);
 	}
 	
 	public String scanNetwirks(String mac)
 	{
-		return TCPServer.doClientCommand(mac, command[2], channelNumber);
+		return TCPServer.doClientCommand(mac, "scanNetworks", channelNumber);
+	}
+	
+	public void stopUDPSocket(String mac)
+	{
+		TCPServer.doClientCommand(mac, "stop", channelNumber);
+	}
+	
+	public void startUDPSocket(String mac)
+	{
+		TCPServer.doClientCommand(mac, "start", channelNumber);
+	}
+	
+	public String[] getClients()
+	{
+		System.out.println("Clients: ");
+		for(String mac : TCPServer.getClients())
+		{
+			System.out.println(mac);
+		}
+		return TCPServer.getClients();
 	}
 }
