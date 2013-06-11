@@ -44,9 +44,13 @@ public class TCPServer
 		{
 			client.write(command);
 			
-			if (channelNumber != -1)
+			if (command.equals("setChannel"))
 			{
 				client.write("" + channelNumber);
+			}
+			else if(command.equals("start"))
+			{
+				client.write(""+client.getPort());
 			}
 			data = client.readData();
 		} 

@@ -31,11 +31,6 @@ public class TCPclientCommandBean
 	
 	public String[] getClients()
 	{
-		System.out.println("Clients: ");
-		for(String mac : TCPServer.getClients())
-		{
-			System.out.println(mac);
-		}
 		return TCPServer.getClients();
 	}
 }

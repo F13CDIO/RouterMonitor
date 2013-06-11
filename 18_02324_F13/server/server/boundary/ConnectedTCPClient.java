@@ -54,10 +54,11 @@ public class ConnectedTCPClient extends Thread
     	String data = "";
 		while(dataFromClient.read() > 0)
 		{
+	    	System.out.println("her");
 			data += dataFromClient.readLine();
 			System.out.println(data);
 		}
-		System.out.println(data);
+		System.out.println("data: " + data);
 		return data;
     }
     
@@ -74,36 +75,13 @@ public class ConnectedTCPClient extends Thread
             	case "mac":
             		macAddress = dataFromClient.readLine();
             		System.out.println("rPi MAC: " + macAddress);
+	        		linkedUDPServer = new UDPServer();
+	        		
+	            	System.out.println("Server: Start on UDP port " + linkedUDPServer.getPort());
+	            	TCPServer.addClient(this);
+            		linkedUDPServer.start();
             		
             		break;
-            		
-            	case "create": // -----------------------------------------------------------------------------
-	            	if (linkedUDPServer == null && !macAddress.equals(""))
-	        		{
-	        			linkedUDPServer = new UDPServer();
-	            		write("start\n" + linkedUDPServer.getPort());
-	            		System.out.println("Server: Start on UDP port " + linkedUDPServer.getPort());
-	            		TCPServer.addClient(this);
-	        		}
-	            	break;
-            	
-            	case "start": 
-            	
-            	if (linkedUDPServer != null)
-            	{
-            		linkedUDPServer.start();
-            		write("UDP server started");
-            		
-            		TCPclientCommandBean test = new TCPclientCommandBean();
-            		test.getClients();
-            	}
-            		
-            	else
-            	{
-            		write("A UDP server hasn't been created yet");
-            	}
-            	break;
-            	
             	
 //            	case "stop": 
 //	            	if (linkedUDPServer != null)
