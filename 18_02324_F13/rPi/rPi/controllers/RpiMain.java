@@ -1,6 +1,9 @@
 
 package rPi.controllers;
 
+import java.io.IOException;
+import java.util.InputMismatchException;
+
 /**
  * This is the main method of the rPi project
  * 
@@ -13,7 +16,14 @@ public class RpiMain {
 
 		MenuHandler mh = new MenuHandler();
 		while (true){
-			mh.handleCommand();	
+			try {
+				mh.handleCommand();	
+			} catch (IOException e) {
+				mh.connectToServer(); // reconnect if we had an IOException
+				e.printStackTrace();
+			} catch (InputMismatchException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

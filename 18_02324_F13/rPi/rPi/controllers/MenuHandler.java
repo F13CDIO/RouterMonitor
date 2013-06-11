@@ -2,6 +2,7 @@ package rPi.controllers;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import rPi.connectors.Connector;
 
 
@@ -22,8 +23,10 @@ public class MenuHandler {
 	
 	public MenuHandler() throws Exception {
 		this.currentOS = checkOS();
-		System.out.println("");
 		cc = new ConnectionController();		
+	}
+	
+	public void connectToServer() throws IOException {
 		inputFromServer = cc.connectToServer();
 	}
 	
@@ -55,26 +58,24 @@ public class MenuHandler {
 	
 	/**
 	 *  Get the command from C&C server
+	 * @throws IOException 
 	 * @throws Exception
 	 */
-	public void handleCommand()
+	public void handleCommand() throws IOException
 	{
-		boolean validCommand = false;
-		try {
+		Command cmd = null;
 			String command = inputFromServer.readLine();
 			System.out.println("command :" + command);
 			
 			// check if command is valid
 			for (Command c : Command.values()){
 				if (c.name().equals(command)){
-					validCommand = true;
+					cmd = Command.valueOf(command); 
 				}
 			}
-			// execute command
-			if (validCommand)
-			{
-				Command cmd = Command.valueOf(command); // enum to avoid mistakes, see below
-				System.out.println("command recieved : " + cmd);
+			if (cmd == null){ // above loop failed and we didn't recieve a valid command
+				throw new InputMismatchException("command recieved : " + command);
+			} else {
 				try {
 					switchMenu(cmd);
 				} catch (Exception e) {
@@ -82,10 +83,7 @@ public class MenuHandler {
 					e.printStackTrace();
 				}
 			}
-		} catch (IOException e) {
-			System.out.println("Could not read command from server");
-			e.printStackTrace();
-		}	
+		
 	} // end handleCommand()
 	
 	/**
@@ -96,7 +94,7 @@ public class MenuHandler {
 	}
 	
 	/**
-	 *  The obvious switch case with possible commands from server
+	 *  The obvious switch case with possible commands from server. When a cmd is succesfully executed it returns "\0" over tcp which is our 'end of file' char
 	 * @param cmd command from server as enum type
 	 * @throws Exception
 	 */
@@ -107,27 +105,34 @@ public class MenuHandler {
 			System.out.println("extracted port nr : " + portnr);
 			startSniffing(portnr);
 			System.out.println("started sniffing");
+			cc.sendStringTCP("\0");
 			break;
 		case stop:
 			System.out.println("stopping sniffer");
 			stopSniffing();
+			cc.sendStringTCP("\0");
 			break;
 		case scanNetworks:
 			System.out.println("scanning networks");
 			cc.sendArrayTCP(scanNetworks());
+			cc.sendStringTCP("\0");
 			break;
 		case setChannel:
 			System.out.println("setting channel");
 			int chan = extractNumber();
 			setChannel(chan);
+			cc.sendStringTCP("\0");
 			break;
 		case getWifiStatus:
 			System.out.println("");
 			cc.sendArrayTCP(getWifiStatus());
+			cc.sendStringTCP("\0");
 			break;
 		case getMacAddress:
 			cc.sendStringTCP( getMacAddress() );
+			cc.sendStringTCP("\0");
 			break;
+		default: cc.sendStringTCP("ERROR"); // enum might get extended
 		}
 		
 	}
