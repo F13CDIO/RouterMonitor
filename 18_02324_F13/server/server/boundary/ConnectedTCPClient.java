@@ -16,9 +16,12 @@ public class ConnectedTCPClient extends Thread
     private String ipAddress;
     private int port;
     private String macAddress = "";
+    
+    private int testint = 0;
 
     public ConnectedTCPClient(Socket socket) throws IOException
     {
+    	dataFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.socket = socket;
         this.ipAddress = this.socket.getInetAddress().toString().replace("/", "");
         this.port = this.socket.getPort();
@@ -44,33 +47,39 @@ public class ConnectedTCPClient extends Thread
     {
 			while(!clientDisconnected)
 			{
-				read();
+				readCommand();
+				System.out.println("running");
 			}
     }
     
+    private String readData(BufferedReader reader) throws IOException
+    {
+    	String data = "";
+		while(dataFromClient.read() > 0)
+		{
+			data += dataFromClient.readLine();
+			System.out.println(data);
+		}
+		System.out.println(data);
+		return data;
+    }
     
-    
-    public String read() 
+    public String readCommand() 
     {
     	String clientRequest = "";
     	
     	try
         {    
-            dataFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+        	
             
-           // while (dataFromClient.read() > 0)
-            {
-				System.out.println("run!!");
-            	clientRequest += dataFromClient.readLine();
-            }
-            
-            
+            clientRequest = dataFromClient.readLine();
             
             switch(clientRequest.toLowerCase())
             {            
-            	case "test":
-            		
-            		break;
+            	case "data":
+            		System.out.println("rPi command: data");
+            		return readData(dataFromClient);
             	
             	case "mac":
             		System.out.println("Pi command: " + clientRequest);
@@ -106,10 +115,6 @@ public class ConnectedTCPClient extends Thread
             	{
             		write("A UDP server hasn't been created yet");
             	}
-
-
-	   			TCPclientCommandBean test = new TCPclientCommandBean();
-	   			test.test();
             	break;
             	
             	
@@ -130,7 +135,9 @@ public class ConnectedTCPClient extends Thread
             	break;
             	
             	default: // -----------------------------------------------------------------------------
-            		//write("Invalid command");
+            		testint ++;
+            		write( testint + "Invalid command");
+            		System.out.println("Invalid command");
             		break;
             }
         }

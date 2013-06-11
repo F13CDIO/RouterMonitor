@@ -68,12 +68,13 @@ public class TCPServer
 			client.write(command);
 			
 			if (channelNumber != -1)
+			{
 				client.write("" + channelNumber);
-			
-			data = client.read();
+			}
+			data = client.readCommand();
 		} 
 		
-		catch (IOException e) 
+		catch (IOException e)
 		{
 			System.out.println(e.getMessage());
 		}
@@ -109,6 +110,6 @@ public class TCPServer
 
 	public static void testLortet() 
 	{
-		doClientCommand("1234", "scanNetworks\n", -1);
+		doClientCommand("1234", "scanNetworks", -1);
 	}
 }

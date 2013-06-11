@@ -9,7 +9,7 @@ public class TCPclientCommandBean
 	public void test()
 	{
 		System.out.println("venter på test");
-		scanner.nextLine();
+		//scanner.nextLine();
 		
 		TCPServer.testLortet();
 	}

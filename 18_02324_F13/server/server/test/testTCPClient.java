@@ -10,7 +10,7 @@ package server.test;
 		private Socket clientSocket;
 		private BufferedReader inFromServer;
 		private DataOutputStream outToServer;
-		private String serverAddress = "10.16.135.44";
+		private String serverAddress = "127.0.0.1";
 		private int serverPort = 9000;
 
 		public testTCPClient() throws Exception
@@ -23,7 +23,8 @@ package server.test;
 		{
 			try {
 				outToServer = new DataOutputStream(clientSocket.getOutputStream());
-				outToServer.writeBytes(message);
+				outToServer.writeBytes(message + "\n");
+				outToServer.flush();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
