@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<Context path="18_02324_F13">
+
+<Realm calssName="org.apache.catalina.realm.JDBCRealm" debug="99"
+driverName="com.mysql.jdbc.Driver"
+connectionURL="JDBS:mysql://bjqrn88.cloudns.org/grp18/?user=grp18&amp;password=123123"
+userTable="userTable" userNameCol="userNameCol" userCredCol="userCredCol"
+userRoleTable="userRoleTable" roleNameCol="RoleNameCol"/>	
+
+</Context>
