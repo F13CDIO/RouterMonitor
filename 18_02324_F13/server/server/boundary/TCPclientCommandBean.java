@@ -1,17 +1,22 @@
 package server.boundary;
 
-import java.util.Scanner;
-
 public class TCPclientCommandBean
 {
-	Scanner scanner = new Scanner(System.in);
-
-	public void test()
+	private String[] command = {"getWifiStatus", "setChannel", "scanNetworks"};
+	private int channelNumber = -1;
+	
+	public String getWikiStatus(String mac)
 	{
-		System.out.println("venter på test");
-		//scanner.nextLine();
-		
-		TCPServer.testLortet();
+		return TCPServer.doClientCommand(mac, command[0], channelNumber);
 	}
 	
+	public String setChannel(String mac, int channelNumber)
+	{
+		return TCPServer.doClientCommand(mac, command[1], channelNumber);
+	}
+	
+	public String scanNetwirks(String mac)
+	{
+		return TCPServer.doClientCommand(mac, command[2], channelNumber);
+	}
 }
