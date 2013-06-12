@@ -172,16 +172,17 @@ public class ConnectedTCPClient extends Thread
     	{	
     		try
 			{
-    		System.out.println(this.ipAddress + ": " + this.port + " disconnected");
-    		clientDisconnected = true;
-			socket.close();
-    		stopThread();
-            System.out.println("MAC REMOVED FROM GUI");
+	    		System.out.println(this.ipAddress + ": " + this.port + " disconnected");
+	    		clientDisconnected = true;
+				socket.close();
+	    		stopThread();
+	            System.out.println("MAC REMOVED FROM GUI");
 	        	if (linkedUDPServer != null)
 	        	{
 	        		// Stop linked UDP server thread
 	        		linkedUDPServer.stopThread();
 	        	}
+	        	TCPServer.removeClient(this);
         	}
 			catch (IOException e)
 			{
