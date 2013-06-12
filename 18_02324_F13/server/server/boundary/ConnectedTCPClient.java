@@ -55,8 +55,22 @@ public class ConnectedTCPClient extends Thread
     public String readData() throws IOException
     {
     	String data = "";
+    	int timeout = 0;
     	
 		//while(dataFromClient.read() > 0)
+    	while(!dataFromClient.ready() && timeout < 20)
+    	{
+    		timeout++;
+    		try
+			{
+				Thread.sleep(50);
+			}
+			catch (InterruptedException e)
+			{
+				System.err.println("sleeping");
+			}
+    	}
+    	
     	while(dataFromClient.ready())
 		{
 			data += dataFromClient.readLine();

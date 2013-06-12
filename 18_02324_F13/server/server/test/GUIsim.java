@@ -21,20 +21,20 @@ public class GUIsim extends Thread
 				sleep();
 				for(String client : bean.getClients())
 				{
-					System.out.println(client);
+					System.out.println("Client: " + client);
 					
 					System.err.println("START");
 					bean.startUDPSocket(client);
-					
+					sleep();
 					System.err.println("STOP");
 					bean.stopUDPSocket(client);
-					
+					sleep();
 					System.err.println("Scan networks");
 					bean.scanNetwirks(client);
-					
+					sleep();
 					System.err.println("Set channel");
 					bean.setChannel(client, 5);
-					
+					sleep();
 					System.err.println("Get wifi status");
 					bean.getWifiStatus(client);
 					

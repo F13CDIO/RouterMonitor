@@ -41,9 +41,6 @@ public class TCPServer
 		
 		
 		client.interrupt();
-		
-		
-		System.out.println(client.getMac());
 		try 
 		{
 			
