@@ -121,16 +121,14 @@ public class ConnectedTCPClient extends Thread
     	try
         {
     		Thread.sleep(1);
-    		//dataFromClient.mark(dataFromClient.);
-//    		if(socket.getInputStream().read() < 0)
-//    		{
-//				close();
-//    		}
+    		int dcCheck;
+    		if((dcCheck = socket.getInputStream().read()) < 0)
+    		{
+				close();
+    		}
     		if (dataFromClient.ready())
     		{
-//    			dataFromClient.reset();
-    			
-	            clientCommand = dataFromClient.readLine();
+	            clientCommand =(char)dcCheck + dataFromClient.readLine();
 	            System.out.println("rPi command: " + clientCommand);
 	            switch(clientCommand.toLowerCase())
 	            {            	
