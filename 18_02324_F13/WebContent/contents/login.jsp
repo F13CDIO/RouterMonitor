@@ -1,5 +1,5 @@
 <br />
-<form action="./?page=login" method="post">
+<form action="j_security_check" method="post">
     <div class="form_description">Username:</div>
     <div class="form_input"><input size="70" name="j_username" type="text" /></div>
     <div class="form_description">Password:</div>

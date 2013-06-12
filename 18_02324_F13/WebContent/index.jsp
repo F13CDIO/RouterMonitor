@@ -12,13 +12,14 @@
         pageName = pageName.toLowerCase();
     }
     
-    /* Check if file exists and replaces with "File not found"-page if it doesn't*/
+    /* Check if file exists and replaces with "Page not found"-page if it doesn't*/
     path = "./contents/" + pageName + ".jsp";
     absolutePath = getServletContext().getRealPath(path);
     java.io.File file = new java.io.File(absolutePath);
     
     if (!file.exists()) {
-        pageName = "file_not_found";
+        pageName = "page_not_found";
+        path = "./contents/" + pageName + ".jsp";
     }
     
     /* Generates a nice looking pagename for title etc. */
