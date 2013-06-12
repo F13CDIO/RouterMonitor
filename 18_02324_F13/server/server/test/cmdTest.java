@@ -35,7 +35,7 @@ public class cmdTest
 				else if(command.equals("getWifiStatus"))
 				{
 					System.out.println("Get wifi status");
-					client.sendLine("Dette er wifi status\ns");
+					client.sendLine("Dette er wifi status\n ailfdnaskdfhbaskudjfb\nasilnslkdjn");
 					
 				}
 				

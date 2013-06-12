@@ -17,7 +17,6 @@ public class MainServer
 		GUIsim sim = new GUIsim();
 		sim.start();
 		ui.startServer();
-		
 	}
 
 }

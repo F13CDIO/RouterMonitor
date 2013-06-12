@@ -89,13 +89,13 @@ public class ConnectedTCPClient extends Thread
 			}
 			catch (InterruptedException e)
 			{
-				System.err.println("sleeping");
+				System.err.println("Sleeping exception");
 			}
     	}
     	
     	while(dataFromClient.ready())
 		{
-			data += dataFromClient.readLine();
+			data += dataFromClient.readLine() + "\n";
 		}
 		
 		GUIInterrupt = false;
@@ -116,26 +116,31 @@ public class ConnectedTCPClient extends Thread
     		
     		if (dataFromClient.ready())
     		{
-            clientCommand = dataFromClient.readLine();
-            System.out.println("rPi command: " + clientCommand);
-            switch(clientCommand.toLowerCase())
-            {            	
-            	case "mac":
-            		macAddress = dataFromClient.readLine();
-            		System.out.println("rPi MAC: " + macAddress);
-	        		linkedUDPServer = new UDPServer();
-	        		
-	            	System.out.println("Server: Start on UDP port " + linkedUDPServer.getPort());
-	            	TCPServer.addClient(this);
-            		linkedUDPServer.start();
-            		break;
-            	
-            	default: 
-            		write("Invalid command");
-            		System.out.println("Invalid command");
-            		break;
-            }
-        
+	            clientCommand = dataFromClient.readLine();
+	            System.out.println("rPi command: " + clientCommand);
+	            switch(clientCommand.toLowerCase())
+	            {            	
+	            	case "mac":
+	            		macAddress = dataFromClient.readLine();
+	            		if(!TCPServer.hasClient(macAddress))
+	            		{
+	                		System.out.println("rPi Connected: " + macAddress);
+	            			linkedUDPServer = new UDPServer();
+	            			System.out.println("Server: Start on UDP port " + linkedUDPServer.getPort());
+	            			TCPServer.addClient(this);
+	            			linkedUDPServer.start();
+	            		}
+	            		else
+	            		{
+	            			System.out.println("rPi ignored: " + macAddress);
+	            		}
+	            		break;
+	            	
+	            	default: 
+	            		write("Invalid command");
+	            		System.out.println("Invalid command");
+	            		break;
+	            }
     		}
     	}
         
@@ -163,7 +168,16 @@ public class ConnectedTCPClient extends Thread
     	dataToClient = new DataOutputStream(socket.getOutputStream());
         dataToClient.writeBytes(message + "\n");
         dataToClient.flush();
-    }    
+    }
+    
+    /**
+     * Gets the UDP port
+     * @return The UDP port
+     */
+    public int getUDPport()
+    {
+    	return linkedUDPServer.getPort();
+    }
     
     /**
      * Stops the client thread

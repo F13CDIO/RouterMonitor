@@ -81,7 +81,7 @@ public class TCPServer
 		
 			else if(command.equals("start"))
 			{
-				client.write(""+client.getPort());
+				client.write(""+client.getUDPport());
 			}
 			
 			data = client.readData();
@@ -91,8 +91,9 @@ public class TCPServer
 		{
 			System.out.println(e.getMessage());
 		}
+		if(!data.equals(""))
+		System.out.println("data returned: \n" + data);
 		
-		System.out.println("data returned: " + data);
 		return data;
 	}
 	
@@ -117,8 +118,18 @@ public class TCPServer
             {
                ConnectedTCPClient client = new ConnectedTCPClient(socket);               
                System.out.println("Client at "+ client.getIpAddress() +":" + client.getPort()+" connected ");
-               client.start(); 
+               client.start();
             }
         }
+    }
+    
+    /**
+     * Checks if mac already exists in clientlist
+     * @param mac 
+     * @return True if mac exists, false if not
+     */
+    public static boolean hasClient(String mac)
+    {
+    	return clients.containsKey(mac);
     }
 }

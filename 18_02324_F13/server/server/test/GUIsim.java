@@ -26,8 +26,6 @@ public class GUIsim extends Thread
 					System.err.println("START");
 					bean.startUDPSocket(client);
 					sleep();
-					System.err.println("STOP");
-					bean.stopUDPSocket(client);
 					sleep();
 					System.err.println("Scan networks");
 					bean.scanNetworks(client);
@@ -38,11 +36,17 @@ public class GUIsim extends Thread
 					System.err.println("Get wifi status");
 					bean.getWifiStatus(client);
 					
+					sleep();
+					sleep();
+					sleep();
+					sleep();
+					sleep();
+					
+					
+					System.err.println("STOP");
+					bean.stopUDPSocket(client);
+					
 					System.out.println("Slut");
-					
-					
-					
-					
 					
 					test = false;
 				}
