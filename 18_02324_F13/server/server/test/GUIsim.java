@@ -30,7 +30,7 @@ public class GUIsim extends Thread
 					bean.stopUDPSocket(client);
 					sleep();
 					System.err.println("Scan networks");
-					bean.scanNetwirks(client);
+					bean.scanNetworks(client);
 					sleep();
 					System.err.println("Set channel");
 					bean.setChannel(client, 5);

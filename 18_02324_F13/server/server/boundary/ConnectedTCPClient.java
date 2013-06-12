@@ -6,6 +6,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+/**
+ * The TCPclient connected to the server
+ * @author Group 18
+ *
+ */
+
 public class ConnectedTCPClient extends Thread
 {
     private Socket socket = null;
@@ -18,6 +24,11 @@ public class ConnectedTCPClient extends Thread
     private String macAddress = "";
     private boolean GUIInterrupt = false;
 
+    /**
+     * 
+     * @param socket 
+     * @throws IOException
+     */
     public ConnectedTCPClient(Socket socket) throws IOException
     {
     	dataFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -26,11 +37,19 @@ public class ConnectedTCPClient extends Thread
         this.port = this.socket.getPort();
     }
     
+    /**
+     * The identifyer of the client is it's macaddress
+     * @return Returns the identifyer of the client
+     */
     public String getMac()
     {
     	return macAddress;
     }
     
+    /**
+     * 
+     * @return Returns the ipaddress of the client
+     */
     public String getIpAddress()
     {
     	return this.ipAddress;
@@ -41,7 +60,6 @@ public class ConnectedTCPClient extends Thread
     	return this.port;
     }
     
-         
     public void run() // Thread start method
     {
 			while(!clientDisconnected)
@@ -52,12 +70,16 @@ public class ConnectedTCPClient extends Thread
 			}
     }
     
+    /**
+     * Reads data send via TCP, with a timeout of 20 times 50ms    
+     * @return The data recieved as one string
+     * @throws IOException
+     */
     public String readData() throws IOException
     {
     	String data = "";
     	int timeout = 0;
     	
-		//while(dataFromClient.read() > 0)
     	while(!dataFromClient.ready() && timeout < 20)
     	{
     		timeout++;
@@ -80,7 +102,10 @@ public class ConnectedTCPClient extends Thread
 		return data;
     }
     
-    public String readCommand() 
+    /**
+     * Common commands recieved from the client, is interpreted here 
+     */
+    public void readCommand() 
     {
     	String clientCommand = "";
     	
@@ -103,23 +128,7 @@ public class ConnectedTCPClient extends Thread
 	            	System.out.println("Server: Start on UDP port " + linkedUDPServer.getPort());
 	            	TCPServer.addClient(this);
             		linkedUDPServer.start();
-            		
             		break;
-            	
-//            	case "stop": 
-//	            	if (linkedUDPServer != null)
-//	            	{
-//	            		linkedUDPServer.stopThread();
-//	            		linkedUDPServer = null;
-//	            		write("UDP server terminated");
-//	            	}
-//	
-//	            	else
-//	            	{
-//	            		write("No UDP server is running");
-//	            	}
-//	            	
-//	            	break;
             	
             	default: 
             		write("Invalid command");
@@ -142,11 +151,13 @@ public class ConnectedTCPClient extends Thread
         	if (linkedUDPServer != null)
         		linkedUDPServer.stopThread(); // Stop linked UDP server thread
         }
-    	
-    	
-   	return clientCommand;
     }
     
+    /**
+     * Sends a message to the client, ending on a linebreake
+     * @param message The message to send
+     * @throws IOException
+     */
     public void write(String message) throws IOException
     {
     	dataToClient = new DataOutputStream(socket.getOutputStream());
@@ -154,6 +165,9 @@ public class ConnectedTCPClient extends Thread
         dataToClient.flush();
     }    
     
+    /**
+     * Stops the client thread
+     */
     private void stopThread()
     {
     	TCPServer.removeClient(this);
