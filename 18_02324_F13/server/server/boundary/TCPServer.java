@@ -34,14 +34,19 @@ public class TCPServer
 	
 	public static String doClientCommand(String mac, String command, int channelNumber)
 	{
-		System.out.println("doCommand");
+		System.out.println("Command: " + command);
 		String data = "";
 		
 		ConnectedTCPClient client = getClient(mac);
 		
+		
+		client.interrupt();
+		
+		
 		System.out.println(client.getMac());
 		try 
 		{
+			
 			client.write(command);
 			
 			if (command.equals("setChannel"))

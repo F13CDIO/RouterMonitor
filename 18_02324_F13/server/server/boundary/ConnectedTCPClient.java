@@ -16,6 +16,7 @@ public class ConnectedTCPClient extends Thread
     private String ipAddress;
     private int port;
     private String macAddress = "";
+    private boolean GUIInterrupt = false;
 
     public ConnectedTCPClient(Socket socket) throws IOException
     {
@@ -45,20 +46,23 @@ public class ConnectedTCPClient extends Thread
     {
 			while(!clientDisconnected)
 			{
-				readCommand();
+					if (!GUIInterrupt)
+						readCommand();				
+				
 			}
     }
     
     public String readData() throws IOException
     {
     	String data = "";
-		while(dataFromClient.read() > 0)
+    	
+		//while(dataFromClient.read() > 0)
+    	while(dataFromClient.ready())
 		{
-	    	System.out.println("her");
 			data += dataFromClient.readLine();
-			System.out.println(data);
 		}
-		System.out.println("data: " + data);
+		
+		GUIInterrupt = false;
 		return data;
     }
     
@@ -66,8 +70,13 @@ public class ConnectedTCPClient extends Thread
     {
     	String clientCommand = "";
     	
+    	
     	try
-        {    
+        { 
+    		Thread.sleep(1);
+    		
+    		if (dataFromClient.ready())
+    		{
             clientCommand = dataFromClient.readLine();
             System.out.println("rPi command: " + clientCommand);
             switch(clientCommand.toLowerCase())
@@ -103,8 +112,14 @@ public class ConnectedTCPClient extends Thread
             		System.out.println("Invalid command");
             		break;
             }
-        }
         
+    		}
+    	}
+        
+    	catch (InterruptedException ie)
+    	{
+    		GUIInterrupt = true;
+    	}
     	catch(Exception e) 
         {
     		System.out.println(this.ipAddress + ": " + this.port + " disconnected");
@@ -113,6 +128,7 @@ public class ConnectedTCPClient extends Thread
         	if (linkedUDPServer != null)
         		linkedUDPServer.stopThread(); // Stop linked UDP server thread
         }
+    	
     	
    	return clientCommand;
     }

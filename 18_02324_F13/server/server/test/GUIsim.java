@@ -22,10 +22,28 @@ public class GUIsim extends Thread
 				for(String client : bean.getClients())
 				{
 					System.out.println(client);
-					System.out.println("før start");
+					
+					System.err.println("START");
 					bean.startUDPSocket(client);
-					System.out.println("efter start");
+					
+					System.err.println("STOP");
 					bean.stopUDPSocket(client);
+					
+					System.err.println("Scan networks");
+					bean.scanNetwirks(client);
+					
+					System.err.println("Set channel");
+					bean.setChannel(client, 5);
+					
+					System.err.println("Get wifi status");
+					bean.getWifiStatus(client);
+					
+					System.out.println("Slut");
+					
+					
+					
+					
+					
 					test = false;
 				}
 				

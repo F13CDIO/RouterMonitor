@@ -31,6 +31,18 @@ package server.test;
 			}	
 		}
 		
+		public void send(String message)
+		{
+			try {
+				outToServer = new DataOutputStream(clientSocket.getOutputStream());
+				outToServer.writeBytes(message);
+				outToServer.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+		
 		public String readLine()
 		{
 			try {
