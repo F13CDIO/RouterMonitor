@@ -23,6 +23,7 @@ public class ConnectedTCPClient extends Thread
     private int port;
     private String macAddress = "";
     private boolean GUIInterrupt = false;
+    private boolean UDPactive = false;
 
     /**
      * 
@@ -44,6 +45,16 @@ public class ConnectedTCPClient extends Thread
     public String getMac()
     {
     	return macAddress;
+    }
+     
+    public void setUDPactive(boolean active)
+    {
+    	UDPactive = active;
+    }
+    
+    public boolean isUDPactive()
+    {
+    	return UDPactive;
     }
     
     /**

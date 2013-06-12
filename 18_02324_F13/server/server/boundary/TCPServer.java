@@ -82,6 +82,11 @@ public class TCPServer
 			else if(command.equals("start"))
 			{
 				client.write(""+client.getUDPport());
+				client.setUDPactive(true);
+			}
+			else if(command.equals("stop"))
+			{
+				client.setUDPactive(false);
 			}
 			
 			data = client.readData();
@@ -95,6 +100,14 @@ public class TCPServer
 		System.out.println("data returned: \n" + data);
 		
 		return data;
+	}
+	
+	public static boolean isUDPactive(String mac)
+	{
+		System.out.println("Command: isUDPactive");
+		ConnectedTCPClient client = getClient(mac);
+		
+		return client.isUDPactive();
 	}
 	
 	/**

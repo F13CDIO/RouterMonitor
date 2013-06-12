@@ -57,6 +57,11 @@ public class TCPclientCommandBean
 		TCPServer.doClientCommand(mac, "start", channelNumber);
 	}
 	
+	public boolean isUDPactive(String mac)
+	{
+		return TCPServer.isUDPactive(mac);
+	}
+	
 	/**
 	 * Gets a list of connected clients, by theire mac's
 	 * @return A lisf of mac's for alle the connected clients

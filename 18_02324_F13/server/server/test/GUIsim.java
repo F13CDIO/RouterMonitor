@@ -33,9 +33,15 @@ public class GUIsim extends Thread
 				{
 					System.out.println("Client: " + client);
 					
+					System.err.println("Is UDP active");
+					System.out.println(bean.isUDPactive(client));
+					sleep();
 					System.err.println("START");
 					bean.startUDPSocket(client);
 					sleep();
+					sleep();
+					System.err.println("Is UDP active");
+					System.out.println(bean.isUDPactive(client));
 					sleep();
 					System.err.println("Scan networks");
 					bean.scanNetworks(client);
@@ -55,6 +61,9 @@ public class GUIsim extends Thread
 					
 					System.err.println("STOP");
 					bean.stopUDPSocket(client);
+					System.err.println("Is UDP active");
+					System.out.println(bean.isUDPactive(client));
+					sleep();
 					
 					System.out.println("Slut");
 					
