@@ -1,3 +1,6 @@
+/**
+ * Boundary layer of 3-tier model.
+ */
 package server.boundary;
 
 import java.io.IOException;
@@ -14,17 +17,23 @@ public class Boundary
 		Boundary.function = function;
 	}
 	
+	/**
+	 * Get functionality layer object 
+	 * @return Function object
+	 */
 	public static IFunction getInstanceOfFunction()
 	{
 		return function;
 	}
 
+	/**
+	 * Start server
+	 */
 	public void startServer() 
 	{
 		try 
 		{		
-			TCPServer.startServer(9000);
-			
+			TCPServer.startServer(9000);		
 		} 
 			
 		catch (IOException e) 

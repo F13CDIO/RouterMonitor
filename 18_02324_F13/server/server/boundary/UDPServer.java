@@ -1,9 +1,11 @@
+/**
+ * UDP server for each client.
+ */
+
 package server.boundary;
 import java.io.*;
 import java.net.*;
-
 import server.function.IFunction;
-
 
 public class UDPServer extends Thread
 {
@@ -22,19 +24,28 @@ public class UDPServer extends Thread
 		UDPServer.availableUDPPort++;
 	}
 	
+	/**
+	 * Get granted UDP port
+	 * @return int udpPort
+	 */
 	public int getPort()
 	{
 		return udpPort;
 	}
 	
+	/**
+	 * Kill thread
+	 */
 	public void stopThread()
 	{
 		keepRunning = false;
 		udpSocket = null;
 	}
 	
-
-	public void run() // Start thread 
+	/**
+	 * Start thread by running start method. Keep listening for UDP packet on granted UDP port. 
+	 */
+	public void run()  
 	{
 		try 
 		{
@@ -46,7 +57,6 @@ public class UDPServer extends Thread
 			System.out.println(e1.getMessage());
 		}
 			
-		// Keep listening
 		while (keepRunning)
 		{
 			try
@@ -54,7 +64,6 @@ public class UDPServer extends Thread
 				incommingPacket = new DatagramPacket(new byte[1024], 1024);
 				udpSocket.receive(incommingPacket);
 				String data = new String(incommingPacket.getData());
-				//String data = "10.16.98.67	74.82.51.6	www.damnlol.com	Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31";
 				function.parse(data);
 			}
 			
