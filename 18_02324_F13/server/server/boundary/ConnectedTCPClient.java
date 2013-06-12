@@ -64,9 +64,8 @@ public class ConnectedTCPClient extends Thread
     {
 			while(!clientDisconnected)
 			{
-					if (!GUIInterrupt)
-						readCommand();				
-				
+				if (!GUIInterrupt)
+					readCommand();
 			}
     }
     
@@ -92,7 +91,6 @@ public class ConnectedTCPClient extends Thread
 				System.err.println("Sleeping exception");
 			}
     	}
-    	
     	while(dataFromClient.ready())
 		{
 			data += dataFromClient.readLine() + "\n";
@@ -109,13 +107,18 @@ public class ConnectedTCPClient extends Thread
     {
     	String clientCommand = "";
     	
-    	
     	try
-        { 
+        {
     		Thread.sleep(1);
-    		
+    		//dataFromClient.mark(dataFromClient.);
+//    		if(socket.getInputStream().read() < 0)
+//    		{
+//				close();
+//    		}
     		if (dataFromClient.ready())
     		{
+//    			dataFromClient.reset();
+    			
 	            clientCommand = dataFromClient.readLine();
 	            System.out.println("rPi command: " + clientCommand);
 	            switch(clientCommand.toLowerCase())
@@ -150,12 +153,33 @@ public class ConnectedTCPClient extends Thread
     	}
     	catch(Exception e) 
         {
-    		System.out.println(this.ipAddress + ": " + this.port + " disconnected");
-            stopThread();
-            System.out.println("MAC REMOVED FROM GUI");
-        	if (linkedUDPServer != null)
-        		linkedUDPServer.stopThread(); // Stop linked UDP server thread
+    		close();
         }
+    }
+    
+    private void close()
+    {
+    	
+    	{	
+    		try
+			{
+    		System.out.println(this.ipAddress + ": " + this.port + " disconnected");
+    		clientDisconnected = true;
+			socket.close();
+    		stopThread();
+            System.out.println("MAC REMOVED FROM GUI");
+	        	if (linkedUDPServer != null)
+	        	{
+	        		// Stop linked UDP server thread
+	        		linkedUDPServer.stopThread();
+	        	}
+        	}
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
     }
     
     /**

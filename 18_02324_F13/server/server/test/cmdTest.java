@@ -17,13 +17,13 @@ public class cmdTest
 			
 			while(true)
 			{
-				String command = client.readLine();
+				String command = ""; 
+				command = client.readLine();
 				
 				if(command.equals("start"))
 				{
 					System.out.println("start");
 					System.out.println(client.readLine());
-					
 				}
 				
 				else if(command.equals("stop"))
@@ -35,7 +35,7 @@ public class cmdTest
 				else if(command.equals("getWifiStatus"))
 				{
 					System.out.println("Get wifi status");
-					client.sendLine("Dette er wifi status\n ailfdnaskdfhbaskudjfb\nasilnslkdjn");
+					client.sendLine("Dette er wifi status\nailfdnaskdfhbaskudjfb\nasilnslkdjn");
 					
 				}
 				
@@ -48,7 +48,7 @@ public class cmdTest
 				else if(command.equals("scanNetworks"))
 				{
 					System.out.println("Scan networks");
-					client.sendLine("Networks retur\n linje 2");
+					client.sendLine("Networks retur\nlinje 2");
 					
 				}
 			}

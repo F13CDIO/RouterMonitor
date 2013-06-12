@@ -13,9 +13,19 @@ public class GUIsim extends Thread
 	public void run()
 	{
 		sleep();
-		System.out.println("GUI!!!!!!!");
+		System.err.println("GUI!!!!!!!");
 		while(test)
 		{
+			try
+			{
+				Thread.sleep(1);
+			}
+			catch (InterruptedException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			if(bean.getClients().length > 0)
 			{
 				sleep();
