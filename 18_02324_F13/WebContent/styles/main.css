@@ -36,6 +36,24 @@ body {
     height: 44px;
     background-image: url('../images/bg_bottom.png');
 }
+#statistics_top_right {
+    width: 500px;
+    float: right;
+    margin: 0 0 30px 15px;
+}
+#customize_layout {
+    border-collapse: collapse;
+}
+#home_example {
+    float: right;
+    margin-left: 30px;
+}
+a {
+    color: black;
+}
+a:hover {
+    text-decoration: none;
+}
 a.menu_link {
     display: block;
     width: 190px;
@@ -67,6 +85,48 @@ div.form_input {
     height: 30px;
     float: left;
 }
+div.clear {
+    clear: both;
+}
+div.selection_box {
+    border: 1px solid black;
+    width: 200px;
+    padding: 10px;
+}
+div.selection_box_container {
+    margin: 30px 50px 0 0;
+    float: left;
+}
+div.layout_big {
+    border: 1px solid black;
+    width: 912px;
+    padding: 70px 0;
+    text-align: center;
+    clear: left;
+    margin-bottom: 10px;
+}
+div.layout_small {
+    width: 450px;
+    margin: 0 10px 10px 0;
+    float: left;
+    text-align: center;
+    border: 1px solid black;
+    padding: 70px 0;
+}
+div.statistics_big {
+    width: 912px;
+    text-align: center;
+    clear: left;
+    margin-bottom: 10px;
+    padding-top: 30px;
+}
+div.statistics_small {
+    width: 450px;
+    margin: 0 10px 10px 0;
+    float: left;
+    text-align: center;
+    padding-top: 30px;
+}
 input.form_submit {
     clear: both;
     float: left;
@@ -74,6 +134,12 @@ input.form_submit {
     height: 50px;
     margin-top: 10px;
 }
-img.home_example {
-    float: right;
+td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+    vertical-align: top;
+}
+td.customize_option {
+    width: 265px;
 }
