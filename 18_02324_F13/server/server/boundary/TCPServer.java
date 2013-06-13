@@ -68,6 +68,10 @@ public class TCPServer
 		String data = "";
 		
 		ConnectedTCPClient client = getClient(mac);
+		if(client == null)
+		{
+			return "No Client with the MAC - address: " + mac + "found";
+		}
 		client.interrupt();
 		
 		try 
@@ -106,7 +110,11 @@ public class TCPServer
 	{
 		System.out.println("Command: isUDPactive");
 		ConnectedTCPClient client = getClient(mac);
-		
+		if(client == null)
+		{
+			System.err.println("No Client with the MAC - address: " + mac + " found");
+			return false;
+		}
 		return client.isUDPactive();
 	}
 	

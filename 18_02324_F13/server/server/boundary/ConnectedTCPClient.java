@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+import server.test.DisconnectCheck;
+
 /**
  * The TCPclient connected to the server
  * @author Group 18
@@ -24,6 +26,7 @@ public class ConnectedTCPClient extends Thread
     private String macAddress = "";
     private boolean GUIInterrupt = false;
     private boolean UDPactive = false;
+    private DisconnectCheck disconnectControl;
 
     /**
      * 
@@ -36,6 +39,7 @@ public class ConnectedTCPClient extends Thread
         this.socket = socket;
         this.ipAddress = this.socket.getInetAddress().toString().replace("/", "");
         this.port = this.socket.getPort();
+        disconnectControl = new DisconnectCheck(socket, this);
     }
     
     /**
@@ -73,10 +77,13 @@ public class ConnectedTCPClient extends Thread
     
     public void run() // Thread start method
     {
+    	disconnectControl.start();
 			while(!clientDisconnected)
 			{
 				if (!GUIInterrupt)
+				{
 					readCommand();
+				}
 			}
     }
     
@@ -104,11 +111,33 @@ public class ConnectedTCPClient extends Thread
     	}
     	while(dataFromClient.ready())
 		{
-			data += dataFromClient.readLine() + "\n";
+			data += readLine() + "\n";
 		}
 		
+    	disconnectControl.setGUIinterrupt(false);
 		GUIInterrupt = false;
 		return data;
+    }
+    
+    private String readLine()
+    {
+    	try
+    	{
+    		char temp;
+	    	if((temp = disconnectControl.getDisconnectCorrection()) > 0)
+			{
+				return temp + dataFromClient.readLine();
+			}
+			else
+			{
+				return dataFromClient.readLine();
+			}
+    	}
+    	catch(IOException e)
+    	{
+    		System.err.println(e.getMessage());
+    		return "ERROR";
+    	}
     }
     
     /**
@@ -121,19 +150,15 @@ public class ConnectedTCPClient extends Thread
     	try
         {
     		Thread.sleep(1);
-    		int dcCheck;
-    		if((dcCheck = socket.getInputStream().read()) < 0)
-    		{
-				close();
-    		}
+    		
     		if (dataFromClient.ready())
     		{
-	            clientCommand =(char)dcCheck + dataFromClient.readLine();
+				clientCommand = readLine();
 	            System.out.println("rPi command: " + clientCommand);
 	            switch(clientCommand.toLowerCase())
 	            {            	
 	            	case "mac":
-	            		macAddress = dataFromClient.readLine();
+	            		macAddress = readLine();
 	            		if(!TCPServer.hasClient(macAddress))
 	            		{
 	                		System.out.println("rPi Connected: " + macAddress);
@@ -159,6 +184,7 @@ public class ConnectedTCPClient extends Thread
     	catch (InterruptedException ie)
     	{
     		GUIInterrupt = true;
+    		disconnectControl.setGUIinterrupt(true);
     	}
     	catch(Exception e) 
         {
@@ -166,7 +192,7 @@ public class ConnectedTCPClient extends Thread
         }
     }
     
-    private void close()
+    public void close()
     {
     	
     	{	
