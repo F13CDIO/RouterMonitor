@@ -49,6 +49,7 @@
                 <a href="./?page=live_traffic" class="menu_link<% if(pageName.equals("live_traffic")){out.print(" menu_link_active");} %>">Live traffic</a>
                 <a href="./?page=create_user" class="menu_link<% if(pageName.equals("create_user")){out.print(" menu_link_active");} %>">Create user</a>
                 <a href="./?page=login" class="menu_link<% if(pageName.equals("login")){out.print(" menu_link_active");} %>">Login</a>
+                <a href="./?page=control_panel" class="menu_link<% if(pageName.equals("control_panel")){out.print(" menu_link_active");} %>">Control Panel</a>
             </div>
             <div id="main">
                 <h2 id="title"><% out.println(pageNameNice); %></h2>

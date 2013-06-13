@@ -48,11 +48,24 @@ body {
     float: right;
     margin-left: 30px;
 }
+#pi_list {
+    width: 600px;
+    min-height: 200px;
+    border: 2px solid #7c7c7c;
+}
+#pi_list_title {
+    width: 585px;
+    border-bottom: 2px solid #7c7c7c;
+    padding: 10px 0 10px 15px;
+}
 a {
     color: black;
 }
 a:hover {
     text-decoration: none;
+}
+a.menu_link_first {
+    margin-left: 70px;
 }
 a.menu_link {
     display: block;
@@ -71,9 +84,6 @@ a.menu_link:hover {
 }
 a.menu_link_active {
     text-decoration: underline;
-}
-a.menu_link_first {
-    margin-left: 70px;
 }
 div.form_description {
     height: 30px;
@@ -134,6 +144,11 @@ input.form_submit {
     height: 50px;
     margin-top: 10px;
 }
+input.pi_control_submit {
+    width: 117px;
+    height: 50px;
+    margin-top: 10px;
+}
 td {
     border: 1px solid black;
     padding: 10px;
@@ -142,4 +157,29 @@ td {
 }
 td.customize_option {
     width: 265px;
+}
+label.pi_line {
+    display: block;
+    width: 568px;
+    padding: 15px;
+    border: 1px solid #c9c9c9;
+    background-color: #dadada;
+}
+label.pi_line:hover {
+    background-color: #dfdfdf;
+}
+span.pi_num {
+    width: 35px;
+    display: block;
+    float: left;
+    text-align: right;
+}
+span.pi_info {
+    width: 160px;
+    padding-left: 90px;
+    display: block;
+    float: left;
+}
+span.pi_sel {
+    margin-left: -20px;
 }
