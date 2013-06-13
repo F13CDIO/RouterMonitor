@@ -8,7 +8,7 @@
     pageName = pageName.substring(position+1);
     
     /* If there is no filename, it must be because we are on the home-page */
-    if(pageName.length() < 4) {
+    if(pageName.length() < 4 || "index.jsp".equals(pageName)) {
         pageName = "home.jsp";
     }
     
