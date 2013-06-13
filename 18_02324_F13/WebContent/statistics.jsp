@@ -1,4 +1,4 @@
-<jsp:useBean id="CustomCharts" class="server.function.CustomCharts" />
+<%@include file="./includes/top.jsp" %>
 
 <%
     boolean fileExists = false;
@@ -30,8 +30,8 @@
         selectedCharts = temp[1].split(",");
         
         out.println("This is your custom statistics page. You can always acces the standard page");
-        out.println("<a href=\"./?page=statistics&std=true\">here</a>, or customize your page");
-        out.println("<a href=\"./?page=customize_selection\">here</a>.");
+        out.println("<a href=\"./statistics.jsp?std=true\">here</a>, or customize your page");
+        out.println("<a href=\"./customize_selection.jsp\">here</a>.");
         
         /* Print layout with charts */
         for (i = 0; i < 5; i++) {
@@ -69,9 +69,11 @@ our service, it is also possible for you to costomize this page.
 <br /><br />
 You can add additional charts, as well as rearrange the entire page.
 <br /><br />
-The customization page can be found <a href="./?page=customize_selection">here.</a>
+The customization page can be found <a href="./customize_selection.jsp">here.</a>
 <div class="clear"><% out.println(CustomCharts.top10Bar1Month()); %></div>
 
 <%
     }
 %>
+
+<%@include file="./includes/bottom.jsp" %>

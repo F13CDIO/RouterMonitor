@@ -1,6 +1,8 @@
+<%@include file="./includes/top.jsp" %>
+
 Select the charts you would like on your customized statistics page...
 <br />
-<form action="./?page=customize_layout" method="post">
+<form action="./customize_layout.jsp" method="post">
     <div class="selection_box_container">
         Top 10 Bar-charts:
         <div class="selection_box">
@@ -104,3 +106,5 @@ Select the charts you would like on your customized statistics page...
     
     <div class="clear"></div>
 </form>
+
+<%@include file="./includes/bottom.jsp" %>

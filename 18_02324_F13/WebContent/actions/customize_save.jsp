@@ -38,10 +38,10 @@
 <html>
     <head>
         <title>Network Monitoring System - Saving data...</title>
-        <meta http-equiv="refresh" content="0; url=../?page=statistics">
+        <meta http-equiv="refresh" content="0; url=../statistics.jsp">
     </head>
     
     <body>
-        Your data is saved. See the result <a href="./?page=statistics">here.</a>
+        Your data is saved. See the result <a href="./statistics.jsp">here.</a>
     </body>
 </html>

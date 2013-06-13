@@ -1,3 +1,5 @@
+<%@include file="./includes/top.jsp" %>
+
 <jsp:useBean id="piControl" class="server.boundary.TCPclientCommandBean" />
 
 <%
@@ -37,7 +39,7 @@
         
         <br />
         Availible Pi's:
-        <form action="./contents/pi_action.jsp" method="post">
+        <form action="./actions/pi_action.jsp" method="post">
         <div id="pi_list">
         <div id="pi_list_title">
         <span class="pi_num">#</span>
@@ -72,3 +74,5 @@
 <%   
     }
 %>
+
+<%@include file="./includes/bottom.jsp" %>

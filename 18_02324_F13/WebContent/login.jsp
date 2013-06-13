@@ -1,3 +1,5 @@
+<%@include file="./includes/top.jsp" %>
+
 <br />
 <form action="j_security_check" method="post">
     <div class="form_description">Username:</div>
@@ -7,3 +9,5 @@
     
     <input class="form_submit" type="submit" value="Login" />
 </form>
+
+<%@include file="./includes/bottom.jsp" %>

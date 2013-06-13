@@ -9,9 +9,8 @@
     selectedPi = request.getParameter("selectedPi");
     action = request.getParameter("action");
     
-    
+    /* Print what we are trying to do */
     out.println("Performing '" + action + "' to Pi with MAC-address: " + selectedPi);
-    
     
     /* Select the correct action to perform */
     if(availibleActions[0].equals(action)) {

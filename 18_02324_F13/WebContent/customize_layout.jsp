@@ -1,3 +1,5 @@
+<%@include file="./includes/top.jsp" %>
+
 <%
     String[] availibleCharts = {
         "Top 10 Bar-chart for the last 10 minutes",
@@ -33,7 +35,7 @@
 %>
 
 
-<form action="./contents/customize_save.jsp" method="post">
+<form action="./actions/customize_save.jsp" method="post">
 
     <%
         for (i = 0; i < 5; i++) {
@@ -86,3 +88,5 @@
     <input class="form_submit" type="submit" value="Save changes" />
 </form>
 <div class="clear"></div>
+
+<%@include file="./includes/bottom.jsp" %>

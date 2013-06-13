@@ -1,3 +1,5 @@
+<%@include file="./includes/top.jsp" %>
+
 <br />
 <form action="./?page=create_user" method="post">
     <div class="form_description">Username:</div>
@@ -11,3 +13,5 @@
     
     <input class="form_submit" type="submit" value="Create user" />
 </form>
+
+<%@include file="./includes/bottom.jsp" %>
