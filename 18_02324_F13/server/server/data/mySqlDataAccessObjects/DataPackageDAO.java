@@ -94,7 +94,7 @@ public class DataPackageDAO implements IDataPackageDAO
 		query += dataPackage.getScourceIP() + "', '";
 		query += dataPackage.getDestinationIP() + "', '";
 		query += dataPackage.getHost() + "', '";
-		query += "sub','";
+		query += dataPackage.getSubHost() + "','";
 		query += dataPackage.getUserAgent() + "', '";
 		query += mySqlTimestamp + "');";
 		
