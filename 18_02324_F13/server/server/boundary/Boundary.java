@@ -33,6 +33,7 @@ public class Boundary
 	{
 		try 
 		{		
+			TomcatServer.start();
 			TCPServer.startServer(9000);		
 		} 
 			

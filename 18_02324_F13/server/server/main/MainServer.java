@@ -13,7 +13,6 @@ public class MainServer
 		IData data = new Data();
 		IFunction function = new Function(data);
 		Boundary ui = new Boundary(function);
-		TomcatServer.start();
 		ui.startServer();
 	}
 
