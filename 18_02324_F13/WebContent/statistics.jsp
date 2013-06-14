@@ -23,6 +23,7 @@
         /* Reads from txt-file */
         java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader(path));
         savedData = reader.readLine();
+        reader.close();
 
         /* Insert into arrays */
         temp = savedData.split(";");
