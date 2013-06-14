@@ -18,7 +18,7 @@ public class DataPackageDAO implements IDataPackageDAO
 	public JSONArray getTop10() throws SQLException 
 	{
 		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
-		return parseResultsetToJSONArray(mySqlOutput);
+		return parseResultsetToJSONArray("hosts", mySqlOutput);
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class DataPackageDAO implements IDataPackageDAO
 	{
 		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());		
 		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
-		return parseResultsetToJSONArray(mySqlOutput);
+		return parseResultsetToJSONArray("hosts", mySqlOutput);
 	}
 
 	@Override
@@ -103,19 +103,34 @@ public class DataPackageDAO implements IDataPackageDAO
 	}
 	
 	@SuppressWarnings("unchecked")
-	private JSONArray parseResultsetToJSONArray(ResultSet mySqlOutput) 
+	private JSONArray parseResultsetToJSONArray(String function, ResultSet mySqlOutput) 
 	{
-		JSONArray hosts = new JSONArray();
+		JSONArray jsonArray = new JSONArray();
 		
 		try 
 		{
 			while (mySqlOutput.next())
-			{			
+			{		
 				JSONObject jo = new JSONObject();
-				jo.put("rank", mySqlOutput.getRow());
-				jo.put("count", mySqlOutput.getInt("count"));
-				jo.put("host", mySqlOutput.getString("host"));
-				hosts.add(jo);
+				switch (function)
+				{
+					case "hosts":
+						jo.put("rank", mySqlOutput.getRow());
+						jo.put("count", mySqlOutput.getInt("count"));
+						jo.put("host", mySqlOutput.getString("host"));
+						jsonArray.add(jo);
+						break;
+						
+					case "users":
+						jo.put("userName", mySqlOutput.getString("userNameCol"));
+						jo.put("userRole", mySqlOutput.getString("roleNameCol"));
+						jsonArray.add(jo);
+						break;
+					
+					default:
+						break;
+				}
+				
 			}
 		} 
 		
@@ -125,7 +140,7 @@ public class DataPackageDAO implements IDataPackageDAO
 			System.out.println(e.getMessage());
 		}
 		
-		return hosts;
+		return jsonArray;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -203,6 +218,13 @@ public class DataPackageDAO implements IDataPackageDAO
 		MySQLConnector.update(query);
 		query = "UPDATE userRoleTable SET roleNameCol = '"+newRole+"' WHERE userNameCol ='"+email+"'";
 		MySQLConnector.update(query);
+	}
+
+	@Override
+	public JSONArray getAllUsers() throws SQLException 
+	{
+		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT * FROM userRoleTable ORDER BY userNameCol ASC");
+		return parseResultsetToJSONArray("users", mySqlOutput);
 	}
 
 	
