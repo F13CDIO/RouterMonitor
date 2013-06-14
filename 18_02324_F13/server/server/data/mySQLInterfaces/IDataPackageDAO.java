@@ -17,4 +17,6 @@ public interface IDataPackageDAO
 	JSONObject get1DayTraffic(Date date, String host) throws SQLException ;
 	JSONObject get1MonthTraffic(Date date, String host) throws SQLException ;
 	void addDataPackage(DataPackage dataPackage) throws SQLException ;
+	void addUser(String email, String password, String role)throws SQLException ;
+	boolean userExists(String email) throws SQLException ;
 }

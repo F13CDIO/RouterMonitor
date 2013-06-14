@@ -162,6 +162,26 @@ public class DataPackageDAO implements IDataPackageDAO
 		return jsonObject;
 	}
 
+	@Override
+	public void addUser(String email, String password, String role) throws SQLException 
+	{
+	
+		String query = "INSERT INTO userTable VALUES('"+email+"', '"+password+"')";
+		System.out.println(query);
+		MySQLConnector.update(query);
+		
+		query = "INSERT INTO userRoleTable VALUES('"+email+"', '"+role+"')";
+		System.out.println(query);
+		MySQLConnector.update(query);
+	}
+
+	@Override
+	public boolean userExists(String email) throws SQLException 
+	{
+		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT userNameCol FROM userTable WHERE userNameCol = '"+email+"'");
+		return mySqlOutput.first();
+	}
+
 	
 
 }
