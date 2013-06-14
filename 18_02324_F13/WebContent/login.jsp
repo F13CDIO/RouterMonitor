@@ -7,7 +7,7 @@
     <div class="form_description">Password:</div>
     <div class="form_input"><input size="70" name="j_password" type="password" /></div>
     
-    <input class="form_submit" type="submit" value="Login" />
+    <input class="form_submit" type="submit" value="login" />
 </form>
 
 <%@include file="./includes/bottom.jsp" %>

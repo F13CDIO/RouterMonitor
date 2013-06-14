@@ -47,7 +47,7 @@
         <br />
         <span id="pi_title">Availible Pi's:</span>
         Change channel:
-        <form action="./actions/pi_action.jsp" method="post">
+        <form action="./pi_action.jsp" method="post">
         <div id="pi_list">
         <div id="pi_list_title">
         <span class="pi_num">#</span>

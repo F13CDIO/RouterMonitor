@@ -35,7 +35,7 @@
 %>
 
 
-<form action="./actions/customize_save.jsp" method="post">
+<form action="./customize_save.jsp" method="post">
 
     <%
         for (i = 0; i < 5; i++) {

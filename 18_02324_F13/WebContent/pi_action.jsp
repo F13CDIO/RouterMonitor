@@ -55,7 +55,7 @@
 <html>
     <head>
         <title>Network Monitoring System - Saving data...</title>
-        <meta http-equiv="refresh" content="0; url=../pi_control.jsp">
+        <meta http-equiv="refresh" content="0; url=./pi_control.jsp">
     </head>
     
     <body>

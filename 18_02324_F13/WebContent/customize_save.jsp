@@ -38,7 +38,7 @@
 <html>
     <head>
         <title>Network Monitoring System - Saving data...</title>
-        <meta http-equiv="refresh" content="0; url=../statistics.jsp">
+        <meta http-equiv="refresh" content="0; url=./statistics.jsp">
     </head>
     
     <body>
