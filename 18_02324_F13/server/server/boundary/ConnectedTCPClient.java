@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-import server.test.DisconnectCheck;
+import server.function.DisconnectCheck;
 
 /**
  * The TCPclient connected to the server

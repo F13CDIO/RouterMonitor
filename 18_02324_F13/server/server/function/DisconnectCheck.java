@@ -1,10 +1,15 @@
-package server.test;
+package server.function;
 
 import java.io.IOException;
 import java.net.Socket;
 
 import server.boundary.ConnectedTCPClient;
 
+/**
+ * 
+ * @author Mads
+ *
+ */
 public class DisconnectCheck extends Thread
 {
 	private Socket socket;
@@ -12,6 +17,11 @@ public class DisconnectCheck extends Thread
 	private boolean connected, GUIinterrupt, returned;
 	private int disconnectCorrection;
 	
+	/**
+	 * Initialises the checker
+	 * @param socket The socket to read from
+	 * @param client The client it is working with
+	 */
 	public DisconnectCheck(Socket socket, ConnectedTCPClient client)
 	{
 		this.socket = socket;
@@ -62,6 +72,10 @@ public class DisconnectCheck extends Thread
 		}
 	}
 	
+	/**
+	 * 
+	 * @return Retuns the missing byte as a char if it has been taken by the reader, else it returns the null char
+	 */
 	public char getDisconnectCorrection()
 	{
 		char correction;
@@ -78,6 +92,10 @@ public class DisconnectCheck extends Thread
 		return correction;
 	}
 
+	/**
+	 * A way to unterrupt the checkker, and start it again
+	 * @param interrupted Wether it should be stopped or started
+	 */
 	public void setGUIinterrupt(boolean interrupted)
 	{
 		GUIinterrupt = interrupted;
