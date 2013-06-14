@@ -29,9 +29,7 @@ public class ConnectionController {
 	String fromServer;
 	StreamParser parser = new StreamParser();
 	
-	public ConnectionController() throws Exception{
-		SERVER_IP = InetAddress.getByName("10.16.172.9");	
-		System.out.println("Connectionscontroller constructor init'd");
+	public ConnectionController(){
 	}
 
 	/**
@@ -47,7 +45,6 @@ public class ConnectionController {
 			System.out.println("Could not resolve server ip to InetAddress");
 			e1.printStackTrace();
 		}
-		DataHandler dHandler = new DataHandler(); // this instance executes the sniffing program in a terminal
 		
 		// The loop that tries to connect to server once in a while
 		while (inputFromServer == null){
@@ -64,10 +61,9 @@ public class ConnectionController {
 		
 		System.out.println("tcp initialized, now sending create"); // useless shit protocol HAVE TO BE MITIGATED!!! 
 		
+		// OUR PROTOCOL HANDSHAKE / WHATEVA
 		con.sendTCP("mac\n");
 		con.sendTCP("60:c5:47:0a:05:fe\n");
-		con.sendTCP("create\n");
-		con.sendTCP("start\n");
 		
 		return inputFromServer;
 	}
@@ -107,6 +103,5 @@ public class ConnectionController {
 			}
 		}
 		System.out.println("TCParray sent");
-		con.sendTCP("\0");
 	}
 }

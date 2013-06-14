@@ -15,12 +15,13 @@ public class RpiMain {
 	public static void main(String[] args) throws Exception {
 
 		MenuHandler mh = new MenuHandler();
+		mh.connectToServer();
 		while (true){
-			try {
+			try {			
 				mh.handleCommand();	
 			} catch (IOException e) {
-				mh.connectToServer(); // reconnect if we had an IOException
 				e.printStackTrace();
+				mh.connectToServer(); // reconnect if we had an IOException
 			} catch (InputMismatchException e) {
 				e.printStackTrace();
 			}

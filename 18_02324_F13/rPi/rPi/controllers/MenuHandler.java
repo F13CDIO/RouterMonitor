@@ -3,7 +3,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import rPi.connectors.Connector;
+
+import rPi.controllers.MainController.SupportedOS;
+import rPi.controllers.MainController.SupportedCommands;
 
 
 /**
@@ -14,123 +16,52 @@ import rPi.connectors.Connector;
 
 public class MenuHandler {
 	
-	private final supportedOS currentOS;
-	
-	TerminalExecutor tc = new TerminalExecutor();
-	public BufferedReader br = null;
-	BufferedReader inputFromServer = null;
-	ConnectionController cc;
-	
-	public MenuHandler() throws Exception {
-		this.currentOS = checkOS();
-		cc = new ConnectionController();		
-	}
-	
-	public void connectToServer() throws IOException {
-		inputFromServer = cc.connectToServer();
-	}
+	private SupportedOS currentOS;
 	
 	/**
-	 *  Supported OS'es. Type-safety wins.
+	 * The constructor needs to know host OS
+	 * 
+	 * @param currentOS
 	 */
-	private enum supportedOS {
-		Windows, Mac, Linux
+	public MenuHandler(SupportedOS currentOS) {
+		this.currentOS = currentOS;
 	}
-	
-	/**
-	 *  We need to invoke different terminal programs for different OS'es, so this
-	 *  method checks current OS.
-	 * @return Current OS of enum type 'supportedOS'
-	 */
-	private supportedOS checkOS(){
-		supportedOS OS = null;
-		// Get current OS
-		final String OSstring = System.getProperty("os.name").toLowerCase(); // Name of OS
-		if (OSstring.indexOf("win") >= 0){
-			OS = supportedOS.Windows;
-		} else if (OSstring.indexOf("mac") >= 0){
-			OS = supportedOS.Mac;
-		} else if (OSstring.indexOf("nix") >= 0){
-			OS = supportedOS.Linux;
-		}
-		return OS;
-	}
-	
-	/**
-	 *  Get the command from C&C server
-	 * @throws IOException 
-	 * @throws Exception
-	 */
-	public void handleCommand() throws IOException
-	{
-		Command cmd = null;
-			String command = inputFromServer.readLine();
-			System.out.println("command :" + command);
-			
-			// check if command is valid
-			for (Command c : Command.values()){
-				if (c.name().equals(command)){
-					cmd = Command.valueOf(command); 
-				}
-			}
-			if (cmd == null){ // above loop failed and we didn't recieve a valid command
-				throw new InputMismatchException("command recieved : " + command);
-			} else {
-				try {
-					switchMenu(cmd);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
 		
-	} // end handleCommand()
-	
-	/**
-	 *  Supported commands from server as enumerated type
-	 */
-	private enum Command {
-		start, stop, scanNetworks, setChannel, getWifiStatus, getMacAddress;
-	}
+	ConnectionController cc = new ConnectionController();		
+	TerminalExecutor tc = new TerminalExecutor();
 	
 	/**
 	 *  The obvious switch case with possible commands from server. When a cmd is succesfully executed it returns "\0" over tcp which is our 'end of file' char
 	 * @param cmd command from server as enum type
 	 * @throws Exception
 	 */
-	private void switchMenu(Command cmd) throws Exception{
+	public void switchMenu(SupportedCommands cmd) throws Exception{
 		switch (cmd) {
 		case start: // start sniffing
 			int portnr = extractNumber();
 			System.out.println("extracted port nr : " + portnr);
 			startSniffing(portnr);
 			System.out.println("started sniffing");
-			cc.sendStringTCP("\0");
 			break;
 		case stop:
 			System.out.println("stopping sniffer");
 			stopSniffing();
-			cc.sendStringTCP("\0");
 			break;
 		case scanNetworks:
 			System.out.println("scanning networks");
 			cc.sendArrayTCP(scanNetworks());
-			cc.sendStringTCP("\0");
 			break;
 		case setChannel:
 			System.out.println("setting channel");
 			int chan = extractNumber();
 			setChannel(chan);
-			cc.sendStringTCP("\0");
 			break;
 		case getWifiStatus:
 			System.out.println("");
 			cc.sendArrayTCP(getWifiStatus());
-			cc.sendStringTCP("\0");
 			break;
 		case getMacAddress:
 			cc.sendStringTCP( getMacAddress() );
-			cc.sendStringTCP("\0");
 			break;
 		default: cc.sendStringTCP("ERROR"); // enum might get extended
 		}
@@ -147,7 +78,7 @@ public class MenuHandler {
 	public void startSniffing(int portToSendTo){
 		String startScript = "bash /usr/local/bin/tshark -T fields -e ip.src -e ip.dst -e http.host -e http.user_agent -i en0 -I -l -R http.request tcp port 80 and ip";
 		//String startScript = "bash startScript.sh"; // the startscript automatically appends the right path to tshark
-		br = tc.exec(startScript);
+		BufferedReader br = tc.exec(startScript);
 		System.out.println("startscript exec'd");
 		cc.initAndSendUDP(br, portToSendTo);
 	}
@@ -158,9 +89,9 @@ public class MenuHandler {
 	public void stopSniffing(){
 		cc.stopUDP();
 		// stopping the process is easy to do in one line, so here it goes with some bash-fu (linux/osx compatible)
-		if (this.currentOS == supportedOS.Mac || this.currentOS == supportedOS.Linux){
+		if (this.currentOS == SupportedOS.Mac || this.currentOS == SupportedOS.Linux){
 			tc.exec("kill $(cat process1.pid)");	
-		} else if (this.currentOS == supportedOS.Windows){
+		} else if (this.currentOS == SupportedOS.Windows){
 			
 		}
 	}
@@ -176,14 +107,14 @@ public class MenuHandler {
 		
 		// Execute network scanning according to user operating system
 		String scanCommand = "";
-		if (this.currentOS == supportedOS.Windows){
+		if (this.currentOS == SupportedOS.Windows){
 			scanCommand = "";
-		} else if (this.currentOS == supportedOS.Mac){
+		} else if (this.currentOS == SupportedOS.Mac){
 			scanCommand = "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s";
-		} else if (this.currentOS == supportedOS.Linux){
+		} else if (this.currentOS == SupportedOS.Linux){
 			scanCommand = "iw wlan0 scan";
 		}
-		br = tc.exec(scanCommand); 
+		BufferedReader br = tc.exec(scanCommand); 
 	    
 		// This parsing only works for mac
 		ArrayList<String[]> networks = new ArrayList<String[]>();
@@ -202,11 +133,12 @@ public class MenuHandler {
 	 * This method changes the channel of the netcard, by invoking different external programs depending on host OS.
 	 * 
 	 * @param chan channel to switch the NIC to
+	 * @author user Niclas & Jacob
 	 */
 	private void setChannel(int chan){
 		assert(this.currentOS != null);
 		
-		if (this.currentOS == supportedOS.Mac){
+		if (this.currentOS == SupportedOS.Mac){
 			// Dissociate from current network
 			tc.exec("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -z");
 			System.out.println("Dissociated from access point");
@@ -226,7 +158,7 @@ public class MenuHandler {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if (this.currentOS == supportedOS.Windows){
+		} else if (this.currentOS == SupportedOS.Windows){
 			
 		}
 	}
@@ -239,11 +171,12 @@ public class MenuHandler {
 	private ArrayList<String[]> getWifiStatus(){
 		assert(this.currentOS != null);
 		
-		if (this.currentOS == supportedOS.Mac){
+		BufferedReader br = null;
+		if (this.currentOS == SupportedOS.Mac){
 			br = tc.exec("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --getinfo");
-		} else if (this.currentOS == supportedOS.Windows){
+		} else if (this.currentOS == SupportedOS.Windows){
 			// TODO
-		} else if (this.currentOS == supportedOS.Linux){
+		} else if (this.currentOS == SupportedOS.Linux){
 			// TODO
 		}
 		ArrayList<String[]> statusList = new ArrayList<String[]>();
@@ -271,9 +204,10 @@ public class MenuHandler {
 		assert(this.currentOS != null);
 		
 		String addr = ""; // the MAC address we wanna return
+		BufferedReader br = null;
 		
 		// MAC
-		if (this.currentOS == supportedOS.Mac){
+		if (this.currentOS == SupportedOS.Mac){
 			br = tc.exec("ifconfig");
 			String line;
 		    while ( (line = br.readLine()) != null){
@@ -283,7 +217,7 @@ public class MenuHandler {
 			   	}
 		    }	
 		// WIN
-		} else if (this.currentOS == supportedOS.Windows){
+		} else if (this.currentOS == SupportedOS.Windows){
 			br = tc.exec("ipconfig /all");
 			String line;
 		    while ( (line = br.readLine()) != null){
@@ -293,7 +227,7 @@ public class MenuHandler {
 			   	}
 		    }	
 		// NIX
-		} else if (this.currentOS == supportedOS.Linux){
+		} else if (this.currentOS == SupportedOS.Linux){
 			// TODO
 		}
 		
@@ -307,6 +241,8 @@ public class MenuHandler {
 	 */
 	private int extractNumber() throws IOException{
 		String command = "";
+		BufferedReader inputFromServer = null;
+		
 		// making it more robust because server maight not respect protocol and send several newlines
 		while (command.length() < 1){
 			command = inputFromServer.readLine();
