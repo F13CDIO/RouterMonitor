@@ -5,7 +5,6 @@ package server.boundary;
 
 import java.io.IOException;
 import server.function.IFunction;
-import server.main.TomcatServer;
 
 public class Boundary
 {
