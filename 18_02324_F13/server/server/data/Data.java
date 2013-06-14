@@ -16,7 +16,6 @@ public class Data implements IData
 	}
 
 	@Override
-	//Sets all the datavariabels, it is legal to set any or all of them as null
 	public void addDataset(Date date, String sourceIP, String destinationIP, String host, String subHost, String userAgent) {
 		dataPackageList.add(new DataPackage(date ,sourceIP, destinationIP, host, subHost, userAgent));
 	}
@@ -33,13 +32,17 @@ public class Data implements IData
 		return dataPackageList.isEmpty();
 	}
 	
-	
+	/**
+	 * Inner class for containing all the data of one package
+	 * @author Mads
+	 *
+	 */
 	public class DataPackage
 	{
 		private String sourceIP;
 		private String destinationIP;
 		private String host;
-		private String subHost; //skal slettes
+		private String subHost;
 		private String userAgent;
 		private Date timeStamp;
 		
@@ -62,36 +65,64 @@ public class Data implements IData
 			this.userAgent = userAgent;
 		}
 		
-		public void setInIP(String IP) {
+		/**
+		 * Sets the ScourceIP of a package
+		 * @param IP ScourceIP to set
+		 */
+		public void setScourceIP(String IP) {
 			this.sourceIP = IP;
 			
 		}
 	
-		public void setOutIP(String IP) {
+		/**
+		 * Sets the destinationIP of a package
+		 * @param IP DestinationIP to set
+		 */
+		public void setDestinationIP(String IP) {
 			this.destinationIP = IP;
 			
 		}
 	
+		/**
+		 * Sets the domain of a package
+		 * @param host
+		 */
 		public void setHost(String host) {
 			this.host = host;
 			
 		}
 	
+		/**
+		 * Sets the subhost of a package
+		 * @param subHost
+		 */
 		public void setSubHost(String subHost) {
 			this.subHost = subHost;
 			
 		}
 	
+		/**
+		 * Sets the useragent of a package
+		 * @param userAgent The useragent, preferably only the name and not the entire useragent string
+		 */
 		public void setUserAgent(String userAgent) {
 			this.userAgent = userAgent;
 			
 		}
 	
-		public String getInIP() {
+		/**
+		 * 
+		 * @return Returns the ScourceIP
+		 */
+		public String getScourceIP() {
 			return sourceIP;
 		}
 	
-		public String getOutIP() {
+		/**
+		 * 
+		 * @return Returns the DestinationIP
+		 */
+		public String getDestinationIP() {
 			return destinationIP;
 		}
 	
@@ -99,14 +130,26 @@ public class Data implements IData
 			return host;
 		}
 	
+		/**
+		 * 
+		 * @return Returns the subhost
+		 */
 		public String getSubHost() {
 			return subHost;
 		}
 	
+		/**
+		 * 
+		 * @return Returns the useragent
+		 */
 		public String getUserAgent() {
 			return userAgent;
 		}
 		
+		/**
+		 * 
+		 * @return Returns the Timestamp of the object
+		 */
 		public Date getTimeStamp()
 		{
 			return timeStamp;
@@ -117,8 +160,8 @@ public class Data implements IData
 			return "Time: " + this.getTimeStamp()+
 					"\nHost: " + this.getHost() +
 					"\nSubhost: " + this.getSubHost() +
-					"\nScource IP: " + this.getInIP() + 
-					"\nDestination IP: " + this.getOutIP() +
+					"\nScource IP: " + this.getScourceIP() + 
+					"\nDestination IP: " + this.getDestinationIP() +
 					"\nUser - Agent: " + this.getUserAgent();
 		}
 	}
