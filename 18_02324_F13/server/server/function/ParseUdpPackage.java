@@ -6,23 +6,27 @@ import java.util.regex.Pattern;
 
 import server.data.*;
 
+/**
+ * Saves the raw inputdata into dataPackage objects
+ * @author Gruppe 18
+ *
+ */
 public class ParseUdpPackage implements IParseUdpPackage, IFunction {
-
-	//A number defining where in the string we are looking
+	
     private IData data;
     private String userAgent;
     private String host;
     private String subHost;
     private String distinationIP;
     private String sourceIP;
-    private RegexFromFile fileReader = new RegexFromFile();
-    //reads the first line from the file "userAgent"
-    private String userAgenrRegex = fileReader.ReadLine("userAgent"); 
+    private String userAgenrRegex;
     
 
     public ParseUdpPackage() 
     {
     	data = Function.getDatalayer();
+        //reads the first line from the file "userAgent"
+    	userAgenrRegex = RegexFromFile.ReadLine("userAgent"); 
     }
 
     public void parse(String input) 
@@ -64,6 +68,11 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
         }
     }
 
+    /**
+     * Extracts the subhost from the URL
+     * @param hostString The URL string
+     * @return Returns the subhost, or null depending if there is any. www does not count as a subhost
+     */
 	private String formatSubHost(String hostString)
 	{
 		hostString = hostString.toLowerCase();
@@ -92,6 +101,11 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction {
 		}
 	}
 
+	/**
+	 * Extracts the host from the URL
+	 * @param hostString The URL string
+	 * @return Returns the domain of the webpage (if it is a .uk it will remove what is in front of uk as well
+	 */
 	private String formatHost(String hostString)
 	{
 		hostString = hostString.toLowerCase();

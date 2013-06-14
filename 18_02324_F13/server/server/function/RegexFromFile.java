@@ -12,7 +12,7 @@ public class RegexFromFile
 	 * @param file Can be "userAgent" or "host" 
 	 * @return Returns the first line of the file
 	 */
-	public String ReadLine(String file)
+	public static String ReadLine(String file)
 	{
 		String line = null;
 		try

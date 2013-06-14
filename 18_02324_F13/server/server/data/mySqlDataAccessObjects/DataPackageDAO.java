@@ -7,9 +7,7 @@ import java.util.Date;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import server.data.Data;
 import server.data.Data.DataPackage;
-import server.data.IData;
 import server.data.mySQLConnector.MySQLConnector;
 import server.data.mySQLInterfaces.IDataPackageDAO;
 
@@ -93,8 +91,8 @@ public class DataPackageDAO implements IDataPackageDAO
 		
 		String query = "INSERT INTO dataPackages VALUES(";
 		query += "0, '";
-		query += dataPackage.getInIP() + "', '";
-		query += dataPackage.getOutIP() + "', '";
+		query += dataPackage.getScourceIP() + "', '";
+		query += dataPackage.getDestinationIP() + "', '";
 		query += dataPackage.getHost() + "', '";
 		query += "sub','";
 		query += dataPackage.getUserAgent() + "', '";
