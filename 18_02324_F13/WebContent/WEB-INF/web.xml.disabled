@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+  <display-name>18_02324_F13</display-name>
+  
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
+	<security-constraint>
+		<display-name>Admin</display-name>
+
+		<!-- Sites -->
+		<web-resource-collection>
+			<web-resource-name>Admin</web-resource-name>
+			<description>accessible by admin</description>
+			<url-pattern>/login.jsp</url-pattern>
+			<url-pattern>/control_panel.jsp</url-pattern>
+                        <url-pattern>/pi_control.jsp</url-pattern>
+                        <url-pattern>/pi_action.jsp</url-pattern>
+                        <url-pattern>/customize_layout.jsp</url-pattern>
+                        <url-pattern>/customize_save.jsp</url-pattern>
+                        <url-pattern>/customize_selection.jsp</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>REQUEST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>FORWARD</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+		
+
+		<!-- Hvilke roller skal have adgang til de pldende sider -->
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	<!--
+    <user-data-constraint>
+        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+	-->
+	</security-constraint>
+	
+	<security-constraint>
+		<display-name>User</display-name>
+
+		<!-- Sites -->
+		<web-resource-collection>
+			<web-resource-name>User</web-resource-name>
+			<description>accessible by admin and user</description>
+			<url-pattern>/login.jsp</url-pattern>
+                        <url-pattern>/customize_layout.jsp</url-pattern>
+                        <url-pattern>/customize_save.jsp</url-pattern>
+                        <url-pattern>/customize_selection.jsp</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>REQUEST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>FORWARD</http-method>
+		</web-resource-collection>
+
+		<!-- Hvilke roller skal have adgang til de pldende sider -->
+		<auth-constraint>
+			<role-name>admin</role-name>
+			<role-name>user</role-name>
+		</auth-constraint>	
+
+	</security-constraint>
+	
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/login.jsp</form-login-page>
+			<form-error-page>/index.jsp</form-error-page>
+		</form-login-config>
+	</login-config>
+	
+	<security-role>
+		<role-name>user</role-name>
+	</security-role>
+	<security-role>
+		<role-name>admin</role-name>
+	</security-role>
+
+</web-app>

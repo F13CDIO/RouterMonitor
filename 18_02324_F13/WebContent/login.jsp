@@ -10,4 +10,17 @@
     <input class="form_submit" type="submit" value="login" />
 </form>
 
+<div class="clear"></div>
+<br /><br />
+
+Herunder er angivet testbrugere med forskellige rettigheder, som kan bruges til test...<br />
+<br />
+Admin:<br />
+Username = hans<br />
+Password = 1212<br />
+<br />
+User:<br />
+Username = flemming<br />
+Password = 1313<br />
+
 <%@include file="./includes/bottom.jsp" %>
