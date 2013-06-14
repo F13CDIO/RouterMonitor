@@ -5,6 +5,12 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
+/**
+ * Reads the first line from a file 
+ * in the folder RegEx files
+ * @author Mads
+ *
+ */
 public class RegexFromFile
 {
 	/**
