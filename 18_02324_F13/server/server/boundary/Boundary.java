@@ -5,6 +5,7 @@ package server.boundary;
 
 import java.io.IOException;
 import server.function.IFunction;
+import server.main.TomcatServer;
 
 public class Boundary
 {
@@ -33,6 +34,7 @@ public class Boundary
 	{
 		try 
 		{		
+			TomcatServer.start();
 			TCPServer.startServer(9000);		
 		} 
 			
