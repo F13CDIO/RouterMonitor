@@ -14,14 +14,14 @@ import java.util.InputMismatchException;
 public class RpiMain {
 	public static void main(String[] args) throws Exception {
 
-		MenuHandler mh = new MenuHandler();
-		mh.connectToServer();
+		MainController mc = new MainController();
+		mc.connectToServer();
 		while (true){
 			try {			
-				mh.handleCommand();	
+				mc.handleCommand();	
 			} catch (IOException e) {
 				e.printStackTrace();
-				mh.connectToServer(); // reconnect if we had an IOException
+				mc.connectToServer(); // reconnect if we had an IOException
 			} catch (InputMismatchException e) {
 				e.printStackTrace();
 			}
