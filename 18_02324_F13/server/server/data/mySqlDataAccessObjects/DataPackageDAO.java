@@ -180,6 +180,31 @@ public class DataPackageDAO implements IDataPackageDAO
 		return mySqlOutput.first();
 	}
 
+	@Override
+	public boolean loginValid(String email, String password) throws SQLException
+	{
+		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT * FROM userTable WHERE userNameCol ='"+email+"' AND userCredCol = '"+password+"'");
+		return mySqlOutput.first();
+	}
+
+	@Override
+	public void deleteUser(String email) throws SQLException 
+	{
+		String query = "DELETE FROM userTable WHERE userNameCol = '"+email+"'";
+		MySQLConnector.update(query);
+		query = "DELETE FROM userRoleTable WHERE userNameCol = '"+email+"'";
+		MySQLConnector.update(query);
+	}
+
+	@Override
+	public void editUser(String email, String newPassword, String newRole)throws SQLException 
+	{
+		String query = "UPDATE userTable SET userCredCol = '"+newPassword+"' WHERE userNameCol ='"+email+"'";
+		MySQLConnector.update(query);
+		query = "UPDATE userRoleTable SET roleNameCol = '"+newRole+"' WHERE userNameCol ='"+email+"'";
+		MySQLConnector.update(query);
+	}
+
 	
 
 }

@@ -19,4 +19,7 @@ public interface IDataPackageDAO
 	void addDataPackage(DataPackage dataPackage) throws SQLException ;
 	void addUser(String email, String password, String role)throws SQLException ;
 	boolean userExists(String email) throws SQLException ;
+	void editUser(String email, String newPassword, String newRole) throws SQLException;
+	void deleteUser(String email) throws SQLException;
+	boolean loginValid(String email, String password) throws SQLException;
 }
