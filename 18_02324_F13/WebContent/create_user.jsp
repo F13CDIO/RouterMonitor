@@ -1,15 +1,22 @@
 <%@include file="./includes/top.jsp" %>
 
+<%	
+	Object createMessage;
+
+	createMessage = session.getAttribute("createMessage");
+	if(createMessage != null) {
+	    out.println("<p id=\"pi_response\">" + createMessage + "</p>");
+	    request.getSession().removeAttribute("createMessage");
+	}
+%>
+
 <br />
-<form action="./?page=create_user" method="post">
-    <div class="form_description">Username:</div>
-    <div class="form_input"><input size="70" name="j_username" type="text" /></div>
-    <div class="form_description">Password:</div>
-    <div class="form_input"><input size="70" name="j_password" type="password" /></div>
-    <div class="form_description">Full name:</div>
-    <div class="form_input"><input size="70" name="name" type="text" /></div>    
+
+<form action="./create_user_action.jsp" method="post">
     <div class="form_description">Email:</div>
     <div class="form_input"><input size="70" name="mail" type="text" /></div>
+    <div class="form_description">Password:</div>
+    <div class="form_input"><input size="70" name="password" type="password" /></div>  
     
     <input class="form_submit" type="submit" value="Create user" />
 </form>
