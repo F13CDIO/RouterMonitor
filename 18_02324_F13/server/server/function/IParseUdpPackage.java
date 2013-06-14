@@ -1,6 +1,7 @@
 package server.function;
 
-public interface IParseUdpPackage {
+public interface IParseUdpPackage 
+{
 
 	/**
 	 * Parses the raw data into the dataobjects, and sorts the data
