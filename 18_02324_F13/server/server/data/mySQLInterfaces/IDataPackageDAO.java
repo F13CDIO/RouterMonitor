@@ -15,6 +15,12 @@ public interface IDataPackageDAO
 	JSONObject get10Minute(Date date, String host) throws SQLException ;
 	JSONObject get1HourTraffic(Date date, String host) throws SQLException ;
 	JSONObject get1DayTraffic(Date date, String host) throws SQLException ;
-	JSONObject get1MonthTraffic(Date date, String host) throws SQLException ;
+	JSONObject get1MonthTraffic(Date date, String host) throws SQLException;
 	void addDataPackage(DataPackage dataPackage) throws SQLException ;
+	void addUser(String email, String password, String role)throws SQLException ;
+	boolean userExists(String email) throws SQLException ;
+	void editUser(String email, String newPassword, String newRole) throws SQLException;
+	void deleteUser(String email) throws SQLException;
+	boolean loginValid(String email, String password) throws SQLException;
+	JSONArray getAllUsers() throws SQLException;
 }

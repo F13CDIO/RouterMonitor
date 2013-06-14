@@ -5,6 +5,12 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
+/**
+ * Reads the first line from a file 
+ * in the folder RegEx files
+ * @author Mads
+ *
+ */
 public class RegexFromFile
 {
 	/**
@@ -12,7 +18,7 @@ public class RegexFromFile
 	 * @param file Can be "userAgent" or "host" 
 	 * @return Returns the first line of the file
 	 */
-	public String ReadLine(String file)
+	public static String ReadLine(String file)
 	{
 		String line = null;
 		try

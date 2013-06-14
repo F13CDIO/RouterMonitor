@@ -57,6 +57,62 @@ public class CustomCharts {
         }
     }
     
+    public String insertChartFromName(String input) {
+        String[] availibleCharts = {
+            "Top 10 Bar-chart for the last 10 minutes",
+            "Top 10 Bar-chart for the last hour",
+            "Top 10 Bar-chart for the last day",
+            "Top 10 Bar-chart for the last month",
+            "Top 5 Line-chart for the last 10 minutes",
+            "Top 5 Line-chart for the last hour",
+            "Top 5 Line-chart for the last day",
+            "Top 5 Line-chart for the last month",
+            "Top 10 Pie-chart for the last 10 minutes",
+            "Top 10 Pie-chart for the last hour",
+            "Top 10 Pie-chart for the last day",
+            "Top 10 Pie-chart for the last month"
+        };
+        
+        if(input.equals(availibleCharts[0])) {
+            return top10Bar10Minute();
+        }
+        else if(input.equals(availibleCharts[1])) {
+            return top10Bar1Hour();
+        }
+        else if(input.equals(availibleCharts[2])) {
+            return top10Bar1Day();
+        }
+        else if(input.equals(availibleCharts[3])) {
+            return top10Bar1Month();
+        }
+        else if(input.equals(availibleCharts[4])) {
+            return top5Line10Minute();
+        }
+        else if(input.equals(availibleCharts[5])) {
+            return top5Line1Hour();
+        }
+        else if(input.equals(availibleCharts[6])) {
+            return top5Line1Day();
+        }
+        else if(input.equals(availibleCharts[7])) {
+            return top5Line1Month();
+        }
+        else if(input.equals(availibleCharts[8])) {
+            return top10Pie10Minute();
+        }
+        else if(input.equals(availibleCharts[9])) {
+            return top10Pie1Hour();
+        }
+        else if(input.equals(availibleCharts[10])) {
+            return top10Pie1Day();
+        }
+        else if(input.equals(availibleCharts[11])) {
+            return top10Pie1Month();
+        }
+        
+        return "Internal error..";
+    }
+    
     
     public String top10Bar10Minute() {
         String TITLE = "Top 10 most visited sites the last 10 minutes";

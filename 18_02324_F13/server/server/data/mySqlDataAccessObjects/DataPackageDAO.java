@@ -7,9 +7,7 @@ import java.util.Date;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import server.data.Data;
 import server.data.Data.DataPackage;
-import server.data.IData;
 import server.data.mySQLConnector.MySQLConnector;
 import server.data.mySQLInterfaces.IDataPackageDAO;
 
@@ -20,7 +18,7 @@ public class DataPackageDAO implements IDataPackageDAO
 	public JSONArray getTop10() throws SQLException 
 	{
 		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
-		return parseResultsetToJSONArray(mySqlOutput);
+		return parseResultsetToJSONArray("hosts", mySqlOutput);
 	}
 
 	@Override
@@ -28,7 +26,7 @@ public class DataPackageDAO implements IDataPackageDAO
 	{
 		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());		
 		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
-		return parseResultsetToJSONArray(mySqlOutput);
+		return parseResultsetToJSONArray("hosts", mySqlOutput);
 	}
 
 	@Override
@@ -93,10 +91,10 @@ public class DataPackageDAO implements IDataPackageDAO
 		
 		String query = "INSERT INTO dataPackages VALUES(";
 		query += "0, '";
-		query += dataPackage.getInIP() + "', '";
-		query += dataPackage.getOutIP() + "', '";
+		query += dataPackage.getScourceIP() + "', '";
+		query += dataPackage.getDestinationIP() + "', '";
 		query += dataPackage.getHost() + "', '";
-		query += "sub','";
+		query += dataPackage.getSubHost() + "','";
 		query += dataPackage.getUserAgent() + "', '";
 		query += mySqlTimestamp + "');";
 		
@@ -105,19 +103,34 @@ public class DataPackageDAO implements IDataPackageDAO
 	}
 	
 	@SuppressWarnings("unchecked")
-	private JSONArray parseResultsetToJSONArray(ResultSet mySqlOutput) 
+	private JSONArray parseResultsetToJSONArray(String function, ResultSet mySqlOutput) 
 	{
-		JSONArray hosts = new JSONArray();
+		JSONArray jsonArray = new JSONArray();
 		
 		try 
 		{
 			while (mySqlOutput.next())
-			{			
+			{		
 				JSONObject jo = new JSONObject();
-				jo.put("rank", mySqlOutput.getRow());
-				jo.put("count", mySqlOutput.getInt("count"));
-				jo.put("host", mySqlOutput.getString("host"));
-				hosts.add(jo);
+				switch (function)
+				{
+					case "hosts":
+						jo.put("rank", mySqlOutput.getRow());
+						jo.put("count", mySqlOutput.getInt("count"));
+						jo.put("host", mySqlOutput.getString("host"));
+						jsonArray.add(jo);
+						break;
+						
+					case "users":
+						jo.put("userName", mySqlOutput.getString("userNameCol"));
+						jo.put("userRole", mySqlOutput.getString("roleNameCol"));
+						jsonArray.add(jo);
+						break;
+					
+					default:
+						break;
+				}
+				
 			}
 		} 
 		
@@ -127,7 +140,7 @@ public class DataPackageDAO implements IDataPackageDAO
 			System.out.println(e.getMessage());
 		}
 		
-		return hosts;
+		return jsonArray;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -160,6 +173,58 @@ public class DataPackageDAO implements IDataPackageDAO
 			System.out.println(e.getMessage());
 		}
 		return jsonObject;
+	}
+
+	@Override
+	public void addUser(String email, String password, String role) throws SQLException 
+	{
+	
+		String query = "INSERT INTO userTable VALUES('"+email+"', '"+password+"')";
+		System.out.println(query);
+		MySQLConnector.update(query);
+		
+		query = "INSERT INTO userRoleTable VALUES('"+email+"', '"+role+"')";
+		System.out.println(query);
+		MySQLConnector.update(query);
+	}
+
+	@Override
+	public boolean userExists(String email) throws SQLException 
+	{
+		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT userNameCol FROM userTable WHERE userNameCol = '"+email+"'");
+		return mySqlOutput.first();
+	}
+
+	@Override
+	public boolean loginValid(String email, String password) throws SQLException
+	{
+		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT * FROM userTable WHERE userNameCol ='"+email+"' AND userCredCol = '"+password+"'");
+		return mySqlOutput.first();
+	}
+
+	@Override
+	public void deleteUser(String email) throws SQLException 
+	{
+		String query = "DELETE FROM userTable WHERE userNameCol = '"+email+"'";
+		MySQLConnector.update(query);
+		query = "DELETE FROM userRoleTable WHERE userNameCol = '"+email+"'";
+		MySQLConnector.update(query);
+	}
+
+	@Override
+	public void editUser(String email, String newPassword, String newRole)throws SQLException 
+	{
+		String query = "UPDATE userTable SET userCredCol = '"+newPassword+"' WHERE userNameCol ='"+email+"'";
+		MySQLConnector.update(query);
+		query = "UPDATE userRoleTable SET roleNameCol = '"+newRole+"' WHERE userNameCol ='"+email+"'";
+		MySQLConnector.update(query);
+	}
+
+	@Override
+	public JSONArray getAllUsers() throws SQLException 
+	{
+		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT * FROM userRoleTable ORDER BY userNameCol ASC");
+		return parseResultsetToJSONArray("users", mySqlOutput);
 	}
 
 	

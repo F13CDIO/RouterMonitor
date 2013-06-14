@@ -1,186 +1,165 @@
+/**
+ * TCP server with support for multiple clients. 
+ */
+
 package server.boundary;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 
 public class TCPServer
 {
-	private Client client;
-	private ServerSocket serverSocket;
-	private int serverPort;
 	
+	private static ServerSocket serverSocket;
+	private static int serverPort;
+	private static HashMap<String, ConnectedTCPClient> clients;	
 	
-	public TCPServer(int serverPort)
+	/**
+	 * Get all client MAC addresses (identifier)
+	 * @return String[]
+	 */
+	public static String[] getClients()
 	{
-		this.serverPort = serverPort;
+		return clients.keySet().toArray(new String[0]);
 	}
 	
-    public void startServer() throws IOException
+	/**
+	 * Add client to list of clients
+	 * @param ConnectedTCPClient object
+	 */
+	public static void addClient(ConnectedTCPClient client)
+	{
+		clients.put(client.getMac(), client);
+	}
+	
+	/**
+	 * Remove a specific client from list of clients
+	 * @param ConnectedTCPClient object
+	 */
+	public static void removeClient(ConnectedTCPClient client) 
+	{
+		clients.remove(client.getMac());
+	}
+	
+	/**
+	 * Get client object from specific MAC address
+	 * @param String mac
+	 * @return ConnectedTCPClient client
+	 */
+	private static ConnectedTCPClient getClient(String mac)
+	{
+		return clients.get(mac);
+	}
+	
+	/**
+	 * Writes command via TCP connection to client.
+	 * 
+	 * @param String mac
+	 * @param String command
+	 * @param int channelNumber
+	 * @return
+	 */
+	public static String doClientCommand(String mac, String command, int channelNumber)
+	{
+		System.out.println("Command: " + command);
+		String data = "";
+		
+		ConnectedTCPClient client = getClient(mac);
+		if(client == null)
+		{
+			return "No Client with the MAC - address: " + mac + "found";
+		}
+		client.interrupt();
+		
+		try 
+		{			
+			client.write(command);
+			
+			if (command.equals("setChannel"))
+			{
+				client.write("" + channelNumber);
+			}
+		
+			else if(command.equals("start"))
+			{
+				client.write(""+client.getUDPport());
+				client.setUDPactive(true);
+			}
+			else if(command.equals("stop"))
+			{
+				client.setUDPactive(false);
+			}
+			
+			data = client.readData();
+		} 
+		
+		catch (IOException e)
+		{
+			System.out.println(e.getMessage());
+		}
+		if(!data.equals(""))
+		System.out.println("data returned: \n" + data);
+		
+		return data;
+	}
+	
+	public static boolean isUDPactive(String mac)
+	{
+		System.out.println("Command: isUDPactive");
+		ConnectedTCPClient client = getClient(mac);
+		if(client == null)
+		{
+			System.err.println("No Client with the MAC - address: " + mac + " found");
+			return false;
+		}
+		return client.isUDPactive();
+	}
+	
+	/**
+	 * Initializes and starts server. Keeps listening (looping) for new clients. For each client connect, a client object is created to deal with the 
+	 * specific traffic between server and client.  
+	 * @param int serverPortNum (Set server TCP port number)
+	 * @throws IOException
+	 */
+    public static void startServer(int serverPortNum) throws IOException
     {
+    	serverPort = serverPortNum;
+		clients = new HashMap<String, ConnectedTCPClient>();
         serverSocket = new ServerSocket(serverPort);
+        
         System.out.println("TCP server online on ip: " + Inet4Address.getLocalHost().getHostAddress());
  
-        while(true) // Keep listening for new clients
+        while(true) 
         {
-            Socket socket = serverSocket.accept(); // Create new client if new connection is established
+        	try
+			{
+				Thread.sleep(1);
+			}
+			catch (InterruptedException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            Socket socket = serverSocket.accept(); 
             if (socket != null)
             {
-               client = new Client(socket);
+               ConnectedTCPClient client = new ConnectedTCPClient(socket);               
                System.out.println("Client at "+ client.getIpAddress() +":" + client.getPort()+" connected ");
-               client.start(); // Thread start
-               //client.write("Welcome");
+               client.start();
             }
         }
     }
     
-    private class Client extends Thread
+    /**
+     * Checks if mac already exists in clientlist
+     * @param mac 
+     * @return True if mac exists, false if not
+     */
+    public static boolean hasClient(String mac)
     {
-        private Socket socket = null;
-        private BufferedReader dataFromClient = null;
-        private DataOutputStream dataToClient = null;
-        private boolean clientDisconnected = false;
-        private UDPServer linkedUDPServer = null;
-        private String ipAddress;
-        private int port;
-
-        public Client(Socket socket) throws IOException
-        {
-            this.socket = socket;
-            this.ipAddress = this.socket.getInetAddress().toString().replace("/", "");
-            this.port = this.socket.getPort();
-        }
-        
-        public String getIpAddress()
-        {
-        	return this.ipAddress;
-        }
-        
-        public int getPort()
-        {
-        	return this.port;
-        }
-        
-             
-        public void run() // Thread start method
-        {
-				while(!clientDisconnected)
-				{
-					read();
-				}
-        }
-        
-        private void read() 
-        {
-        	try
-            {    
-                dataFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                String clientRequest = dataFromClient.readLine();
-                System.out.println("Pi command: " + clientRequest);
-                
-                switch(clientRequest.toLowerCase())
-                    {            		
-                    	case "create": // -----------------------------------------------------------------------------
-                    	if (linkedUDPServer == null)
-                		{
-                			linkedUDPServer = new UDPServer();
-                    		write("start\n" + linkedUDPServer.getPort());
-                    		System.out.println("Server: Start on UDP port " + linkedUDPServer.getPort());
-                		}
-                    	break;
-                    	
-
-                    	case "start": // -----------------------------------------------------------------------------
-                    	if (linkedUDPServer != null)
-                    	{
-                    		linkedUDPServer.start();
-                    		write("UDP server started");
-                    		
-                    		// test comm with pi
-                    		write("scanNetworks\n");
-                    		System.out.println("Server: Scan networks");
-                    		while (dataFromClient.read() > 0)
-                    		{
-                    			System.out.println("Pi: " + dataFromClient.readLine());
-                    		}
-                    		
-                    		Thread.sleep(1000);
-                    		
-                    		write("getWifiStatus");
-                    		System.out.println("Server: Get wifi status");
-                    		while (dataFromClient.read() > 0)
-                    		{
-                    			System.out.println("Pi: " + dataFromClient.readLine());
-                    		}
-                    		Thread.sleep(1000);
-                    		                    		
-                    		write("setChannel");
-                    		write("5");
-                    		System.out.println("Server: Set channel 5");
-                    		
-                    		while (dataFromClient.read() > 0)
-                    			System.out.println("Pi: " + dataFromClient.readLine());
-                    		
-                    		write("getWifiStatus");
-                    		System.out.println("Command to rPi: Get wifi status");
-                    		while (dataFromClient.read() > 0)
-                    		{
-                    			System.out.println("Pi: " + dataFromClient.readLine());
-                    		}
-                    		// End test
-
-                    	}
-                    		
-                    	else
-                    		write("A UDP server hasn't been created yet");
-                    	break;
-                    	
-                    	
-                    	case "stop": // -----------------------------------------------------------------------------
-                    	if (linkedUDPServer != null)
-                    	{
-                    		linkedUDPServer.stopThread();
-                    		linkedUDPServer = null;
-                    		write("UDP server terminated");
-                    	}
-
-                    	else
-                    	{
-                    		write("No UDP server is running");
-                    	}
-                    	
-                    	break;
-                    	
-                    	default: // -----------------------------------------------------------------------------
-                    		write("Invalid command");
-                    		
-                    	break;
-                    }
-            }
-            
-        	catch(Exception e) // IO and null pointer
-            {
-        		System.out.println(client.ipAddress + ": " + client.port + " disconnected");
-                stopThread(); 
-            	if (linkedUDPServer != null)
-            		linkedUDPServer.stopThread(); // Stop linked UDP server thread
-            }
-        }
-        
-        private void write(String message) throws IOException
-        {
-        	dataToClient = new DataOutputStream(socket.getOutputStream());
-            dataToClient.writeBytes(message + "\n");
-            dataToClient.flush();
-        }    
-        
-        private void stopThread()
-        {
-        	clientDisconnected = true;
-        }
+    	return clients.containsKey(mac);
     }
 }
