@@ -1,4 +1,4 @@
-package server.main;
+lpackage server.main;
 
 import server.boundary.Boundary;
 import server.data.Data;

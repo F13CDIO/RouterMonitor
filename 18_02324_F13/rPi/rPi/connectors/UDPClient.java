@@ -2,7 +2,7 @@ package rPi.connectors;
 import java.io.*;
 import java.net.*;
 
-/*
+/**
  *  Class to send the truncated network traffic that the rPi has scanned to the server through UDP
  *  written 01-03-2013 by Niclas Falck
  */
