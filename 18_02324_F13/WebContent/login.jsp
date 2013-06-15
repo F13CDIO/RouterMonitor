@@ -1,5 +1,11 @@
 <%@include file="./includes/top.jsp" %>
 
+<%
+	if("true".equals(request.getParameter("error"))) {
+	    out.println("<p id=\"message\">Unable to login.</p>");
+	}
+%>
+
 <br />
 <form action="j_security_check" method="post">
     <div class="form_description">Username:</div>
