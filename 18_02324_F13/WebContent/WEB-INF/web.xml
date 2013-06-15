@@ -16,11 +16,13 @@
 			<description>accessible by admin</description>
 			<url-pattern>/login.jsp</url-pattern>
 			<url-pattern>/control_panel.jsp</url-pattern>
-                        <url-pattern>/pi_control.jsp</url-pattern>
-                        <url-pattern>/pi_action.jsp</url-pattern>
-                        <url-pattern>/customize_layout.jsp</url-pattern>
-                        <url-pattern>/customize_save.jsp</url-pattern>
-                        <url-pattern>/customize_selection.jsp</url-pattern>
+			<url-pattern>/customize_layout.jsp</url-pattern>
+			<url-pattern>/customize_save.jsp</url-pattern>
+			<url-pattern>/customize_selection.jsp</url-pattern>
+			<url-pattern>/live_traffic.jsp</url-pattern>
+			<url-pattern>/pi_control.jsp</url-pattern>
+			<url-pattern>/pi_action.jsp</url-pattern>
+			<url-pattern>/statistics.jsp</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>
 			<http-method>REQUEST</http-method>
@@ -49,9 +51,11 @@
 			<web-resource-name>User</web-resource-name>
 			<description>accessible by admin and user</description>
 			<url-pattern>/login.jsp</url-pattern>
-                        <url-pattern>/customize_layout.jsp</url-pattern>
-                        <url-pattern>/customize_save.jsp</url-pattern>
-                        <url-pattern>/customize_selection.jsp</url-pattern>
+			<url-pattern>/customize_layout.jsp</url-pattern>
+			<url-pattern>/customize_save.jsp</url-pattern>
+			<url-pattern>/customize_selection.jsp</url-pattern>
+			<url-pattern>/live_traffic.jsp</url-pattern>
+			<url-pattern>/statistics.jsp</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>
 			<http-method>REQUEST</http-method>
@@ -71,7 +75,7 @@
 		<auth-method>FORM</auth-method>
 		<form-login-config>
 			<form-login-page>/login.jsp</form-login-page>
-			<form-error-page>/index.jsp</form-error-page>
+			<form-error-page>/login.jsp?error=true</form-error-page>
 		</form-login-config>
 	</login-config>
 	

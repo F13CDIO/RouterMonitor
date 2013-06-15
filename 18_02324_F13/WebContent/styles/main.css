@@ -103,6 +103,25 @@ a.menu_link:hover {
 a.menu_link_active {
     text-decoration: underline;
 }
+a.control_panel_link {
+    display: block;
+    width: 200px;
+    padding-top: 60px;
+    height: 90px;
+    border: 2px solid #d5d5d5;
+    float: left;
+    text-align: center;
+    margin-right: 20px;
+}
+a.pi {
+    background-image: url('../images/pie_bg.jpg');
+}
+a.user {
+    background-image: url('../images/user_bg.jpg');
+}
+a.chart {
+    background-image: url('../images/chart_bg.jpg');
+}
 div.form_description {
     height: 30px;
     width: 100px;

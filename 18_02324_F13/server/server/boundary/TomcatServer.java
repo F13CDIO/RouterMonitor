@@ -18,6 +18,9 @@ public class TomcatServer
 	{
 		Tomcat tomcat = new Tomcat();
 		tomcat.setPort(8080);
+		tomcat.getHost().setDeployOnStartup(true);
+        tomcat.getHost().setAutoDeploy(true);
+        tomcat.getHost().setAppBase("WebContent");
 		tomcat.enableNaming();
 		
 		File base = new File("WebContent");
@@ -25,9 +28,12 @@ public class TomcatServer
 		tomcat.setBaseDir(base.getAbsolutePath());
 		try
 		{
-			tomcat.addWebapp("/", base.getAbsolutePath()).getDocBase();
+			Context ctx = tomcat.addWebapp("/", base.getAbsolutePath());
+			File configFile = new File("WebContent/META-INF/context.xml");
+	        ctx.setConfigFile(configFile.toURI().toURL());
+			
 		}
-		catch (ServletException e1)
+		catch (Exception e1)
 		{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

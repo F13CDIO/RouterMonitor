@@ -5,7 +5,7 @@
 
 	createMessage = session.getAttribute("createMessage");
 	if(createMessage != null) {
-	    out.println("<p id=\"pi_response\">" + createMessage + "</p>");
+	    out.println("<p id=\"message\">" + createMessage + "</p>");
 	    request.getSession().removeAttribute("createMessage");
 	}
 %>
