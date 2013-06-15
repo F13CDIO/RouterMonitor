@@ -9,7 +9,7 @@ import rPi.controllers.MainController.SupportedCommands;
 
 
 /**
- *  This class has the main menu plus some OS differentiation as this is the only class that invokes external programs.
+ *  This class handles all the menu options, and is the only class that is OS-aware
  *  
  *  @author Niclas
  */
