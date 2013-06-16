@@ -10,7 +10,7 @@ public class ChannelHopping extends Thread {
 	private String SSID;
 	private SupportedOS currentOS;
 	TerminalExecutor tc;
-	
+	//git test
 	
 	public ChannelHopping(String ssid, SupportedOS currentOS) {
 		this.SSID = ssid;
