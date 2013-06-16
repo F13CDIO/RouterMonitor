@@ -52,7 +52,7 @@ public class MainController {
 	 *  Supported commands from server as enumerated type
 	 */
 	public enum SupportedCommands {
-		nop, start, stop, scanNetworks, setChannel, getWifiStatus, getMacAddress;
+		nop, start, stop, scanNetworks, setChannel, getWifiStatus, getMacAddress, iterate;//TODO iterate skal implementeres paa serveren
 	}
 	
 	/**

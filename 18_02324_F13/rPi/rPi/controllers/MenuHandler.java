@@ -63,6 +63,10 @@ public class MenuHandler {
 		case getMacAddress:
 			cc.sendStringTCP( getMacAddress() );
 			break;
+		case iterate: 
+			ChannelHopping hopper = new ChannelHopping("dtu", currentOS);
+			(new Thread(hopper)).start();
+				
 		default: cc.sendStringTCP("ERROR"); // enum might get extended
 		}
 		
