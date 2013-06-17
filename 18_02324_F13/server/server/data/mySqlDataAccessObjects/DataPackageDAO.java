@@ -214,10 +214,18 @@ public class DataPackageDAO implements IDataPackageDAO
 	@Override
 	public void editUser(String email, String newPassword, String newRole)throws SQLException 
 	{
-		String query = "UPDATE userTable SET userCredCol = '"+newPassword+"' WHERE userNameCol ='"+email+"'";
-		MySQLConnector.update(query);
-		query = "UPDATE userRoleTable SET roleNameCol = '"+newRole+"' WHERE userNameCol ='"+email+"'";
-		MySQLConnector.update(query);
+		String query = "";
+		if (newPassword != null)
+		{
+			query = "UPDATE userTable SET userCredCol = '"+newPassword+"' WHERE userNameCol ='"+email+"'";
+			MySQLConnector.update(query);
+		}
+		
+		if (newRole != null)
+		{
+			query = "UPDATE userRoleTable SET roleNameCol = '"+newRole+"' WHERE userNameCol ='"+email+"'";
+			MySQLConnector.update(query);
+		}
 	}
 
 	@Override

@@ -1,6 +1,9 @@
 <%
-    String pageName, pageNameNice;
+    String pageName, pageNameNice, userName, userType;
     int position;
+    
+    /* Get username */
+    userName = request.getRemoteUser();
     
     /* Gets the name of the current file */
     pageName = request.getRequestURI();
@@ -38,8 +41,18 @@
                 <a href="./statistics.jsp" class="menu_link<% if("statistics.jsp".equals(pageName)){out.print(" menu_link_active");} %>">Statistics</a>
                 <a href="./live_traffic.jsp" class="menu_link<% if("live_traffic.jsp".equals(pageName)){out.print(" menu_link_active");} %>">Live traffic</a>
                 <a href="./create_user.jsp" class="menu_link<% if("create_user.jsp".equals(pageName)){out.print(" menu_link_active");} %>">Create user</a>
-                <a href="./login.jsp" class="menu_link<% if("login.jsp".equals(pageName)){out.print(" menu_link_active");} %>">Login</a>
-                <a href="./control_panel.jsp" class="menu_link<% if("control_panel.jsp".equals(pageName)){out.print(" menu_link_active");} %>">Control Panel</a>
+
+<%
+/* Dynamic menu. Only show control-panel and logout tab if someone is logged in */
+if(userName != null) { %>
+	<a href="./logout.jsp" class="menu_link<% if("logout.jsp".equals(pageName)){out.print(" menu_link_active");} %>">Logout</a>
+	<a href="./control_panel.jsp" class="menu_link<% if("control_panel.jsp".equals(pageName)){out.print(" menu_link_active");} %>">Control Panel</a>
+<% }
+else { %>
+	<a href="./login.jsp" class="menu_link<% if("login.jsp".equals(pageName)){out.print(" menu_link_active");} %>">Login</a>
+<% }
+%>
+
             </div>
             <div id="main">
                 <h2 id="title"><% out.print(pageNameNice); %></h2>

@@ -14,7 +14,7 @@
 
 <form action="./create_user_action.jsp" method="post">
     <div class="form_description">Email:</div>
-    <div class="form_input"><input size="70" name="mail" type="text" /></div>
+    <div class="form_input"><input size="70" name="mail" type="email" /></div>
     <div class="form_description">Password:</div>
     <div class="form_input"><input size="70" name="password" type="password" /></div>  
     

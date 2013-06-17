@@ -73,7 +73,7 @@ body {
     display: block;
     float: left;
 }
-#pi_response {
+#message {
     color: red;
 }
 a {
@@ -122,9 +122,18 @@ a.user {
 a.chart {
     background-image: url('../images/chart_bg.jpg');
 }
+a.password {
+	background-image: url('../images/password_bg.jpg');
+}
 div.form_description {
     height: 30px;
     width: 100px;
+    float: left;
+    clear: left;
+}
+div.form_description_long {
+    height: 30px;
+    width: 150px;
     float: left;
     clear: left;
 }
