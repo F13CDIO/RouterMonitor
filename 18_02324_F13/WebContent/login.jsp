@@ -1,8 +1,16 @@
 <%@include file="./includes/top.jsp" %>
 
 <%
-	if("true".equals(request.getParameter("error"))) {
+	Object logout_message;
+
+	logout_message = session.getAttribute("logout_message");
+
+	if("error".equals(request.getParameter("message"))) {
 	    out.println("<p id=\"message\">Unable to login.</p>");
+	}
+	else if(logout_message != null) {
+		out.println("<p id=\"message\">" + logout_message + "</p>");
+		request.getSession().removeAttribute("logout_message");
 	}
 %>
 

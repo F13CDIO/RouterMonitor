@@ -11,8 +11,15 @@
 		try {
 			mysql.connect();
 			
-			DAO.addUser(mail, password, "user");
-			message = "User created succesfully.";
+			/* Check if user exists */
+			if(!DAO.userExists(mail)) {
+				DAO.addUser(mail, password, "user");
+				message = "User created succesfully.";	
+			}
+			else {
+				message = "User already exists!";
+			}
+			
 		}
 		catch (Exception e) {
 			message = "System error. User not created!<br />Error: " + e;
