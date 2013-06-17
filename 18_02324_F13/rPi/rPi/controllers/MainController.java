@@ -7,19 +7,21 @@ import java.util.InputMismatchException;
 public class MainController {
 	
 	private final SupportedOS currentOS;
+	private final String server_ip;
 	
 	TerminalExecutor tc = new TerminalExecutor();
 	public BufferedReader br = null;
 	BufferedReader inputFromServer = null;
 	ConnectionController cc;
 	
-	public MainController() throws Exception {
+	public MainController(String server_ip) throws Exception {
+		this.server_ip = server_ip;
 		this.currentOS = checkOS();
 		cc = new ConnectionController();		
 	}
 	
 	public void connectToServer() throws IOException {
-		inputFromServer = cc.connectToServer();
+		inputFromServer = cc.connectToServer(server_ip);
 	}
 	
 	/**

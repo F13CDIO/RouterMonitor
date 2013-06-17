@@ -14,7 +14,11 @@ import java.util.InputMismatchException;
 public class RpiMain {
 	public static void main(String[] args) throws Exception {
 
-		MainController mc = new MainController();
+		// Take server ip in as argument when program is run in terminal
+		String server_ip = 	args[0];
+		System.out.println("ip entered : " + server_ip);
+		
+		MainController mc = new MainController(server_ip);
 		mc.connectToServer();
 		while (true){
 			try {			

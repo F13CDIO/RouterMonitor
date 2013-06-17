@@ -177,7 +177,7 @@ public class MenuHandler {
 		} else if (this.currentOS == SupportedOS.Windows){
 			// TODO
 		} else if (this.currentOS == SupportedOS.Linux){
-			// TODO
+			System.out.println("tried to get linux wifistatus, not supported yet");
 		}
 		ArrayList<String[]> statusList = new ArrayList<String[]>();
 		String[] aLine = new String[2];
@@ -228,7 +228,14 @@ public class MenuHandler {
 		    }	
 		// NIX
 		} else if (this.currentOS == SupportedOS.Linux){
-			// TODO
+			br = tc.exec("ifconfig -a");
+			String line;
+			while( (line = br.readLine()) != null){
+				System.out.println("line");
+				if (line.indexOf("HWaddr") >= 0){
+					addr = line.substring(line.indexOf(" ") + 1);
+				}
+			}
 		}
 		
 		return addr;
