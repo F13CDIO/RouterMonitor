@@ -97,7 +97,7 @@ public class ConnectedTCPClient extends Thread
     	String data = "";
     	int timeout = 0;
     	
-    	while(!dataFromClient.ready() && timeout < 20)
+    	while(!dataFromClient.ready() && timeout < 300)
     	{
     		timeout++;
     		try
