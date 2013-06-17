@@ -49,7 +49,20 @@ public class ChannelHopping extends Thread {
 	}
 	
 	private void iteratingMac(String ssid){
-		//TODO iterate over channels mac
+		ArrayList<Integer> channels = getRelevantChannelsMac(ssid);
+		int i = 0;
+		while(true){
+			tc.exec("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -z");
+			tc.exec("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --channel="+channels.get(i));
+			try{
+				Thread.sleep(5000);
+			}catch(InterruptedException e){
+				e.printStackTrace();
+			}
+			i++;
+			if(i >= channels.size())
+				i = 0;
+		}
 	}
 	/**
 	 * This method scans the wireless networks and returns the channels we want to monitor
@@ -90,7 +103,24 @@ public class ChannelHopping extends Thread {
 	
 	private ArrayList<Integer> getRelevantChannelsMac(String ssid){
 		ArrayList<Integer> channels = new ArrayList<Integer>();
-		//TODO implement extraction of channels mac
+		String scanCmd = "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s";
+		BufferedReader br = tc.exec(scanCmd);
+		String[] aNetwork = new String[7];
+		while(true){
+			try{
+				String line = br.readLine();
+				if(line.length() > 0){
+					aNetwork = line.split("\\s+");
+					if(aNetwork[1].equals(ssid)){
+						int channel = Integer.parseInt(aNetwork[4]);
+						if(!channels.contains(channel))
+							channels.add(channel);
+					}
+				}
+			} catch(Exception e){
+				break;
+			}
+		}
 		return channels;
 	}
 
