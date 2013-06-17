@@ -4,8 +4,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import server.data.Data;
-import server.data.Data.DataPackage;
+import server.data.DataPackage;
 
 public interface IDataPackageDAO 
 {
