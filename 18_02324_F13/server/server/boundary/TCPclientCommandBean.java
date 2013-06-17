@@ -39,6 +39,11 @@ public class TCPclientCommandBean
 		return TCPServer.doClientCommand(mac, "scanNetworks", channelNumber);
 	}
 	
+	public void iterateOverChannels(String mac)
+	{
+		TCPServer.doClientCommand(mac, "iterate", channelNumber);
+	}
+	
 	/**
 	 * Stops the sending of UDP data from the client
 	 * @param mac The identifyer for the client
