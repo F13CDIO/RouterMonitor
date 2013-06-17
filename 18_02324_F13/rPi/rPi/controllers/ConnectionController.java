@@ -59,7 +59,7 @@ public class ConnectionController {
 			}
 		}
 		
-		System.out.println("tcp initialized, now sending create"); // useless shit protocol HAVE TO BE MITIGATED!!! 
+		System.out.println("tcp initialized"); // useless shit protocol HAVE TO BE MITIGATED!!! 
 		
 		// OUR PROTOCOL HANDSHAKE / WHATEVA
 		con.sendTCP("mac\n");
@@ -97,10 +97,13 @@ public class ConnectionController {
 	 */
 	public void sendArrayTCP(ArrayList<String[]> arrList){
 		for (String[] array : arrList){
+			System.out.println("array length "+ array.length);
+			String networkInfo = "";
 			for (String str : array){
-				System.out.println("array string sent : " + str);
-				con.sendTCP(str + "\n");
+				networkInfo += str + "|";
 			}
+			System.out.println(networkInfo);
+			con.sendTCP(networkInfo+"\n");
 		}
 		System.out.println("TCParray sent");
 	}

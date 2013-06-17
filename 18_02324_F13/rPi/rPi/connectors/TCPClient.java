@@ -22,6 +22,7 @@ class TCPClient
 	public void sendLine(String message)
 	{
 		try {
+			System.out.println(message);
 			outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			outToServer.writeBytes(message);
 			outToServer.flush();

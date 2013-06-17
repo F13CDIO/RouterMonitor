@@ -1,7 +1,7 @@
 package server.data;
 
 import java.util.*;
-import server.data.Data.DataPackage;
+import server.data.DataPackage;
 
 /**
  * 

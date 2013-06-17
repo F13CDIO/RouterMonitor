@@ -54,7 +54,7 @@ public class MainController {
 	 *  Supported commands from server as enumerated type
 	 */
 	public enum SupportedCommands {
-		nop, start, stop, scanNetworks, setChannel, getWifiStatus, getMacAddress;
+		nop, start, stop, scanNetworks, setChannel, getWifiStatus, getMacAddress, iterate; //TODO iterate skal implementeres paa serveren
 	}
 	
 	/**
@@ -64,7 +64,7 @@ public class MainController {
 	 */
 	public void handleCommand() throws IOException
 	{
-		MenuHandler mh = new MenuHandler(currentOS);
+		MenuHandler mh = new MenuHandler(currentOS, cc);
 		
 		SupportedCommands thisCommand = SupportedCommands.nop;
 		String commandStringFromServer = inputFromServer.readLine();
@@ -72,10 +72,12 @@ public class MainController {
 			
 		// check if command is valid
 		for (SupportedCommands c : SupportedCommands.values()){
+			System.out.println("command recieved : " + commandStringFromServer);
 			if (c.name().equals(commandStringFromServer)){
 				thisCommand = SupportedCommands.valueOf(commandStringFromServer); 
 			} else {
-				throw new InputMismatchException("command recieved : " + commandStringFromServer);
+				System.out.println(commandStringFromServer);
+				//throw new InputMismatchException("command recieved : " + commandStringFromServer);
 			}
 		}
 		

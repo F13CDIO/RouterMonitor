@@ -1,4 +1,4 @@
-package server.data;
+package server.test;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -7,7 +7,7 @@ import java.util.Date;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import server.data.Data.DataPackage;
+import server.data.DataPackage;
 import server.data.mySQLConnector.MySQLConnector;
 import server.data.mySqlDataAccessObjects.DataPackageDAO;
 

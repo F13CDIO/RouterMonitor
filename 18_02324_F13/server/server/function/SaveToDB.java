@@ -2,7 +2,7 @@ package server.function;
 
 import java.sql.SQLException;
 
-import server.data.Data.DataPackage;
+import server.data.DataPackage;
 import server.data.mySQLConnector.MySQLConnector;
 import server.data.mySqlDataAccessObjects.DataPackageDAO;
 import server.data.IData;

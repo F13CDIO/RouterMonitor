@@ -17,17 +17,18 @@ import rPi.controllers.MainController.SupportedCommands;
 public class MenuHandler {
 	
 	private SupportedOS currentOS;
+	private ConnectionController cc;
 	
 	/**
 	 * The constructor needs to know host OS
 	 * 
 	 * @param currentOS
 	 */
-	public MenuHandler(SupportedOS currentOS) {
+	public MenuHandler(SupportedOS currentOS, ConnectionController cc) {
 		this.currentOS = currentOS;
+		this.cc = cc;
 	}
-		
-	ConnectionController cc = new ConnectionController();		
+				
 	TerminalExecutor tc = new TerminalExecutor();
 	
 	/**
@@ -63,6 +64,10 @@ public class MenuHandler {
 		case getMacAddress:
 			cc.sendStringTCP( getMacAddress() );
 			break;
+		case iterate: 
+			ChannelHopping hopper = new ChannelHopping("dtu", currentOS);
+			(new Thread(hopper)).start();
+				
 		default: cc.sendStringTCP("ERROR"); // enum might get extended
 		}
 		
@@ -76,8 +81,8 @@ public class MenuHandler {
 	 * @param UDP port on server to send to as sniffing uses out-of-band communication
 	 */
 	public void startSniffing(int portToSendTo){
-		String startScript = "bash /usr/local/bin/tshark -T fields -e ip.src -e ip.dst -e http.host -e http.user_agent -i en0 -I -l -R http.request tcp port 80 and ip";
-		//String startScript = "bash startScript.sh"; // the startscript automatically appends the right path to tshark
+		// String startScript = "bash /usr/local/bin/tshark -T fields -e ip.src -e ip.dst -e http.host -e http.user_agent -i en0 -I -l -R http.request tcp port 80 and ip";
+		String startScript = "bash startScript.sh"; // the startscript automatically appends the right path to tshark
 		BufferedReader br = tc.exec(startScript);
 		System.out.println("startscript exec'd");
 		cc.initAndSendUDP(br, portToSendTo);
@@ -92,7 +97,7 @@ public class MenuHandler {
 		if (this.currentOS == SupportedOS.Mac || this.currentOS == SupportedOS.Linux){
 			tc.exec("kill $(cat process1.pid)");	
 		} else if (this.currentOS == SupportedOS.Windows){
-			
+			System.out.println("windows can't sniff");
 		}
 	}
 	
@@ -105,28 +110,85 @@ public class MenuHandler {
 	private ArrayList<String[]> scanNetworks() throws Exception{
 		assert(this.currentOS != null);
 		
+		ArrayList<String[]> networkOutput = null;
+		
 		// Execute network scanning according to user operating system
 		String scanCommand = "";
 		if (this.currentOS == SupportedOS.Windows){
+			System.out.println("windows not supported");
 			scanCommand = "";
 		} else if (this.currentOS == SupportedOS.Mac){
 			scanCommand = "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s";
 		} else if (this.currentOS == SupportedOS.Linux){
-			scanCommand = "iw wlan0 scan";
+			System.out.println("executing linux scan");
+			scanCommand = "iwlist wlan0 scan";
 		}
 		BufferedReader br = tc.exec(scanCommand); 
-	    
-		// This parsing only works for mac
+		if (this.currentOS == SupportedOS.Mac){
+			networkOutput = parseMacScanNetworks(br);
+		} else if (this.currentOS == SupportedOS.Linux){
+			networkOutput =  parseLinuxScanNetworks(br);
+		} 
+		if (networkOutput == null)
+			System.out.println("ARRAY IS FUCKING null");
+		return networkOutput;
+	}
+	
+	private ArrayList<String[]> parseMacScanNetworks(BufferedReader br){
 		ArrayList<String[]> networks = new ArrayList<String[]>();
-	    String[] aNetwork = new String[7]; // SSID | BSSID | RSSI | CHANNEL | HT | CC | SECURITY
-	    for (int i = 0; i < 20; i++){
-	    	String line = br.readLine();
-	    	if (line.length() > 0){
-	    		aNetwork = line.split("^S"); // Split on first non whitespace character
-	    		networks.add(aNetwork);
+	    String[] aNetwork; // SSID | BSSID | RSSI | CHANNEL | HT | CC | SECURITY
+	    while (true){
+	    	try {
+	    		String line = br.readLine();
+	    		System.out.println(line);
+	    		if (line.length() > 0){
+	    			aNetwork = line.split("\\s+"); // Split on first non whitespace character
+	    			networks.add(aNetwork);
+	    		}
+	    	} catch (Exception e){
+	    		break;
 	    	}
-	    }
+	    } // end while
 	    return networks;
+	}
+
+	// The point is to try and get the messy linux output formatted the same way as mac scan above ^^ SSID | BSSID | RSSI | CHANNEL | HT | CC | SECURITY
+	// Country code (cc) and HT does not get outputted by iwlist in linux, so we set it to null
+	private ArrayList<String[]> parseLinuxScanNetworks(BufferedReader br){
+		ArrayList<String[]> networks = new ArrayList<String[]>();
+		String[] aNetwork = new String[7];
+		String line;
+		
+		while (true){
+			try{
+				line = br.readLine();
+				String [] temp = line.split("\\s+");
+				if (temp[0].equals("Cell")){
+					networks.add(aNetwork); // save current network when 1. line is met
+					aNetwork = new String[7];
+					
+					aNetwork[4] = null; // set HT to null
+					aNetwork[5] = null; // set CC to null
+					
+					aNetwork[1] = temp[4]; // BSSID from temp to aNetwork
+				} else if (temp[0].startsWith("Channel")){
+					aNetwork[3] = temp[0].split(":")[1]; // CHANNEL from temp to aNetwork
+				} else if (temp[0].startsWith("Quality")){
+					aNetwork[2] = temp[2].split("=")[1];
+				} else if (temp[0].startsWith("Encryption")){
+					aNetwork[6] = temp[1].split(":")[1]; // Sec settings not as verbose as mac (on/off)
+				} else if (temp[0].startsWith("ESSID")){
+					String tempESSID = temp[0].split(":")[1]; // saves ESSID but with quotes around
+					aNetwork[0] = tempESSID.substring(1, tempESSID.length()-2); // remove quotes from "ESSID"
+				} 
+				
+			} catch (IOException e){
+				e.printStackTrace();
+				networks.remove(0); // hack to remove the first entry which is added though it's null
+				break;
+			}
+		}
+		return networks;
 	}
 	
 	/**

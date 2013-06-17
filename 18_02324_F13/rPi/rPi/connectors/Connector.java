@@ -2,6 +2,7 @@ package rPi.connectors;
 
 import java.io.BufferedReader;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /*
  * Implementation of the controller that handles our network connections through use of TCPCLient and UDPCLient
@@ -29,8 +30,10 @@ public class Connector implements IConnector {
 	@Override
 	public void sendTCP(String message)
 	{
-		assert(tcp != null);
+		assert(tcp != null);	
+		
 		tcp.sendLine(message);
+		
 	}
 	@Override
 	public void initUDP(int portToSendFrom, int destinationPort, InetAddress destinationIP)
