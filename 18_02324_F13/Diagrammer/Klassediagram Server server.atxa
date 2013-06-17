@@ -1,0 +1,698 @@
+<,mads.slotsbo@gmail.com,mads.slotsbo@gmail.com> <http://www.architexa.com/rdf/core#creator> "true" .
+
+@prefix atxa-rse-eclipse: <http://www.architexa.com/rdf/rse-eclipse#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix atxa-jdt-wkspc: <http://www.architexa.com/rdf/jdt-wkspc#> .
+@prefix atxa-core: <http://www.architexa.com/rdf/core#> .
+@prefix atxa: <http://www.architexa.com/rdf/> .
+@prefix atxa-jdt: <http://www.architexa.com/rdf/jdt#> .
+
+<http://www.architexa.com/rdf/rse-eclipse#Diagrammer_slKlassediagram Server server.atxa> a atxa-core:reloFile .
+
+atxa:DetailNode atxa-core:detailLevel "1" .
+
+atxa-core:docRoot atxa-core:browseModel "com.architexa.diagrams.relo.jdt/com.architexa.diagrams.relo.jdt.browse.ClassStrucBrowseModel" ;
+	atxa-core:contains _:node17t8j18b7x1 .
+
+_:node17t8j18b7x1 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.main> ;
+	atxa-core:posX "426" ;
+	atxa-core:posY "921" .
+
+<http://www.architexa.com/rdf/jdt-wkspc#server.main> atxa-core:contains <http://www.architexa.com/rdf/jdt-wkspc#server.main$MainServer> .
+
+_:node17t8j18b7x1 atxa-core:contains _:node17t8j18b7x2 .
+
+_:node17t8j18b7x2 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.main$MainServer> ;
+	atxa-core:posX "432" ;
+	atxa-core:posY "946" .
+
+<http://www.architexa.com/rdf/jdt-wkspc#server.main$MainServer> atxa-core:contains <http://www.architexa.com/rdf/jdt-wkspc#server.main$MainServer.main(String[],)> , <http://www.architexa.com/rdf/jdt-wkspc#server.main$MainServer.MainServer()> .
+
+_:node17t8j18b7x5 a atxa-core:link ;
+	atxa-core:model atxa-jdt:refType ;
+	rdf:subject _:node17t8j18b7x2 ;
+	rdf:object _:node17t8j18b7x6 .
+
+_:node17t8j18b7x2 atxa-core:contains _:node17t8j18b7x13 .
+
+_:node17t8j18b7x13 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.main$MainServer.main(String[],)> ;
+	atxa-core:posX "433" ;
+	atxa-core:posY "964" .
+
+_:node17t8j18b7x2 atxa-core:contains _:node17t8j18b7x14 .
+
+_:node17t8j18b7x14 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.main$MainServer.MainServer()> ;
+	atxa-core:posX "433" ;
+	atxa-core:posY "980" .
+
+atxa-core:docRoot atxa-core:contains _:node17t8j18b7x15 .
+
+_:node17t8j18b7x15 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary> ;
+	atxa-core:posX "386" ;
+	atxa-core:posY "1078" .
+
+<http://www.architexa.com/rdf/jdt-wkspc#server.boundary> atxa-core:contains <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$Boundary> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TomcatServer> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient> .
+
+_:node17t8j18b7x15 atxa-core:contains _:node17t8j18b7x6 .
+
+_:node17t8j18b7x6 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$Boundary> ;
+	atxa-core:posX "392" ;
+	atxa-core:posY "1129" .
+
+<http://www.architexa.com/rdf/jdt-wkspc#server.boundary$Boundary> atxa-core:contains <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$Boundary.Boundary()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$Boundary.Boundary(IFunction,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$Boundary.function> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$Boundary.getInstanceOfFunction()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$Boundary.startServer()> .
+
+_:node17t8j18b7x16 a atxa-core:link ;
+	atxa-core:model atxa-jdt:refType ;
+	rdf:subject _:node17t8j18b7x6 ;
+	rdf:object _:node17t8j18b7x17 .
+
+_:node17t8j18b7x18 a atxa-core:link ;
+	atxa-core:model atxa-jdt:refType ;
+	rdf:subject _:node17t8j18b7x6 ;
+	rdf:object _:node17t8j18b7x19 .
+
+_:node17t8j18b7x6 atxa-core:contains _:node17t8j18b7x21 .
+
+_:node17t8j18b7x21 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$Boundary.Boundary()> ;
+	atxa-core:posX "393" ;
+	atxa-core:posY "1163" .
+
+_:node17t8j18b7x6 atxa-core:contains _:node17t8j18b7x22 .
+
+_:node17t8j18b7x22 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$Boundary.Boundary(IFunction,)> ;
+	atxa-core:posX "393" ;
+	atxa-core:posY "1179" .
+
+_:node17t8j18b7x6 atxa-core:contains _:node17t8j18b7x23 .
+
+_:node17t8j18b7x23 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$Boundary.function> ;
+	atxa-core:posX "393" ;
+	atxa-core:posY "1147" .
+
+_:node17t8j18b7x6 atxa-core:contains _:node17t8j18b7x24 .
+
+_:node17t8j18b7x24 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$Boundary.getInstanceOfFunction()> ;
+	atxa-core:posX "393" ;
+	atxa-core:posY "1195" .
+
+_:node17t8j18b7x6 atxa-core:contains _:node17t8j18b7x25 .
+
+_:node17t8j18b7x25 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$Boundary.startServer()> ;
+	atxa-core:posX "393" ;
+	atxa-core:posY "1211" .
+
+_:node17t8j18b7x15 atxa-core:contains _:node17t8j18b7x30 .
+
+_:node17t8j18b7x30 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer> ;
+	atxa-core:posX "638" ;
+	atxa-core:posY "1103" .
+
+<http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer> atxa-core:contains <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.availableUDPPort> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.function> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.getPort()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.incommingPacket> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.keepRunning> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.run()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.stopThread()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.udpPort> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.UDPServer()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.udpSocket> .
+
+_:node17t8j18b7x57 a atxa-core:link ;
+	atxa-core:model atxa-jdt:refType ;
+	rdf:subject _:node17t8j18b7x30 ;
+	rdf:object _:node17t8j18b7x6 .
+
+_:node17t8j18b7x30 atxa-core:contains _:node17t8j18b7x59 .
+
+_:node17t8j18b7x59 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.availableUDPPort> ;
+	atxa-core:posX "639" ;
+	atxa-core:posY "1121" .
+
+_:node17t8j18b7x30 atxa-core:contains _:node17t8j18b7x60 .
+
+_:node17t8j18b7x60 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.function> ;
+	atxa-core:posX "639" ;
+	atxa-core:posY "1137" .
+
+_:node17t8j18b7x30 atxa-core:contains _:node17t8j18b7x61 .
+
+_:node17t8j18b7x61 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.getPort()> ;
+	atxa-core:posX "639" ;
+	atxa-core:posY "1217" .
+
+_:node17t8j18b7x30 atxa-core:contains _:node17t8j18b7x62 .
+
+_:node17t8j18b7x62 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.incommingPacket> ;
+	atxa-core:posX "639" ;
+	atxa-core:posY "1153" .
+
+_:node17t8j18b7x30 atxa-core:contains _:node17t8j18b7x63 .
+
+_:node17t8j18b7x63 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.keepRunning> ;
+	atxa-core:posX "639" ;
+	atxa-core:posY "1169" .
+
+_:node17t8j18b7x30 atxa-core:contains _:node17t8j18b7x64 .
+
+_:node17t8j18b7x64 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.run()> ;
+	atxa-core:posX "639" ;
+	atxa-core:posY "1233" .
+
+_:node17t8j18b7x30 atxa-core:contains _:node17t8j18b7x65 .
+
+_:node17t8j18b7x65 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.stopThread()> ;
+	atxa-core:posX "639" ;
+	atxa-core:posY "1249" .
+
+_:node17t8j18b7x30 atxa-core:contains _:node17t8j18b7x66 .
+
+_:node17t8j18b7x66 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.udpPort> ;
+	atxa-core:posX "639" ;
+	atxa-core:posY "1185" .
+
+_:node17t8j18b7x30 atxa-core:contains _:node17t8j18b7x67 .
+
+_:node17t8j18b7x67 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.UDPServer()> ;
+	atxa-core:posX "639" ;
+	atxa-core:posY "1265" .
+
+_:node17t8j18b7x30 atxa-core:contains _:node17t8j18b7x68 .
+
+_:node17t8j18b7x68 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$UDPServer.udpSocket> ;
+	atxa-core:posX "639" ;
+	atxa-core:posY "1201" .
+
+_:node17t8j18b7x15 atxa-core:contains _:node17t8j18b7x19 .
+
+_:node17t8j18b7x19 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TomcatServer> ;
+	atxa-core:posX "428" ;
+	atxa-core:posY "1297" .
+
+<http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TomcatServer> atxa-core:contains <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TomcatServer.start()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TomcatServer.TomcatServer()> .
+
+_:node17t8j18b7x19 atxa-core:contains _:node17t8j18b7x69 .
+
+_:node17t8j18b7x69 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TomcatServer.start()> ;
+	atxa-core:posX "429" ;
+	atxa-core:posY "1315" .
+
+_:node17t8j18b7x19 atxa-core:contains _:node17t8j18b7x70 .
+
+_:node17t8j18b7x70 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TomcatServer.TomcatServer()> ;
+	atxa-core:posX "429" ;
+	atxa-core:posY "1331" .
+
+_:node17t8j18b7x15 atxa-core:contains _:node17t8j18b7x71 .
+
+_:node17t8j18b7x71 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean> ;
+	atxa-core:posX "435" ;
+	atxa-core:posY "1507" .
+
+<http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean> atxa-core:contains <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.channelNumber> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.getClients()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.getWifiStatus(String,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.isUDPactive(String,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.scanNetworks(String,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.setChannel(String,int,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.startUDPSocket(String,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.stopUDPSocket(String,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.TCPclientCommandBean()> .
+
+_:node17t8j18b7x72 a atxa-core:link ;
+	atxa-core:model atxa-jdt:refType ;
+	rdf:subject _:node17t8j18b7x71 ;
+	rdf:object _:node17t8j18b7x17 .
+
+_:node17t8j18b7x71 atxa-core:contains _:node17t8j18b7x73 .
+
+_:node17t8j18b7x73 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.channelNumber> ;
+	atxa-core:posX "436" ;
+	atxa-core:posY "1525" .
+
+_:node17t8j18b7x71 atxa-core:contains _:node17t8j18b7x74 .
+
+_:node17t8j18b7x74 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.getClients()> ;
+	atxa-core:posX "436" ;
+	atxa-core:posY "1541" .
+
+_:node17t8j18b7x71 atxa-core:contains _:node17t8j18b7x75 .
+
+_:node17t8j18b7x75 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.getWifiStatus(String,)> ;
+	atxa-core:posX "436" ;
+	atxa-core:posY "1557" .
+
+_:node17t8j18b7x71 atxa-core:contains _:node17t8j18b7x76 .
+
+_:node17t8j18b7x76 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.isUDPactive(String,)> ;
+	atxa-core:posX "436" ;
+	atxa-core:posY "1573" .
+
+_:node17t8j18b7x71 atxa-core:contains _:node17t8j18b7x77 .
+
+_:node17t8j18b7x77 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.scanNetworks(String,)> ;
+	atxa-core:posX "436" ;
+	atxa-core:posY "1589" .
+
+_:node17t8j18b7x71 atxa-core:contains _:node17t8j18b7x78 .
+
+_:node17t8j18b7x78 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.setChannel(String,int,)> ;
+	atxa-core:posX "436" ;
+	atxa-core:posY "1605" .
+
+_:node17t8j18b7x71 atxa-core:contains _:node17t8j18b7x79 .
+
+_:node17t8j18b7x79 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.startUDPSocket(String,)> ;
+	atxa-core:posX "436" ;
+	atxa-core:posY "1621" .
+
+_:node17t8j18b7x71 atxa-core:contains _:node17t8j18b7x80 .
+
+_:node17t8j18b7x80 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.stopUDPSocket(String,)> ;
+	atxa-core:posX "436" ;
+	atxa-core:posY "1637" .
+
+_:node17t8j18b7x71 atxa-core:contains _:node17t8j18b7x81 .
+
+_:node17t8j18b7x81 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPclientCommandBean.TCPclientCommandBean()> ;
+	atxa-core:posX "436" ;
+	atxa-core:posY "1653" .
+
+_:node17t8j18b7x15 atxa-core:contains _:node17t8j18b7x17 .
+
+_:node17t8j18b7x17 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer> ;
+	atxa-core:posX "753" ;
+	atxa-core:posY "1560" .
+
+<http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer> atxa-core:contains <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.addClient(ConnectedTCPClient,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.clients> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.doClientCommand(String,String,int,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.getClient(String,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.getClients()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.hasClient(String,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.isUDPactive(String,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.removeClient(ConnectedTCPClient,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.serverPort> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.serverSocket> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.startServer(int,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.TCPServer()> .
+
+_:node17t8j18b7x82 a atxa-core:link ;
+	atxa-core:model atxa-jdt:refType ;
+	rdf:subject _:node17t8j18b7x17 ;
+	rdf:object _:node17t8j18b7x26 .
+
+_:node17t8j18b7x17 atxa-core:contains _:node17t8j18b7x83 .
+
+_:node17t8j18b7x83 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.addClient(ConnectedTCPClient,)> ;
+	atxa-core:posX "754" ;
+	atxa-core:posY "1626" .
+
+_:node17t8j18b7x17 atxa-core:contains _:node17t8j18b7x84 .
+
+_:node17t8j18b7x84 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.clients> ;
+	atxa-core:posX "754" ;
+	atxa-core:posY "1578" .
+
+_:node17t8j18b7x17 atxa-core:contains _:node17t8j18b7x85 .
+
+_:node17t8j18b7x85 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.doClientCommand(String,String,int,)> ;
+	atxa-core:posX "754" ;
+	atxa-core:posY "1642" .
+
+_:node17t8j18b7x17 atxa-core:contains _:node17t8j18b7x86 .
+
+_:node17t8j18b7x86 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.getClient(String,)> ;
+	atxa-core:posX "754" ;
+	atxa-core:posY "1658" .
+
+_:node17t8j18b7x17 atxa-core:contains _:node17t8j18b7x87 .
+
+_:node17t8j18b7x87 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.getClients()> ;
+	atxa-core:posX "754" ;
+	atxa-core:posY "1674" .
+
+_:node17t8j18b7x17 atxa-core:contains _:node17t8j18b7x88 .
+
+_:node17t8j18b7x88 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.hasClient(String,)> ;
+	atxa-core:posX "754" ;
+	atxa-core:posY "1690" .
+
+_:node17t8j18b7x17 atxa-core:contains _:node17t8j18b7x89 .
+
+_:node17t8j18b7x89 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.isUDPactive(String,)> ;
+	atxa-core:posX "754" ;
+	atxa-core:posY "1706" .
+
+_:node17t8j18b7x17 atxa-core:contains _:node17t8j18b7x90 .
+
+_:node17t8j18b7x90 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.removeClient(ConnectedTCPClient,)> ;
+	atxa-core:posX "754" ;
+	atxa-core:posY "1722" .
+
+_:node17t8j18b7x17 atxa-core:contains _:node17t8j18b7x91 .
+
+_:node17t8j18b7x91 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.serverPort> ;
+	atxa-core:posX "754" ;
+	atxa-core:posY "1594" .
+
+_:node17t8j18b7x17 atxa-core:contains _:node17t8j18b7x92 .
+
+_:node17t8j18b7x92 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.serverSocket> ;
+	atxa-core:posX "754" ;
+	atxa-core:posY "1610" .
+
+_:node17t8j18b7x17 atxa-core:contains _:node17t8j18b7x93 .
+
+_:node17t8j18b7x93 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.startServer(int,)> ;
+	atxa-core:posX "754" ;
+	atxa-core:posY "1738" .
+
+_:node17t8j18b7x17 atxa-core:contains _:node17t8j18b7x94 .
+
+_:node17t8j18b7x94 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$TCPServer.TCPServer()> ;
+	atxa-core:posX "754" ;
+	atxa-core:posY "1754" .
+
+_:node17t8j18b7x15 atxa-core:contains _:node17t8j18b7x26 .
+
+_:node17t8j18b7x26 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient> ;
+	atxa-core:posX "905" ;
+	atxa-core:posY "1104" .
+
+<http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient> atxa-core:contains <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.clientDisconnected> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.close()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.ConnectedTCPClient(Socket,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.dataFromClient> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.dataToClient> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.disconnectControl> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.getIpAddress()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.getMac()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.getPort()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.getUDPport()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.GUIInterrupt> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.ipAddress> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.isUDPactive()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.linkedUDPServer> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.macAddress> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.port> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.readCommand()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.readData()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.readLine()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.run()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.setUDPactive(boolean,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.socket> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.stopThread()> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.UDPactive> , <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.write(String,)> .
+
+_:node17t8j18b7x27 a atxa-core:link ;
+	atxa-core:model atxa-jdt:refType ;
+	rdf:subject _:node17t8j18b7x26 ;
+	rdf:object _:node17t8j18b7x28 .
+
+_:node17t8j18b7x29 a atxa-core:link ;
+	atxa-core:model atxa-jdt:refType ;
+	rdf:subject _:node17t8j18b7x26 ;
+	rdf:object _:node17t8j18b7x30 .
+
+_:node17t8j18b7x31 a atxa-core:link ;
+	atxa-core:model atxa-jdt:refType ;
+	rdf:subject _:node17t8j18b7x26 ;
+	rdf:object _:node17t8j18b7x17 .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x32 .
+
+_:node17t8j18b7x32 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.clientDisconnected> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1122" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x33 .
+
+_:node17t8j18b7x33 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.close()> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1298" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x34 .
+
+_:node17t8j18b7x34 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.ConnectedTCPClient(Socket,)> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1314" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x35 .
+
+_:node17t8j18b7x35 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.dataFromClient> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1138" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x36 .
+
+_:node17t8j18b7x36 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.dataToClient> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1154" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x37 .
+
+_:node17t8j18b7x37 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.disconnectControl> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1170" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x38 .
+
+_:node17t8j18b7x38 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.getIpAddress()> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1330" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x39 .
+
+_:node17t8j18b7x39 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.getMac()> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1346" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x40 .
+
+_:node17t8j18b7x40 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.getPort()> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1362" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x41 .
+
+_:node17t8j18b7x41 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.getUDPport()> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1378" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x42 .
+
+_:node17t8j18b7x42 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.GUIInterrupt> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1186" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x43 .
+
+_:node17t8j18b7x43 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.ipAddress> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1202" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x44 .
+
+_:node17t8j18b7x44 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.isUDPactive()> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1394" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x45 .
+
+_:node17t8j18b7x45 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.linkedUDPServer> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1218" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x46 .
+
+_:node17t8j18b7x46 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.macAddress> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1234" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x47 .
+
+_:node17t8j18b7x47 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.port> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1250" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x48 .
+
+_:node17t8j18b7x48 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.readCommand()> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1410" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x49 .
+
+_:node17t8j18b7x49 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.readData()> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1426" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x50 .
+
+_:node17t8j18b7x50 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.readLine()> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1442" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x51 .
+
+_:node17t8j18b7x51 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.run()> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1458" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x52 .
+
+_:node17t8j18b7x52 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.setUDPactive(boolean,)> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1474" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x53 .
+
+_:node17t8j18b7x53 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.socket> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1266" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x54 .
+
+_:node17t8j18b7x54 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.stopThread()> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1490" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x55 .
+
+_:node17t8j18b7x55 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.UDPactive> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1282" .
+
+_:node17t8j18b7x26 atxa-core:contains _:node17t8j18b7x56 .
+
+_:node17t8j18b7x56 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.boundary$ConnectedTCPClient.write(String,)> ;
+	atxa-core:posX "906" ;
+	atxa-core:posY "1506" .
+
+atxa-core:docRoot atxa-core:contains _:node17t8j18b7x95 .
+
+_:node17t8j18b7x95 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.function> ;
+	atxa-core:posX "720" ;
+	atxa-core:posY "850" .
+
+<http://www.architexa.com/rdf/jdt-wkspc#server.function> atxa-core:contains <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck> .
+
+_:node17t8j18b7x95 atxa-core:contains _:node17t8j18b7x28 .
+
+_:node17t8j18b7x28 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck> ;
+	atxa-core:posX "726" ;
+	atxa-core:posY "875" .
+
+<http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck> atxa-core:contains <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.client> , <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.connected> , <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.DisconnectCheck(Socket,ConnectedTCPClient,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.disconnectCorrection> , <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.getDisconnectCorrection()> , <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.GUIinterrupt> , <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.returned> , <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.run()> , <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.setGUIinterrupt(boolean,)> , <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.socket> .
+
+_:node17t8j18b7x149 a atxa-core:link ;
+	atxa-core:model atxa-jdt:refType ;
+	rdf:subject _:node17t8j18b7x28 ;
+	rdf:object _:node17t8j18b7x26 .
+
+_:node17t8j18b7x28 atxa-core:contains _:node17t8j18b7x150 .
+
+_:node17t8j18b7x150 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.client> ;
+	atxa-core:posX "727" ;
+	atxa-core:posY "893" .
+
+_:node17t8j18b7x28 atxa-core:contains _:node17t8j18b7x151 .
+
+_:node17t8j18b7x151 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.connected> ;
+	atxa-core:posX "727" ;
+	atxa-core:posY "909" .
+
+_:node17t8j18b7x28 atxa-core:contains _:node17t8j18b7x152 .
+
+_:node17t8j18b7x152 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.DisconnectCheck(Socket,ConnectedTCPClient,)> ;
+	atxa-core:posX "727" ;
+	atxa-core:posY "989" .
+
+_:node17t8j18b7x28 atxa-core:contains _:node17t8j18b7x153 .
+
+_:node17t8j18b7x153 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.disconnectCorrection> ;
+	atxa-core:posX "727" ;
+	atxa-core:posY "925" .
+
+_:node17t8j18b7x28 atxa-core:contains _:node17t8j18b7x154 .
+
+_:node17t8j18b7x154 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.getDisconnectCorrection()> ;
+	atxa-core:posX "727" ;
+	atxa-core:posY "1005" .
+
+_:node17t8j18b7x28 atxa-core:contains _:node17t8j18b7x155 .
+
+_:node17t8j18b7x155 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.GUIinterrupt> ;
+	atxa-core:posX "727" ;
+	atxa-core:posY "941" .
+
+_:node17t8j18b7x28 atxa-core:contains _:node17t8j18b7x156 .
+
+_:node17t8j18b7x156 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.returned> ;
+	atxa-core:posX "727" ;
+	atxa-core:posY "957" .
+
+_:node17t8j18b7x28 atxa-core:contains _:node17t8j18b7x157 .
+
+_:node17t8j18b7x157 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.run()> ;
+	atxa-core:posX "727" ;
+	atxa-core:posY "1021" .
+
+_:node17t8j18b7x28 atxa-core:contains _:node17t8j18b7x158 .
+
+_:node17t8j18b7x158 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.setGUIinterrupt(boolean,)> ;
+	atxa-core:posX "727" ;
+	atxa-core:posY "1037" .
+
+_:node17t8j18b7x28 atxa-core:contains _:node17t8j18b7x159 .
+
+_:node17t8j18b7x159 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#server.function$DisconnectCheck.socket> ;
+	atxa-core:posX "727" ;
+	atxa-core:posY "973" .
+
+@prefix atxa-rse-eclipse: <http://www.architexa.com/rdf/rse-eclipse#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix atxa-jdt-wkspc: <http://www.architexa.com/rdf/jdt-wkspc#> .
+@prefix atxa-core: <http://www.architexa.com/rdf/core#> .
+@prefix atxa: <http://www.architexa.com/rdf/> .
+@prefix atxa-jdt: <http://www.architexa.com/rdf/jdt#> .
+
+<http://www.architexa.com/rdf/rse-eclipse#Diagrammer_slKlassediagram Server server.atxa> a atxa-core:reloFile ;
+	atxa-core:contains _:node17t8j18b7x13 , _:node17t8j18b7x14 , _:node17t8j18b7x2 , _:node17t8j18b7x1 , _:node17t8j18b7x21 , _:node17t8j18b7x22 , _:node17t8j18b7x23 , _:node17t8j18b7x24 , _:node17t8j18b7x25 , _:node17t8j18b7x6 , _:node17t8j18b7x59 , _:node17t8j18b7x60 , _:node17t8j18b7x61 , _:node17t8j18b7x62 , _:node17t8j18b7x63 , _:node17t8j18b7x64 , _:node17t8j18b7x65 , _:node17t8j18b7x66 , _:node17t8j18b7x67 , _:node17t8j18b7x68 , _:node17t8j18b7x30 , _:node17t8j18b7x69 , _:node17t8j18b7x70 , _:node17t8j18b7x19 , _:node17t8j18b7x73 , _:node17t8j18b7x74 , _:node17t8j18b7x75 , _:node17t8j18b7x76 , _:node17t8j18b7x77 , _:node17t8j18b7x78 , _:node17t8j18b7x79 , _:node17t8j18b7x80 , _:node17t8j18b7x81 , _:node17t8j18b7x71 , _:node17t8j18b7x83 , _:node17t8j18b7x84 , _:node17t8j18b7x85 , _:node17t8j18b7x86 , _:node17t8j18b7x87 , _:node17t8j18b7x88 , _:node17t8j18b7x89 , _:node17t8j18b7x90 , _:node17t8j18b7x91 , _:node17t8j18b7x92 , _:node17t8j18b7x93 , _:node17t8j18b7x94 , _:node17t8j18b7x17 , _:node17t8j18b7x32 , _:node17t8j18b7x33 , _:node17t8j18b7x34 , _:node17t8j18b7x35 , _:node17t8j18b7x36 , _:node17t8j18b7x37 , _:node17t8j18b7x38 , _:node17t8j18b7x39 , _:node17t8j18b7x40 , _:node17t8j18b7x41 , _:node17t8j18b7x42 , _:node17t8j18b7x43 , _:node17t8j18b7x44 , _:node17t8j18b7x45 , _:node17t8j18b7x46 , _:node17t8j18b7x47 , _:node17t8j18b7x48 , _:node17t8j18b7x49 , _:node17t8j18b7x50 , _:node17t8j18b7x51 , _:node17t8j18b7x52 , _:node17t8j18b7x53 , _:node17t8j18b7x54 , _:node17t8j18b7x55 , _:node17t8j18b7x56 , _:node17t8j18b7x26 , _:node17t8j18b7x15 , _:node17t8j18b7x150 , _:node17t8j18b7x151 , _:node17t8j18b7x152 , _:node17t8j18b7x153 , _:node17t8j18b7x154 , _:node17t8j18b7x155 , _:node17t8j18b7x156 , _:node17t8j18b7x157 , _:node17t8j18b7x158 , _:node17t8j18b7x159 , _:node17t8j18b7x28 , _:node17t8j18b7x95 , atxa-core:docRoot , _:node17t8j18b7x13 , _:node17t8j18b7x14 , _:node17t8j18b7x2 , _:node17t8j18b7x1 , _:node17t8j18b7x21 , _:node17t8j18b7x22 , _:node17t8j18b7x23 , _:node17t8j18b7x24 , _:node17t8j18b7x25 , _:node17t8j18b7x6 , _:node17t8j18b7x59 , _:node17t8j18b7x60 , _:node17t8j18b7x61 , _:node17t8j18b7x62 , _:node17t8j18b7x63 , _:node17t8j18b7x64 , _:node17t8j18b7x65 , _:node17t8j18b7x66 , _:node17t8j18b7x67 , _:node17t8j18b7x68 , _:node17t8j18b7x30 , _:node17t8j18b7x69 , _:node17t8j18b7x70 , _:node17t8j18b7x19 , _:node17t8j18b7x73 , _:node17t8j18b7x74 , _:node17t8j18b7x75 , _:node17t8j18b7x76 , _:node17t8j18b7x77 , _:node17t8j18b7x78 , _:node17t8j18b7x79 , _:node17t8j18b7x80 , _:node17t8j18b7x81 , _:node17t8j18b7x71 , _:node17t8j18b7x83 , _:node17t8j18b7x84 , _:node17t8j18b7x85 , _:node17t8j18b7x86 , _:node17t8j18b7x87 , _:node17t8j18b7x88 , _:node17t8j18b7x89 , _:node17t8j18b7x90 , _:node17t8j18b7x91 , _:node17t8j18b7x92 , _:node17t8j18b7x93 , _:node17t8j18b7x94 , _:node17t8j18b7x17 , _:node17t8j18b7x32 , _:node17t8j18b7x33 , _:node17t8j18b7x34 , _:node17t8j18b7x35 , _:node17t8j18b7x36 , _:node17t8j18b7x37 , _:node17t8j18b7x38 , _:node17t8j18b7x39 , _:node17t8j18b7x40 , _:node17t8j18b7x41 , _:node17t8j18b7x42 , _:node17t8j18b7x43 , _:node17t8j18b7x44 , _:node17t8j18b7x45 , _:node17t8j18b7x46 , _:node17t8j18b7x47 , _:node17t8j18b7x48 , _:node17t8j18b7x49 , _:node17t8j18b7x50 , _:node17t8j18b7x51 , _:node17t8j18b7x52 , _:node17t8j18b7x53 , _:node17t8j18b7x54 , _:node17t8j18b7x55 , _:node17t8j18b7x56 , _:node17t8j18b7x26 , _:node17t8j18b7x15 , _:node17t8j18b7x150 , _:node17t8j18b7x151 , _:node17t8j18b7x152 , _:node17t8j18b7x153 , _:node17t8j18b7x154 , _:node17t8j18b7x155 , _:node17t8j18b7x156 , _:node17t8j18b7x157 , _:node17t8j18b7x158 , _:node17t8j18b7x159 , _:node17t8j18b7x28 , _:node17t8j18b7x95 , atxa-core:docRoot , _:node17t8j18b7x5 , _:node17t8j18b7x16 , _:node17t8j18b7x18 , _:node17t8j18b7x57 , _:node17t8j18b7x72 , _:node17t8j18b7x82 , _:node17t8j18b7x27 , _:node17t8j18b7x29 , _:node17t8j18b7x31 , _:node17t8j18b7x149 , _:node17t8j18b7x5 , _:node17t8j18b7x16 , _:node17t8j18b7x18 , _:node17t8j18b7x57 , _:node17t8j18b7x72 , _:node17t8j18b7x82 , _:node17t8j18b7x27 , _:node17t8j18b7x29 , _:node17t8j18b7x31 , _:node17t8j18b7x149 .
+
