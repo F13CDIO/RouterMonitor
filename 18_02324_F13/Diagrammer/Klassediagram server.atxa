@@ -231,14 +231,14 @@ _:node17t8huau5x115 a atxa-core:link ;
 	atxa-core:model atxa-jdt:inherits ;
 	rdf:subject _:node17t8huau5x4 ;
 	rdf:object _:node17t8huau5x8 ;
-	atxa-core:bendpoint _:node17t8fds8rx11343 .
+	atxa-core:bendpoint _:node17t8fds8rx12675 .
 
-_:node17t8fds8rx11343 atxa-core:bpLocation "493,1344" ;
+_:node17t8fds8rx12675 atxa-core:bpLocation "493,1344" ;
 	atxa-core:bpIndex "0" .
 
-_:node17t8huau5x115 atxa-core:bendpoint _:node17t8fds8rx11344 .
+_:node17t8huau5x115 atxa-core:bendpoint _:node17t8fds8rx12676 .
 
-_:node17t8fds8rx11344 atxa-core:bpLocation "648,1344" ;
+_:node17t8fds8rx12676 atxa-core:bpLocation "648,1344" ;
 	atxa-core:bpIndex "1" .
 
 _:node17t8huau5x118 a atxa-core:link ;
@@ -730,14 +730,14 @@ _:node17t8huau5x211 a atxa-core:link ;
 	atxa-core:model atxa-jdt:inherits ;
 	rdf:subject _:node17t8huau5x106 ;
 	rdf:object _:node17t8huau5x154 ;
-	atxa-core:bendpoint _:node17t8fds8rx11345 .
+	atxa-core:bendpoint _:node17t8fds8rx12677 .
 
-_:node17t8fds8rx11345 atxa-core:bpLocation "948,1004" ;
+_:node17t8fds8rx12677 atxa-core:bpLocation "948,1004" ;
 	atxa-core:bpIndex "0" .
 
-_:node17t8huau5x211 atxa-core:bendpoint _:node17t8fds8rx11346 .
+_:node17t8huau5x211 atxa-core:bendpoint _:node17t8fds8rx12678 .
 
-_:node17t8fds8rx11346 atxa-core:bpLocation "973,1004" ;
+_:node17t8fds8rx12678 atxa-core:bpLocation "973,1004" ;
 	atxa-core:bpIndex "1" .
 
 _:node17t8huau5x213 a atxa-core:link ;
