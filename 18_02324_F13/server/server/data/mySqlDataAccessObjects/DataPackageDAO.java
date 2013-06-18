@@ -50,7 +50,10 @@ public class DataPackageDAO implements IDataPackageDAO
 			host = "and host = '"+host+"'";
 		
 		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
-		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(1))*(1)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 10 SECOND) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 1 LIMIT 10");
+		String query = "SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(1))*(1)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 10 SECOND) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 1 LIMIT 10";
+		ResultSet mySqlOutput = mySQLConnector.execQuery(query);
+		System.out.println("mySQL: Get 10 second traffic");
+		System.out.println("Query: " + query);
 		return parseResultsetToJSONObject("traffic", mySqlOutput);
 	}
 	
@@ -112,7 +115,7 @@ public class DataPackageDAO implements IDataPackageDAO
 		query += dataPackage.getUserAgent() + "', '";
 		query += mySqlTimestamp + "');";
 		
-		System.out.println(query);
+		//System.out.println(query);
 		mySQLConnector.update(query);		
 	}
 	
@@ -202,11 +205,11 @@ public class DataPackageDAO implements IDataPackageDAO
 	{
 	
 		String query = "INSERT INTO userTable VALUES('"+email+"', '"+password+"')";
-		System.out.println(query);
+		//System.out.println(query);
 		mySQLConnector.update(query);
 		
 		query = "INSERT INTO userRoleTable VALUES('"+email+"', '"+role+"')";
-		System.out.println(query);
+		//System.out.println(query);
 		mySQLConnector.update(query);
 	}
 

@@ -1,82 +1,58 @@
 package server.function;
 
 import java.sql.SQLException;
-
 import server.data.DataPackage;
-import server.data.mySQLConnector.MySQLConnector;
 import server.data.mySqlDataAccessObjects.DataPackageDAO;
 import server.data.IData;
-//import server.data.mySqlConnect;
 
 public class SaveToDB implements Runnable
 {
 	private IData data;
-	private boolean connected = false;
 	private DataPackage dataPackage = null;
-	private DataPackageDAO dataPackageDAO;
-	//private MySQLConnector mySQLConnector = new MySQLConnector(); 
-	
-	
-	
+	private DataPackageDAO dataPackageDAO;	
 	
 	public SaveToDB()
 	{
 		data = Function.getDatalayer();
 		dataPackageDAO = new DataPackageDAO();
-		
 	}
 	
 	@Override
 	public void run()
-	{
+	{		
 		while(true)
 		{
-			try
+			while(data.isEmpty())
 			{
-				Thread.sleep(1); 
-			}
-			catch (InterruptedException e)
-			{
-				System.out.println(e.getMessage());
-			}
-			
-			if(!data.isEmpty())
-			{
-				if(!connected)
+				try
 				{
-					try 
-					{
-						dataPackageDAO.openConnection();
-						connected = true;
-					} 
-					
-					catch (SQLException e) 
-					{
-						System.out.println(e.getMessage());
-					}					
+					Thread.sleep(5); 
 				}
 				
+				catch (InterruptedException e) { System.out.println(e.getMessage()); }
+			}
+			
+			try 
+			{
+				dataPackageDAO.openConnection();
+				System.out.println("mySQL: Start adding packets.");
+			} 
+			
+			catch (SQLException e1) { System.out.println(e1.getMessage()); 	}
+			
+			while(!data.isEmpty())
+			{
 				try
 				{
 					dataPackage= data.getDataPackage();
 					dataPackageDAO.addDataPackage(dataPackage);
-					//mySQL.addDataPackage(dataPackage.getInIP(), dataPackage.getOutIP(), dataPackage.getHost(), dataPackage.getSubHost(), dataPackage.getUserAgent(), dataPackage.getTimeStamp());
-					System.out.println(dataPackage.toString());
 				}
 				
-				catch(Exception e)
-				{
-					System.out.println(e.getStackTrace());
-					System.out.println(e.getMessage());
-					System.out.println(dataPackageDAO);
-					System.out.println(dataPackage);
-				}
+				catch(Exception e) { e.getMessage(); }
 			}
-			else if(connected)
-			{
-				dataPackageDAO.closeConnection();
-				connected = false;
-			}
+			
+			System.out.println("mySQL: Stop adding packets.");
+			dataPackageDAO.closeConnection();
 		}
 	}
 }
