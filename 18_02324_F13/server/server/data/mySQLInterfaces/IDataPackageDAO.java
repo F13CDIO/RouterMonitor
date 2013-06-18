@@ -10,6 +10,7 @@ public interface IDataPackageDAO
 {
 	JSONArray getTop10() throws SQLException ;
 	JSONArray getTop10(Date dateFrom) throws SQLException ;
+	JSONArray getTop10WithSubhosts(Date dateFrom) throws SQLException ;
 	JSONObject get10SecondTraffic(Date date, String host) throws SQLException ;
 	JSONObject get10Minute(Date date, String host) throws SQLException ;
 	JSONObject get1HourTraffic(Date date, String host) throws SQLException ;
@@ -22,4 +23,11 @@ public interface IDataPackageDAO
 	void deleteUser(String email) throws SQLException;
 	boolean loginValid(String email, String password) throws SQLException;
 	JSONArray getAllUsers() throws SQLException;
+	boolean openConnection() throws SQLException;
+	void closeConnection();
+	
+	boolean hasUserSettings(String userName) throws SQLException;
+	void editUserSettings(String userName, String userSettings) throws SQLException;
+	void addUserSettings(String userName, String userSettings) throws SQLException;
+	String getUserSettings(String userName) throws SQLException;
 }

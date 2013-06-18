@@ -73,10 +73,16 @@ function liveUpdate() {
     return liveTrafficBuffer[activeBuffer][bufferIndex];
 }
 
+function writeDebugInfo(dataSet) {
+	document.getElementById("live_debug").innerHTML="Senest modtaget datasæt: '" + dataSet + "'";
+}
+
 function get10SecondTraffic(doOnFinish) {
     /* Get string with JSON Object from JSP page */
     $.get(LIVE_FEED_PATH + '?date=' + currentDate.getTime(), function(data) {
         var i;
+        
+        writeDebugInfo(data);
         
         /* Parse input string to JSON Object */
         data = eval( '(' + data + ')' );

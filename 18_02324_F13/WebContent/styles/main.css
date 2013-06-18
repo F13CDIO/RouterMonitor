@@ -54,8 +54,19 @@ body {
     border: 2px solid #7c7c7c;
     float: left;
 }
+#pi_list_wide {
+    width: 800px;
+    min-height: 200px;
+    border: 2px solid #7c7c7c;
+    float: left;
+}
 #pi_list_title {
     width: 585px;
+    border-bottom: 2px solid #7c7c7c;
+    padding: 10px 0 10px 15px;
+}
+#pi_list_title_wide {
+    width: 785px;
     border-bottom: 2px solid #7c7c7c;
     padding: 10px 0 10px 15px;
 }
@@ -195,6 +206,11 @@ input.pi_control_submit {
     height: 50px;
     margin-top: 10px;
 }
+input.pi_control_submit_wide {
+    width: 200px;
+    height: 50px;
+    margin-top: 10px;
+}
 input.pi_submit_last {
     margin-left: 50px;
     width: 250px;
@@ -218,6 +234,16 @@ label.pi_line {
 label.pi_line:hover {
     background-color: #dfdfdf;
 }
+label.pi_line_wide {
+    display: block;
+    width: 768px;
+    padding: 15px;
+    border: 1px solid #c9c9c9;
+    background-color: #dadada;
+}
+label.pi_line_wide:hover {
+    background-color: #dfdfdf;
+}
 span.pi_num {
     width: 35px;
     display: block;
@@ -226,6 +252,12 @@ span.pi_num {
 }
 span.pi_info {
     width: 160px;
+    padding-left: 90px;
+    display: block;
+    float: left;
+}
+span.pi_info_wide {
+    width: 340px;
     padding-left: 90px;
     display: block;
     float: left;

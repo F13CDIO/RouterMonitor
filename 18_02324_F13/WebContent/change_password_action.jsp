@@ -1,5 +1,4 @@
 <jsp:useBean id="DAO" class="server.data.mySqlDataAccessObjects.DataPackageDAO" />
-<jsp:useBean id="mysql" class="server.data.mySQLConnector.MySQLConnector" />
 
 <%
 	String oldPass, newPass, user, output, role;
@@ -9,26 +8,15 @@
 	newPass = request.getParameter("new_password");
 	user = request.getRemoteUser();
 	
-	/* Find userrole */
-	if(request.isUserInRole("admin")) {
-		role = "admin";
-	}
-	else if(request.isUserInRole("user")) {
-		role = "user";
-	}
-	else {
-		role = null;
-	}
-	
 	/* If all parameters are given, attempt to connect to database and update user */
-	if(oldPass != null && !"".equals(oldPass) && newPass != null && !"".equals(newPass) && user != null && role != null) {
+	if(oldPass != null && !"".equals(oldPass) && newPass != null && !"".equals(newPass) && user != null) {
 		try {
-			mysql.connect();
+			DAO.openConnection();
 			
 			/* Check if old password is correct */
 			if(DAO.loginValid(user, oldPass)) {
 				
-				DAO.editUser(user, newPass, role);
+				DAO.editUser(user, newPass, null);
 				output = "Your password was changed successfully.";
 			}
 			else {
@@ -39,7 +27,7 @@
 			output = "Database error. Your password could not be changed.<br />Error: " + e;
 		}
 		finally {
-			mysql.closeConnection();
+			DAO.closeConnection();
 		}
 	}
 	else {

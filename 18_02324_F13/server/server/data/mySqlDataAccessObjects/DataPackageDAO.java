@@ -13,11 +13,17 @@ import server.data.mySQLInterfaces.IDataPackageDAO;
 
 public class DataPackageDAO implements IDataPackageDAO
 {
+	private MySQLConnector mySQLConnector = new MySQLConnector();
+	
+	public DataPackageDAO()
+	{
+		
+	}
 
 	@Override
 	public JSONArray getTop10() throws SQLException 
 	{
-		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
 		return parseResultsetToJSONArray("hosts", mySqlOutput);
 	}
 
@@ -25,8 +31,16 @@ public class DataPackageDAO implements IDataPackageDAO
 	public JSONArray getTop10(Date dateFrom) throws SQLException 
 	{
 		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());		
-		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
 		return parseResultsetToJSONArray("hosts", mySqlOutput);
+	}
+	
+	@Override
+	public JSONArray getTop10WithSubhosts(Date dateFrom) throws SQLException 
+	{
+		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());		
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
+		return parseResultsetToJSONArray("hostsWithSubhost", mySqlOutput);
 	}
 
 	@Override
@@ -36,7 +50,7 @@ public class DataPackageDAO implements IDataPackageDAO
 			host = "and host = '"+host+"'";
 		
 		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
-		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(10))*(10)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 10 SECOND) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 1 LIMIT 10");
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(1))*(1)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 10 SECOND) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 1 LIMIT 10");
 		return parseResultsetToJSONObject("traffic", mySqlOutput);
 	}
 	
@@ -47,7 +61,7 @@ public class DataPackageDAO implements IDataPackageDAO
 			host = "and host = '"+host+"'";
 		
 		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
-		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(60))*(60)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 10 MINUTE) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 60 LIMIT 10");
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(60))*(60)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 10 MINUTE) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 60 LIMIT 10");
 		return parseResultsetToJSONObject("traffic", mySqlOutput);
 	}
 
@@ -58,7 +72,7 @@ public class DataPackageDAO implements IDataPackageDAO
 			host = "and host = '"+host+"'";
 		
 		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
-		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(60))*(60)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 1 HOUR) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 60 LIMIT 60");
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(60))*(60)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 1 HOUR) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 60 LIMIT 60");
 		return parseResultsetToJSONObject("traffic", mySqlOutput);
 	}
 
@@ -69,7 +83,7 @@ public class DataPackageDAO implements IDataPackageDAO
 			host = "and host = '"+host+"'";
 		
 		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
-		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(3600))*(3600)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 1 DAY) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 3600 LIMIT 24");
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(3600))*(3600)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 1 DAY) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 3600 LIMIT 24");
 		return parseResultsetToJSONObject("traffic", mySqlOutput);
 	}
 
@@ -80,7 +94,7 @@ public class DataPackageDAO implements IDataPackageDAO
 			host = "and host = '"+host+"'";
 		
 		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
-		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(86400))*(86400)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 1 MONTH) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 86400 LIMIT 31");
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(86400))*(86400)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 1 MONTH) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 86400 LIMIT 31");
 		return parseResultsetToJSONObject("traffic", mySqlOutput);
 	}
 
@@ -99,7 +113,7 @@ public class DataPackageDAO implements IDataPackageDAO
 		query += mySqlTimestamp + "');";
 		
 		System.out.println(query);
-		MySQLConnector.update(query);		
+		mySQLConnector.update(query);		
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -118,6 +132,14 @@ public class DataPackageDAO implements IDataPackageDAO
 						jo.put("rank", mySqlOutput.getRow());
 						jo.put("count", mySqlOutput.getInt("count"));
 						jo.put("host", mySqlOutput.getString("host"));
+						jsonArray.add(jo);
+						break;
+						
+					case "hostsWithSubhost":
+						jo.put("rank", mySqlOutput.getRow());
+						jo.put("count", mySqlOutput.getInt("count"));
+						jo.put("host", mySqlOutput.getString("host"));
+						jo.put("subHost", mySqlOutput.getString("subhost"));
 						jsonArray.add(jo);
 						break;
 						
@@ -181,24 +203,24 @@ public class DataPackageDAO implements IDataPackageDAO
 	
 		String query = "INSERT INTO userTable VALUES('"+email+"', '"+password+"')";
 		System.out.println(query);
-		MySQLConnector.update(query);
+		mySQLConnector.update(query);
 		
 		query = "INSERT INTO userRoleTable VALUES('"+email+"', '"+role+"')";
 		System.out.println(query);
-		MySQLConnector.update(query);
+		mySQLConnector.update(query);
 	}
 
 	@Override
 	public boolean userExists(String email) throws SQLException 
 	{
-		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT userNameCol FROM userTable WHERE userNameCol = '"+email+"'");
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT userNameCol FROM userTable WHERE userNameCol = '"+email+"'");
 		return mySqlOutput.first();
 	}
 
 	@Override
 	public boolean loginValid(String email, String password) throws SQLException
 	{
-		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT * FROM userTable WHERE userNameCol ='"+email+"' AND userCredCol = '"+password+"'");
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT * FROM userTable WHERE userNameCol ='"+email+"' AND userCredCol = '"+password+"'");
 		return mySqlOutput.first();
 	}
 
@@ -206,9 +228,9 @@ public class DataPackageDAO implements IDataPackageDAO
 	public void deleteUser(String email) throws SQLException 
 	{
 		String query = "DELETE FROM userTable WHERE userNameCol = '"+email+"'";
-		MySQLConnector.update(query);
+		mySQLConnector.update(query);
 		query = "DELETE FROM userRoleTable WHERE userNameCol = '"+email+"'";
-		MySQLConnector.update(query);
+		mySQLConnector.update(query);
 	}
 
 	@Override
@@ -218,23 +240,73 @@ public class DataPackageDAO implements IDataPackageDAO
 		if (newPassword != null)
 		{
 			query = "UPDATE userTable SET userCredCol = '"+newPassword+"' WHERE userNameCol ='"+email+"'";
-			MySQLConnector.update(query);
+			mySQLConnector.update(query);
 		}
 		
 		if (newRole != null)
 		{
 			query = "UPDATE userRoleTable SET roleNameCol = '"+newRole+"' WHERE userNameCol ='"+email+"'";
-			MySQLConnector.update(query);
+			mySQLConnector.update(query);
 		}
 	}
 
 	@Override
 	public JSONArray getAllUsers() throws SQLException 
 	{
-		ResultSet mySqlOutput = MySQLConnector.execQuery("SELECT * FROM userRoleTable ORDER BY userNameCol ASC");
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT * FROM userRoleTable ORDER BY userNameCol ASC");
 		return parseResultsetToJSONArray("users", mySqlOutput);
 	}
 
-	
+	@Override
+	public boolean openConnection() throws SQLException 
+	{
+		try 
+		{
+			mySQLConnector.connect();
+			return true;
+		} 
+		
+		catch (InstantiationException e) {System.out.println(e.getMessage()); return false; } 
+		catch (IllegalAccessException e) {System.out.println(e.getMessage()); return false;	} 
+		catch (ClassNotFoundException e) {System.out.println(e.getMessage()); return false; }
+	}
 
+	@Override
+	public void closeConnection() 
+	{
+		mySQLConnector.closeConnection();
+	}
+
+	@Override
+	public boolean hasUserSettings(String userName) throws SQLException 
+	{
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT * FROM userSettings WHERE userName = '"+userName+"'");
+		return mySqlOutput.first();
+	}
+
+	@Override
+	public void editUserSettings(String userName, String userSettings)throws SQLException 
+	{
+		String query = "UPDATE userSettings SET setting = '"+userSettings+"' WHERE userName ='"+userName+"'";
+		mySQLConnector.update(query);
+	}
+
+	@Override
+	public void addUserSettings(String userName, String userSettings)throws SQLException 
+	{
+		String query = "INSERT INTO userSettings VALUES('"+userName+"','"+userSettings+"')";
+		mySQLConnector.update(query);
+	}
+
+	@Override
+	public String getUserSettings(String userName) throws SQLException 
+	{
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT * FROM userSettings WHERE userName ='"+userName+"'");
+		while (mySqlOutput.next())
+		{
+			return mySqlOutput.getString("setting");
+		}
+		
+		return null;
+	}
 }

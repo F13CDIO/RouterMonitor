@@ -88,7 +88,6 @@ public class DisconnectCheck extends Thread
 			correction = 0;
 		}
 		returned = true;
-		System.out.println("correction: " + correction);
 		return correction;
 	}
 
