@@ -34,6 +34,14 @@ public class DataPackageDAO implements IDataPackageDAO
 		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
 		return parseResultsetToJSONArray("hosts", mySqlOutput);
 	}
+	
+	@Override
+	public JSONArray getTop10WithSubhosts(Date dateFrom) throws SQLException 
+	{
+		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());		
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
+		return parseResultsetToJSONArray("hostsWithSubhost", mySqlOutput);
+	}
 
 	@Override
 	public JSONObject get10SecondTraffic(Date date, String host) throws SQLException 
@@ -42,7 +50,7 @@ public class DataPackageDAO implements IDataPackageDAO
 			host = "and host = '"+host+"'";
 		
 		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
-		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(10))*(10)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 10 SECOND) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 1 LIMIT 10");
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(1))*(1)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 10 SECOND) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 1 LIMIT 10");
 		return parseResultsetToJSONObject("traffic", mySqlOutput);
 	}
 	
@@ -124,6 +132,14 @@ public class DataPackageDAO implements IDataPackageDAO
 						jo.put("rank", mySqlOutput.getRow());
 						jo.put("count", mySqlOutput.getInt("count"));
 						jo.put("host", mySqlOutput.getString("host"));
+						jsonArray.add(jo);
+						break;
+						
+					case "hostsWithSubhost":
+						jo.put("rank", mySqlOutput.getRow());
+						jo.put("count", mySqlOutput.getInt("count"));
+						jo.put("host", mySqlOutput.getString("host"));
+						jo.put("subHost", mySqlOutput.getString("subhost"));
 						jsonArray.add(jo);
 						break;
 						
@@ -244,24 +260,15 @@ public class DataPackageDAO implements IDataPackageDAO
 	@Override
 	public boolean openConnection() throws SQLException 
 	{
-		try {
+		try 
+		{
 			mySQLConnector.connect();
 			return true;
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
+		} 
 		
-		
+		catch (InstantiationException e) {System.out.println(e.getMessage()); return false; } 
+		catch (IllegalAccessException e) {System.out.println(e.getMessage()); return false;	} 
+		catch (ClassNotFoundException e) {System.out.println(e.getMessage()); return false; }
 	}
 
 	@Override
@@ -269,7 +276,4 @@ public class DataPackageDAO implements IDataPackageDAO
 	{
 		mySQLConnector.closeConnection();
 	}
-
-	
-
 }
