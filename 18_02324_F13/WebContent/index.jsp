@@ -1,10 +1,5 @@
 <%@include file="./includes/top.jsp" %>
 
-<%
-out.print(request.getUserPrincipal());
-
-%>
-
 <img src="./images/home_example.jpg" alt="Images showing example of a Network Statistics chart" id="home_example" />
 Get statistics from the usage of DTUs wireless network.
 <br /><br />
