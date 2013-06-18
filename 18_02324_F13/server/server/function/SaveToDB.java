@@ -14,6 +14,7 @@ public class SaveToDB implements Runnable
 	private boolean connected = false;
 	private DataPackage dataPackage = null;
 	private DataPackageDAO dataPackageDAO;
+	private MySQLConnector mySQLConnector = new MySQLConnector(); 
 	
 	
 	
@@ -22,6 +23,7 @@ public class SaveToDB implements Runnable
 	{
 		data = Function.getDatalayer();
 		dataPackageDAO = new DataPackageDAO();
+		
 	}
 	
 	@Override
@@ -44,7 +46,7 @@ public class SaveToDB implements Runnable
 				{
 					try 
 					{
-						MySQLConnector.connect();
+						mySQLConnector.connect();
 						connected = true;
 					} 
 					
@@ -73,7 +75,7 @@ public class SaveToDB implements Runnable
 			}
 			else if(connected)
 			{
-				MySQLConnector.closeConnection();
+				mySQLConnector.closeConnection();
 				connected = false;
 			}
 		}

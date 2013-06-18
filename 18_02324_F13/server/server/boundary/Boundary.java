@@ -4,6 +4,9 @@
 package server.boundary;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
+import server.data.mySQLConnector.MySQLConnector;
 import server.function.IFunction;
 
 public class Boundary
@@ -34,7 +37,11 @@ public class Boundary
 		try 
 		{		
 			TomcatServer.start();
-			TCPServer.startServer(9000);		
+			TCPServer.startServer(9000);	
+			
+			
+			
+			
 		} 
 			
 		catch (IOException e) 

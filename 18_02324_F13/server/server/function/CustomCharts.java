@@ -19,6 +19,7 @@ public class CustomCharts {
     /* An integer to increment for each new chart, to make multiple charts possible */
     private int uniqeHtmlId = 0;
     
+    private MySQLConnector mySQLConnector = new MySQLConnector();
     
     public String importScripts() {
         String begin, end;
@@ -39,13 +40,13 @@ public class CustomCharts {
             cal.setTimeInMillis(input);
 
             /* Connects to mySQL database, to be able to get data */
-            MySQLConnector.connect();
+            mySQLConnector.connect();
 
             /* Gets data and saves in temp var, so the MySQL connection can be closed before return */
             String output = DAO.get10SecondTraffic(cal.getTime(), "").toString();
 
             /* Close mySQL database connection */
-            MySQLConnector.closeConnection();
+            mySQLConnector.closeConnection();
 
             return output;
         }
@@ -53,7 +54,7 @@ public class CustomCharts {
             return "";
         }
         finally {
-            MySQLConnector.closeConnection();
+        	mySQLConnector.closeConnection();
         }
     }
     
@@ -242,7 +243,7 @@ public class CustomCharts {
             int i;
 
             /* Connects to mySQL database, to be able to get data */
-            MySQLConnector.connect();
+            mySQLConnector.connect();
 
             /* Get data */
             JSONArray data = DAO.getTop10(offset);
@@ -262,7 +263,7 @@ public class CustomCharts {
             }
 
             /* Close mySQL database connection */
-            MySQLConnector.closeConnection();
+            mySQLConnector.closeConnection();
 
             return generateBar(mainCategories, mainValues, subCategories, subValues, title);
         }
@@ -270,7 +271,7 @@ public class CustomCharts {
             return "Database error occurred. <br /><br />Error: " + e.getMessage() + "<br />";
         }
         finally {
-            MySQLConnector.closeConnection();
+        	mySQLConnector.closeConnection();
         }
     } //OBS - subhost not implemented
     
@@ -353,7 +354,7 @@ public class CustomCharts {
             numberOfZeros = numberOfZeros(secondsBack);
 
             /* Connect to database */
-            MySQLConnector.connect();
+            mySQLConnector.connect();
 
             /* Get top10 data */
             top10Data = DAO.getTop10(dateOffset.getTime());
@@ -408,7 +409,7 @@ public class CustomCharts {
             }
 
             /* Close mySQL database connection */
-            MySQLConnector.closeConnection();
+            mySQLConnector.closeConnection();
 
             return generateLine(categories, series, values, title);
         }
@@ -416,7 +417,7 @@ public class CustomCharts {
             return "Database error occurred. <br /><br />Error: " + e.getMessage() + "<br />";
         }
         finally {
-            MySQLConnector.closeConnection();
+        	mySQLConnector.closeConnection();
         }
     }
     
@@ -474,7 +475,7 @@ public class CustomCharts {
             int i;
 
             /* Connects to mySQL database, to be able to get data */
-            MySQLConnector.connect();
+            mySQLConnector.connect();
 
             /* Get data */
             JSONArray data = DAO.getTop10(offset);
@@ -493,7 +494,7 @@ public class CustomCharts {
             }
 
             /* Close mySQL database connection */
-            MySQLConnector.closeConnection();
+            mySQLConnector.closeConnection();
 
             return generatePie(pieCategories, pieValues, title);
         }
@@ -501,7 +502,7 @@ public class CustomCharts {
             return "Database error occurred. <br /><br />Error: " + e.getMessage() + "<br />";
         }
         finally {
-            MySQLConnector.closeConnection();
+        	mySQLConnector.closeConnection();
         }
     }
     
