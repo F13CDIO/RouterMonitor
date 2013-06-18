@@ -54,7 +54,7 @@
 <br />
 <form action="./user_edit_action.jsp" method="post">
     <div class="form_description">Username:</div>
-    <div class="form_input"><input size="50" name="username" type="text" value="<% out.print(selectedUser); %>" disabled /></div>
+    <div class="form_input"><input size="50" name="username" type="text" value="<% out.print(selectedUser); %>" readonly /></div>
     <div class="form_description">Role:</div>
     <div class="form_input">
 	<select name="role">

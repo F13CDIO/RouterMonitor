@@ -12,7 +12,7 @@
 		
 		DAO.editUser(username, null, role);
 		
-		output = "User updated successfully.";
+		output = "Set '" + username + "' to '" + role + "'. User updated successfully.";
 	}
 	catch (Exception e) {
 		output = "Database error. Could not delete user!<br />Error: " + e;
