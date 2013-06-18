@@ -1,5 +1,4 @@
 <jsp:useBean id="DAO" class="server.data.mySqlDataAccessObjects.DataPackageDAO" />
-<jsp:useBean id="mysql" class="server.data.mySQLConnector.MySQLConnector" />
 
 <%
 	String username, password, fullname, mail, message;
@@ -9,7 +8,7 @@
 	
 	if(mail != null && password != null) {
 		try {
-			mysql.connect();
+			DAO.openConnection();
 			
 			/* Check if user exists */
 			if(!DAO.userExists(mail)) {
@@ -25,7 +24,7 @@
 			message = "System error. User not created!<br />Error: " + e;
 		}
 		finally {
-			mysql.closeConnection();
+			DAO.closeConnection();
 		}
 	}
 	else {

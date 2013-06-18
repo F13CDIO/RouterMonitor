@@ -1,5 +1,4 @@
 <jsp:useBean id="DAO" class="server.data.mySqlDataAccessObjects.DataPackageDAO" />
-<jsp:useBean id="mysql" class="server.data.mySQLConnector.MySQLConnector" />
 
 <%
 	String username, role, output;
@@ -8,7 +7,7 @@
 	role = request.getParameter("role");
 
 	try {
-		mysql.connect();
+		DAO.openConnection();
 		
 		DAO.editUser(username, null, role);
 		
@@ -18,7 +17,7 @@
 		output = "Database error. Could not delete user!<br />Error: " + e;
 	}
 	finally {
-		mysql.closeConnection();
+		DAO.closeConnection();
 	}
 	
 	session.setAttribute("message", output);

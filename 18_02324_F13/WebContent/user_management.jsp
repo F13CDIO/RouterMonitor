@@ -3,21 +3,20 @@
 <%@page import="org.json.simple.*"%>
 
 <jsp:useBean id="DAO" class="server.data.mySqlDataAccessObjects.DataPackageDAO" />
-<jsp:useBean id="mysql" class="server.data.mySQLConnector.MySQLConnector" />
 
 <%
 	int i;
 	Object message; 
 	
 	/* Connects to mySQL database, to be able to get data */
-	mysql.connect();
+	DAO.openConnection();
 	
 	/* Get data */
 	JSONArray data = DAO.getAllUsers();
 	JSONObject temp;
 	
 	/* Close mySQL database connection */
-	mysql.closeConnection();
+	DAO.closeConnection();
 	
 	/* Creates array with size according to actual number of pages in top10 */
 	String[] userNames = new String[data.size()];
