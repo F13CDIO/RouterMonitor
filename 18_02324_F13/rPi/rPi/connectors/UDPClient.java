@@ -51,8 +51,8 @@ class UDPClient extends Thread
 		while(true)
 		{
 			String line = outputFromPi.readLine();
-			if(line == null)
-				System.out.println("output in sendData is null");
+			//if(line == null)
+			//	System.out.println("output in sendData is null");
 			if(line != null){
 				System.out.println(line);
 					//break;

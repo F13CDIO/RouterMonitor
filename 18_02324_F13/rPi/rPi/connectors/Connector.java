@@ -50,6 +50,7 @@ public class Connector implements IConnector {
 	public void sendUDP(BufferedReader bf)
 	{
 		if (udp != null){
+			System.out.println("Setting udp buff reader in Connector.java");
 			udp.setBufferedReader(bf);
 			try {
 				udp.start();

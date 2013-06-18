@@ -64,7 +64,7 @@ public class MainController {
 	 */
 	public void handleCommand() throws IOException
 	{
-		MenuHandler mh = new MenuHandler(currentOS, cc);
+		MenuHandler mh = new MenuHandler(currentOS, cc, inputFromServer);
 		
 		SupportedCommands thisCommand = SupportedCommands.nop;
 		String commandStringFromServer = inputFromServer.readLine();
@@ -84,6 +84,7 @@ public class MainController {
 		try {
 			// call the menu handler
 			mh.switchMenu(thisCommand);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -51,6 +51,7 @@
 			<web-resource-name>User</web-resource-name>
 			<description>accessible by admin and user</description>
 			<url-pattern>/login.jsp</url-pattern>
+			<url-pattern>/control_panel.jsp</url-pattern>
 			<url-pattern>/customize_layout.jsp</url-pattern>
 			<url-pattern>/customize_save.jsp</url-pattern>
 			<url-pattern>/customize_selection.jsp</url-pattern>
@@ -75,7 +76,7 @@
 		<auth-method>FORM</auth-method>
 		<form-login-config>
 			<form-login-page>/login.jsp</form-login-page>
-			<form-error-page>/login.jsp?error=true</form-error-page>
+			<form-error-page>/login.jsp?message=error</form-error-page>
 		</form-login-config>
 	</login-config>
 	

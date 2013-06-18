@@ -18,18 +18,20 @@ public class MenuHandler {
 	
 	private SupportedOS currentOS;
 	private ConnectionController cc;
-	
+	private BufferedReader inputFromServer;
+	private String STARTSCRIPT = "bash ./rPi/rPi/startScript.sh";
+	TerminalExecutor tc = new TerminalExecutor();
 	/**
-	 * The constructor needs to know host OS
+	 * The constructor needs to know host OS and CC. The knowledge of BufferedReader inputFromserver is a hack -> mitigate
 	 * 
 	 * @param currentOS
 	 */
-	public MenuHandler(SupportedOS currentOS, ConnectionController cc) {
+	public MenuHandler(SupportedOS currentOS, ConnectionController cc, BufferedReader inputFromServer) {
 		this.currentOS = currentOS;
 		this.cc = cc;
+		this.inputFromServer = inputFromServer;
 	}
-				
-	TerminalExecutor tc = new TerminalExecutor();
+
 	
 	/**
 	 *  The obvious switch case with possible commands from server. When a cmd is succesfully executed it returns "\0" over tcp which is our 'end of file' char
@@ -81,9 +83,9 @@ public class MenuHandler {
 	 * @param UDP port on server to send to as sniffing uses out-of-band communication
 	 */
 	public void startSniffing(int portToSendTo){
-		// String startScript = "bash /usr/local/bin/tshark -T fields -e ip.src -e ip.dst -e http.host -e http.user_agent -i en0 -I -l -R http.request tcp port 80 and ip";
-		String startScript = "bash startScript.sh"; // the startscript automatically appends the right path to tshark
-		BufferedReader br = tc.exec(startScript);
+		//String startScript = "bash /usr/local/bin/tshark -T fields -e ip.src -e ip.dst -e http.host -e http.user_agent -i en0 -I -l -R http.request tcp port 80 and ip";
+		BufferedReader br = tc.exec(STARTSCRIPT); // the startscript automatically appends the right path to tshark
+		System.out.println(STARTSCRIPT);
 		System.out.println("startscript exec'd");
 		cc.initAndSendUDP(br, portToSendTo);
 	}
@@ -310,7 +312,6 @@ public class MenuHandler {
 	 */
 	private int extractNumber() throws IOException{
 		String command = "";
-		BufferedReader inputFromServer = null;
 		
 		// making it more robust because server maight not respect protocol and send several newlines
 		while (command.length() < 1){
