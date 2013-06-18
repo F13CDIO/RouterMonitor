@@ -14,10 +14,6 @@ import java.util.Scanner;
 
 public class RpiMain {
 	public static void main(String[] args) throws Exception {
-<<<<<<< HEAD
-		
-		MainController mc = new MainController();
-=======
 
 		String server_ip;
 		// Take server ip in as argument when program is run in terminal
@@ -31,7 +27,6 @@ public class RpiMain {
 		System.out.println("ip entered : " + server_ip);
 		
 		MainController mc = new MainController(server_ip);
->>>>>>> 8a847b5fa12853aa953ad8764818a4223c9d6425
 		mc.connectToServer();
 		while (true){
 			try {			

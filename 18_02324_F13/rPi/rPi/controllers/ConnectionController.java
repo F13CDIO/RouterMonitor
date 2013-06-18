@@ -100,6 +100,7 @@ public class ConnectionController {
 			System.out.println("array length "+ array.length);
 			String networkInfo = "";
 			for (String str : array){
+				System.out.println(str);
 				networkInfo += str + "|";
 			}
 			System.out.println(networkInfo);

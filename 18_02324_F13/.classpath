@@ -16,9 +16,9 @@
 	<classpathentry kind="lib" path="tomcat-embed-logging-juli.jar"/>
 	<classpathentry kind="lib" path="tomcat-embed-logging-log4j.jar"/>
 	<classpathentry kind="lib" path="ecj-4.2.2.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/Home"/>
 	<classpathentry kind="lib" path="mail.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json-simple-1.1.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-5.1.18-bin.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -40,17 +40,15 @@ public class TerminalExecutor {
 			System.out.println("could not execute script or command: " + pathToScriptOrTheCommand);
 			e.printStackTrace();
 		}
-		finally 
+		try 
 		{
-			try 
-			{
-				br = new BufferedReader(new InputStreamReader(thisProcess.getInputStream()), BUFFER_SIZE);
-			} catch (Exception e)
-			{
-				System.out.println("Could not read from stdout");
-			}
-			return br;
+			br = new BufferedReader(new InputStreamReader(thisProcess.getInputStream()), BUFFER_SIZE);
+		} catch (Exception e)
+		{
+			System.out.println("Could not read from stdout");
 		}
+		return br;
+		
 	}
 	
 	/*

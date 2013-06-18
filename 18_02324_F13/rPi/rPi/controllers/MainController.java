@@ -40,11 +40,13 @@ public class MainController {
 		SupportedOS OS = null;
 		// Get current OS
 		final String OSstring = System.getProperty("os.name").toLowerCase(); // Name of OS
+		System.out.println("your OS:"+ OSstring);
 		if (OSstring.indexOf("win") >= 0){
 			OS = SupportedOS.Windows;
 		} else if (OSstring.indexOf("mac") >= 0){
 			OS = SupportedOS.Mac;
-		} else if (OSstring.indexOf("nix") >= 0){
+		} else if (OSstring.indexOf("inux") >= 0){
+			System.out.println("DU HAR LIIIIINUUUUUX");
 			OS = SupportedOS.Linux;
 		}
 		return OS;
@@ -76,10 +78,7 @@ public class MainController {
 			if (c.name().equals(commandStringFromServer)){
 				thisCommand = SupportedCommands.valueOf(commandStringFromServer); 
 			} else {
-<<<<<<< HEAD
-=======
 				System.out.println(commandStringFromServer);
->>>>>>> 8a847b5fa12853aa953ad8764818a4223c9d6425
 				//throw new InputMismatchException("command recieved : " + commandStringFromServer);
 			}
 		}
