@@ -74,7 +74,7 @@ function liveUpdate() {
 }
 
 function writeDebugInfo(dataSet) {
-	document.getElementById("live_debug").innerHTML="Senest modtaget datasæt: '" + dataSet + "'";
+	document.getElementById("live_debug").innerHTML="Senest modtaget dataset: '" + dataSet + "'";
 }
 
 function get10SecondTraffic(doOnFinish) {
@@ -92,15 +92,15 @@ function get10SecondTraffic(doOnFinish) {
         
         /* Iterates through the recieved dataset */
         for(i=0; i<10; i++) {
-            addSeconds(1);
-            
-            /* If the value of the current key is 'undefined', it will be set to 0 */
+        	/* If the value of the current key is 'undefined', it will be set to 0 */
             if(typeof data[javaDateString()] == 'undefined') {
                 liveTrafficBuffer[getInactiveBuffer()][i] = 0;
             }
             else {
                 liveTrafficBuffer[getInactiveBuffer()][i] = data[javaDateString()];
             }
+            
+            addSeconds(1);
         }
         
         /*Adds 10 seconds when a new dataset have been saved */
