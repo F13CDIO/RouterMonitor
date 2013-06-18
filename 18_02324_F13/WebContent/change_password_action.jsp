@@ -8,26 +8,15 @@
 	newPass = request.getParameter("new_password");
 	user = request.getRemoteUser();
 	
-	/* Find userrole */
-	if(request.isUserInRole("admin")) {
-		role = "admin";
-	}
-	else if(request.isUserInRole("user")) {
-		role = "user";
-	}
-	else {
-		role = null;
-	}
-	
 	/* If all parameters are given, attempt to connect to database and update user */
-	if(oldPass != null && !"".equals(oldPass) && newPass != null && !"".equals(newPass) && user != null && role != null) {
+	if(oldPass != null && !"".equals(oldPass) && newPass != null && !"".equals(newPass) && user != null) {
 		try {
 			DAO.openConnection();
 			
 			/* Check if old password is correct */
 			if(DAO.loginValid(user, oldPass)) {
 				
-				DAO.editUser(user, newPass, role);
+				DAO.editUser(user, newPass, null);
 				output = "Your password was changed successfully.";
 			}
 			else {
