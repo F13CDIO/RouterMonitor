@@ -276,4 +276,32 @@ public class DataPackageDAO implements IDataPackageDAO
 	{
 		mySQLConnector.closeConnection();
 	}
+
+	@Override
+	public boolean hasUserSettings(String userName) throws SQLException 
+	{
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT * FROM userSettings WHERE userName = '"+userName+"'");
+		return mySqlOutput.first();
+	}
+
+	@Override
+	public void editUserSettings(String userName, String userSettings)throws SQLException 
+	{
+		String query = "UPDATE userSettings SET setting = '"+userSettings+"' WHERE userName ='"+userName+"'";
+		mySQLConnector.update(query);
+	}
+
+	@Override
+	public void addUserSettings(String userName, String userSettings)throws SQLException 
+	{
+		String query = "INSERT INTO userSettings VALUES('"+userName+"','"+userSettings+"')";
+		mySQLConnector.update(query);
+	}
+
+	@Override
+	public String getUserSettings(String userName) throws SQLException 
+	{
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT * FROM userSettings WHERE userName ='"+userName+"'");
+		return mySqlOutput.getString("setting");
+	}
 }

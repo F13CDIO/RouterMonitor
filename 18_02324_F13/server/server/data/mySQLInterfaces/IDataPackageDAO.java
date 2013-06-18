@@ -25,4 +25,9 @@ public interface IDataPackageDAO
 	JSONArray getAllUsers() throws SQLException;
 	boolean openConnection() throws SQLException;
 	void closeConnection();
+	
+	boolean hasUserSettings(String userName) throws SQLException;
+	void editUserSettings(String userName, String userSettings) throws SQLException;
+	void addUserSettings(String userName, String userSettings) throws SQLException;
+	String getUserSettings(String userName) throws SQLException;
 }
