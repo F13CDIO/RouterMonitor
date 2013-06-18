@@ -87,6 +87,12 @@ body {
 #message {
     color: red;
 }
+#wifi_list {
+	width: 930px;
+    min-height: 200px;
+    border: 2px solid #7c7c7c;
+    float: left;
+}
 a {
     color: black;
 }
@@ -193,6 +199,38 @@ div.statistics_small {
     float: left;
     text-align: center;
     padding-top: 30px;
+}
+div.wifi_line {
+    width: 898px;
+    padding: 15px;
+    height: 20px;
+    border: 1px solid #c9c9c9;
+    background-color: #dadada;
+}
+div.wifi_line:hover {
+	background-color: #dfdfdf;
+}
+div.wifi_item0, div.wifi_item1, div.wifi_item2, div.wifi_item3, div.wifi_item4, div.wifi_item5, div.wifi_item6, div.wifi_item7 {
+	float: left;
+}
+div.wifi_item0 {
+	width: 170px;
+}
+div.wifi_item1 {
+	width: 200px;
+}
+div.wifi_item2 {
+	width: 60px;
+	text-align: center;
+	margin-right: 5px;
+}
+div.wifi_item3 {
+	width: 80px;
+	text-align: center;
+	margin-right: 15px;
+}
+div.wifi_item4 {
+	width: 358px;
 }
 input.form_submit {
     clear: both;

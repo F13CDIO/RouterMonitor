@@ -82,7 +82,7 @@ function get10SecondTraffic(doOnFinish) {
     $.get(LIVE_FEED_PATH + '?date=' + currentDate.getTime(), function(data) {
         var i;
         
-        writeDebugInfo(data);
+        /* Uncomment this for debug info: writeDebugInfo(data); */
         
         /* Parse input string to JSON Object */
         data = eval( '(' + data + ')' );
