@@ -302,6 +302,11 @@ public class DataPackageDAO implements IDataPackageDAO
 	public String getUserSettings(String userName) throws SQLException 
 	{
 		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT * FROM userSettings WHERE userName ='"+userName+"'");
-		return mySqlOutput.getString("setting");
+		while (mySqlOutput.next())
+		{
+			return mySqlOutput.getString("setting");
+		}
+		
+		return null;
 	}
 }
