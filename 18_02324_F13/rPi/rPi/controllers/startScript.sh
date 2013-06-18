@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo thisScriptIsInControllers
+
 # get absolute path to tshark no matter where its installed
 tsharkPrefix=$(which tshark)
 echo $tsharkPrefix

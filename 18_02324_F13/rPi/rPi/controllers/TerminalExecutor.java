@@ -30,9 +30,11 @@ public class TerminalExecutor {
 	 */
 	public BufferedReader exec(String pathToScriptOrTheCommand)
 	{
+		System.out.println("terminal executor bla bla bla");
 		assert(pathToScriptOrTheCommand.length() > 0);
 		
 		try {
+			System.out.println("execute " + pathToScriptOrTheCommand);
 			thisProcess = Runtime.getRuntime().exec(pathToScriptOrTheCommand);
 		} catch (IOException e) {
 			System.out.println("could not execute script or command: " + pathToScriptOrTheCommand);

