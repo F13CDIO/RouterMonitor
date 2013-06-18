@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Context path="/18_02324_F13">
-
-<!-- JDBCRealm setup -->
-<Realm className="org.apache.catalina.realm.JDBCRealm" debug="99"
-	driverName="com.mysql.jdbc.Driver"
-	connectionURL="jdbc:mysql://bjqrn88.cloudns.org:3306/grp18?user=grp18&amp;password=123123"
-	userTable="userTable" userNameCol="userNameCol" userCredCol="userCredCol"
-	userRoleTable="userRoleTable" roleNameCol="roleNameCol"
-/>
-
-
+	<!-- JDBCRealm setup -->
+	<Realm
+		className="org.apache.catalina.realm.JDBCRealm"
+		driverName="com.mysql.jdbc.Driver"
+		connectionURL="jdbc:mysql://bjqrn88.cloudns.org:3306/grp18?user=grp18&amp;password=123123"
+		userTable="userTable" userNameCol="userNameCol" userCredCol="userCredCol"
+		userRoleTable="userRoleTable" roleNameCol="roleNameCol"
+	/>
 </Context>
 

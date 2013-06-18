@@ -7,19 +7,21 @@ import java.util.InputMismatchException;
 public class MainController {
 	
 	private final SupportedOS currentOS;
+	private final String server_ip;
 	
 	TerminalExecutor tc = new TerminalExecutor();
 	public BufferedReader br = null;
 	BufferedReader inputFromServer = null;
 	ConnectionController cc;
 	
-	public MainController() throws Exception {
+	public MainController(String server_ip) throws Exception {
+		this.server_ip = server_ip;
 		this.currentOS = checkOS();
 		cc = new ConnectionController();		
 	}
 	
 	public void connectToServer() throws IOException {
-		inputFromServer = cc.connectToServer();
+		inputFromServer = cc.connectToServer(server_ip);
 	}
 	
 	/**
@@ -52,7 +54,7 @@ public class MainController {
 	 *  Supported commands from server as enumerated type
 	 */
 	public enum SupportedCommands {
-		nop, start, stop, scanNetworks, setChannel, getWifiStatus, getMacAddress, iterate;//TODO iterate skal implementeres paa serveren
+		nop, start, stop, scanNetworks, setChannel, getWifiStatus, getMacAddress, iterate; //TODO iterate skal implementeres paa serveren
 	}
 	
 	/**
@@ -62,7 +64,7 @@ public class MainController {
 	 */
 	public void handleCommand() throws IOException
 	{
-		MenuHandler mh = new MenuHandler(currentOS);
+		MenuHandler mh = new MenuHandler(currentOS, cc, inputFromServer);
 		
 		SupportedCommands thisCommand = SupportedCommands.nop;
 		String commandStringFromServer = inputFromServer.readLine();
@@ -70,9 +72,14 @@ public class MainController {
 			
 		// check if command is valid
 		for (SupportedCommands c : SupportedCommands.values()){
+			System.out.println("command recieved : " + commandStringFromServer);
 			if (c.name().equals(commandStringFromServer)){
 				thisCommand = SupportedCommands.valueOf(commandStringFromServer); 
 			} else {
+<<<<<<< HEAD
+=======
+				System.out.println(commandStringFromServer);
+>>>>>>> 8a847b5fa12853aa953ad8764818a4223c9d6425
 				//throw new InputMismatchException("command recieved : " + commandStringFromServer);
 			}
 		}
@@ -80,6 +87,7 @@ public class MainController {
 		try {
 			// call the menu handler
 			mh.switchMenu(thisCommand);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -29,7 +29,7 @@
                     piStatus[i] = "Running";
                 }
                 else {
-                    piStatus[i] = "Stoped";
+                    piStatus[i] = "Stopped";
                 }
             }
             catch (Exception e) {
@@ -45,7 +45,7 @@
 %>
         
         <br />
-        <span id="pi_title">Availible Pi's:</span>
+        <span id="pi_title">Available Pi's:</span>
         Change channel:
         <form action="./pi_action.jsp" method="post">
         <div id="pi_list">
@@ -60,7 +60,7 @@
         /* Print list of Pi's */
         for(i=0; i<piList.length; i++) {
             out.println("<label class=\"pi_line\">");
-            out.println("<span class=\"pi_num\">" + i + "</span>");
+            out.println("<span class=\"pi_num\">" + i+1 + "</span>");
             out.println("<span class=\"pi_info\">" + piList[i] + "</span>");
             out.println("<span class=\"pi_info\">" + piStatus[i] + "</span>");
             out.print("<input name=\"selectedPi\" value=\"" + piList[i] + "\" type=\"radio\"");

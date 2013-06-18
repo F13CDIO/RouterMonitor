@@ -5,6 +5,12 @@ import java.util.ArrayList;
 
 import rPi.controllers.MainController.SupportedOS;
 
+/**
+ * TODO write docs for this class
+ * 
+ * @author Jacob
+ *
+ */
 
 public class ChannelHopping extends Thread {
 	private String SSID;
@@ -31,7 +37,7 @@ public class ChannelHopping extends Thread {
 	
 	private void iteratingLinux(String ssid){
 		ArrayList<Integer> channels = getRelevantChannelsLinux(ssid);
-		tc.exec("bash ./monitor.sh");
+		tc.exec("bash monitor.sh");
 		int i = 0;
 		while(true){
 			tc.exec("iw dev mon0 set channel "+channels.get(i));

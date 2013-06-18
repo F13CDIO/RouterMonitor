@@ -1,6 +1,8 @@
+<jsp:useBean id="DAO" class="server.data.mySqlDataAccessObjects.DataPackageDAO" />
+
 <%
     int i;
-    String combinedData = "";
+    String userName, combinedData = "";
     String[] layout = new String[5];
     String[] selectedCharts = new String[10];
     
@@ -27,11 +29,13 @@
     }
     
     
-    /* Saves data to txt-file */
-    String path = application.getRealPath("/") + "customized_charts.txt";
-    java.io.FileWriter filewriter = new java.io.FileWriter(path);
-    filewriter.write(combinedData);
-    filewriter.close();
+    /* Saves data to database */
+    userName = request.getRemoteUser();
+    if(userName != null) {
+    	DAO.openConnection();
+    	DAO.addUserSettings(userName, combinedData);
+    	DAO.closeConnection();
+    }
 %>
 
 <!DOCTYPE html>

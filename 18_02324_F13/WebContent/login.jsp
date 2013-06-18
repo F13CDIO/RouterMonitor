@@ -1,3 +1,22 @@
+<%
+if(request.getUserPrincipal() != null) {
+%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Network Monitoring System - Saving data...</title>
+        <meta http-equiv="refresh" content="0; url=./control_panel.jsp">
+    </head>
+    
+    <body>
+		<a href="./control_panel.jsp">Continue...</a>
+    </body>
+</html>
+<%
+}
+else {
+%>
+
 <%@include file="./includes/top.jsp" %>
 
 <%
@@ -17,7 +36,7 @@
 <br />
 <form action="j_security_check" method="post">
     <div class="form_description">Username:</div>
-    <div class="form_input"><input size="70" name="j_username" type="text" /></div>
+    <div class="form_input"><input size="70" name="j_username" type="text" autofocus /></div>
     <div class="form_description">Password:</div>
     <div class="form_input"><input size="70" name="j_password" type="password" /></div>
     
@@ -38,3 +57,7 @@ Username = flemming<br />
 Password = 1313<br />
 
 <%@include file="./includes/bottom.jsp" %>
+
+<%
+}
+%>
