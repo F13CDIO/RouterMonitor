@@ -1,3 +1,22 @@
+<%
+if(request.getUserPrincipal() != null) {
+%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Network Monitoring System - Saving data...</title>
+        <meta http-equiv="refresh" content="0; url=./control_panel.jsp">
+    </head>
+    
+    <body>
+		<a href="./control_panel.jsp">Continue...</a>
+    </body>
+</html>
+<%
+}
+else {
+%>
+
 <%@include file="./includes/top.jsp" %>
 
 <%
@@ -38,3 +57,7 @@ Username = flemming<br />
 Password = 1313<br />
 
 <%@include file="./includes/bottom.jsp" %>
+
+<%
+}
+%>
