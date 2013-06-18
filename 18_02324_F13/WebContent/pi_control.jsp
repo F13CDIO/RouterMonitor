@@ -29,7 +29,7 @@
                     piStatus[i] = "Running";
                 }
                 else {
-                    piStatus[i] = "Stoped";
+                    piStatus[i] = "Stopped";
                 }
             }
             catch (Exception e) {
@@ -45,7 +45,7 @@
 %>
         
         <br />
-        <span id="pi_title">Availible Pi's:</span>
+        <span id="pi_title">Available Pi's:</span>
         Change channel:
         <form action="./pi_action.jsp" method="post">
         <div id="pi_list">
