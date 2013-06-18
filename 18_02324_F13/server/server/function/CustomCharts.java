@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import server.data.mySQLConnector.MySQLConnector;
 import server.data.mySQLInterfaces.IDataPackageDAO;
 import server.data.mySqlDataAccessObjects.DataPackageDAO;
 
@@ -40,15 +39,10 @@ public class CustomCharts {
             cal.setTimeInMillis(input);
 
             /* Connects to mySQL database, to be able to get data */
-            
             DAO.openConnection();
 
             /* Gets data and saves in temp var, so the MySQL connection can be closed before return */
             String output = DAO.get10SecondTraffic(cal.getTime(), "").toString();
-
-            /* Close mySQL database connection */
-            
-            DAO.closeConnection();
 
             return output;
         }
@@ -56,6 +50,7 @@ public class CustomCharts {
             return "";
         }
         finally {
+        	/* Close mySQL database connection */
         	DAO.closeConnection();
         }
     }
@@ -264,15 +259,13 @@ public class CustomCharts {
                 mainCategories[i] = temp.get("host").toString();
             }
 
-            /* Close mySQL database connection */
-            DAO.closeConnection();
-
             return generateBar(mainCategories, mainValues, subCategories, subValues, title);
         }
         catch (Exception e) {
             return "Database error occurred. <br /><br />Error: " + e.getMessage() + "<br />";
         }
         finally {
+        	/* Close mySQL database connection */
         	DAO.closeConnection();
         }
     } //OBS - subhost not implemented
@@ -410,15 +403,13 @@ public class CustomCharts {
                 dateOffset.add(Calendar.SECOND, -secondsBack);
             }
 
-            /* Close mySQL database connection */
-            DAO.closeConnection();
-
             return generateLine(categories, series, values, title);
         }
         catch (Exception e) {
             return "Database error occurred. <br /><br />Error: " + e.getMessage() + "<br />";
         }
         finally {
+        	/* Close mySQL database connection */
         	DAO.closeConnection();
         }
     }
@@ -495,15 +486,13 @@ public class CustomCharts {
                 pieCategories[i] = temp.get("host").toString();
             }
 
-            /* Close mySQL database connection */
-            DAO.closeConnection();
-
             return generatePie(pieCategories, pieValues, title);
         }
         catch (Exception e) {
             return "Database error occurred. <br /><br />Error: " + e.getMessage() + "<br />";
         }
         finally {
+        	/* Close mySQL database connection */
         	DAO.closeConnection();
         }
     }
@@ -539,15 +528,8 @@ public class CustomCharts {
         if(secondsBack == 10) {
             return DAO.get10SecondTraffic(date, host);
         }
-        else if(secondsBack == 60) {
-            //get1MinuteTraffic er fjernet det nye interface?!?
-            //return DAO.get1MinuteTraffic(date, host);
-            return DAO.get1HourTraffic(date, host);
-        }
         else if(secondsBack == 600) {
-            //get10MinuteTraffic er fjernet det nye interface?!?
-            //return DAO.get10MinuteTraffic(date, host);
-            return DAO.get1HourTraffic(date, host);
+        	return DAO.get10Minute(date, host);
         }
         else if(secondsBack == 3600) {
             return DAO.get1HourTraffic(date, host);
