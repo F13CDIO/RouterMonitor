@@ -1,30 +1,37 @@
+<jsp:useBean id="DAO" class="server.data.mySqlDataAccessObjects.DataPackageDAO" />
+
 <%@include file="./includes/top.jsp" %>
 
 <%
-    boolean fileExists = false;
+    boolean useCustom = false;
     boolean useStdPage = false;
     int i, chartNum = 0;
-    String path, savedData;
+    String path, savedData = null;
     String[] temp, layout, selectedCharts;
-    
-    /* Check if customize-file exists */
-    path = application.getRealPath("/") + "customized_charts.txt";
-    java.io.File file = new java.io.File(path);
-    if(file.exists()) {
-        fileExists = true;
-    }
     
     /* Check if user wants std. page */
     if("true".equals(request.getParameter("std"))) {
         useStdPage = true;
     }
     
-    if (fileExists && !useStdPage) {
-        /* Reads from txt-file */
-        java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader(path));
-        savedData = reader.readLine();
-        reader.close();
-
+    /* Check if customize-data exists, and gets it if it does */
+    try {
+	    DAO.openConnection();
+	    if(userName != null && !useStdPage && DAO.hasUserSettings(userName)) {
+	    	savedData = DAO.getUserSettings(userName);
+	    	useCustom = true;
+	    }
+    }
+    catch (Exception e) {
+    	out.print("<p id=\"message\">Database error. Could not get customized layout.</p>");
+    	useCustom = false;
+    }
+    finally {
+    	DAO.closeConnection();
+    }
+    
+    
+    if (useCustom && savedData != null) {
         /* Insert into arrays */
         temp = savedData.split(";");
         layout = temp[0].split(",");
