@@ -22,4 +22,6 @@ public interface IDataPackageDAO
 	void deleteUser(String email) throws SQLException;
 	boolean loginValid(String email, String password) throws SQLException;
 	JSONArray getAllUsers() throws SQLException;
+	boolean openConnection() throws SQLException;
+	void closeConnection();
 }

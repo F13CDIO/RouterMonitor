@@ -14,7 +14,7 @@ public class SaveToDB implements Runnable
 	private boolean connected = false;
 	private DataPackage dataPackage = null;
 	private DataPackageDAO dataPackageDAO;
-	private MySQLConnector mySQLConnector = new MySQLConnector(); 
+	//private MySQLConnector mySQLConnector = new MySQLConnector(); 
 	
 	
 	
@@ -46,15 +46,14 @@ public class SaveToDB implements Runnable
 				{
 					try 
 					{
-						mySQLConnector.connect();
+						dataPackageDAO.openConnection();
 						connected = true;
 					} 
 					
-					catch (InstantiationException e) {e.printStackTrace();} 
-					catch (IllegalAccessException e) {e.printStackTrace();} 
-					catch (ClassNotFoundException e) {e.printStackTrace();}
-					catch (SQLException e) {e.printStackTrace();}
-					
+					catch (SQLException e) 
+					{
+						System.out.println(e.getMessage());
+					}					
 				}
 				
 				try
@@ -75,7 +74,7 @@ public class SaveToDB implements Runnable
 			}
 			else if(connected)
 			{
-				mySQLConnector.closeConnection();
+				dataPackageDAO.closeConnection();
 				connected = false;
 			}
 		}

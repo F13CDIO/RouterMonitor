@@ -17,21 +17,7 @@ public class DataPackageDAO implements IDataPackageDAO
 	
 	public DataPackageDAO()
 	{
-		try {
-			mySQLConnector.connect();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 
 	@Override
@@ -253,6 +239,35 @@ public class DataPackageDAO implements IDataPackageDAO
 	{
 		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT * FROM userRoleTable ORDER BY userNameCol ASC");
 		return parseResultsetToJSONArray("users", mySqlOutput);
+	}
+
+	@Override
+	public boolean openConnection() throws SQLException 
+	{
+		try {
+			mySQLConnector.connect();
+			return true;
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+		
+	}
+
+	@Override
+	public void closeConnection() 
+	{
+		mySQLConnector.closeConnection();
 	}
 
 	
