@@ -246,7 +246,7 @@ public class MenuHandler {
 	private int extractNumber() throws IOException{
 		String command = "";
 		BufferedReader inputFromServer = null;
-		
+		System.out.println("extract number method");
 		// making it more robust because server maight not respect protocol and send several newlines
 		while (command.length() < 1){
 			command = inputFromServer.readLine();

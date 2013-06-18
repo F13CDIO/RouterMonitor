@@ -13,7 +13,7 @@ import java.util.InputMismatchException;
 
 public class RpiMain {
 	public static void main(String[] args) throws Exception {
-
+		
 		MainController mc = new MainController();
 		mc.connectToServer();
 		while (true){

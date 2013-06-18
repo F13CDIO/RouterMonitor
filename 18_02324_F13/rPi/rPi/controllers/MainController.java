@@ -73,7 +73,7 @@ public class MainController {
 			if (c.name().equals(commandStringFromServer)){
 				thisCommand = SupportedCommands.valueOf(commandStringFromServer); 
 			} else {
-				throw new InputMismatchException("command recieved : " + commandStringFromServer);
+				//throw new InputMismatchException("command recieved : " + commandStringFromServer);
 			}
 		}
 		
