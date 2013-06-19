@@ -13,7 +13,7 @@ public class Function implements IFunction
 	{
 		this.data = data;
 		parseUdpPackage = new ParseUdpPackage();
-		saveToDB = new Thread(new SaveToDB());
+		saveToDB = new SaveToDB();
 		saveToDB.start();
 	}
 

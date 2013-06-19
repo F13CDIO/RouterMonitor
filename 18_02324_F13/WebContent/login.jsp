@@ -49,12 +49,12 @@ else {
 Herunder er angivet testbrugere med forskellige rettigheder, som kan bruges til test...<br />
 <br />
 Admin:<br />
-Username = hans<br />
-Password = 1212<br />
+Username = grp18dtu@gmail.com<br />
+Password = admin<br />
 <br />
 User:<br />
-Username = flemming<br />
-Password = 1313<br />
+Username = email@gmail.com<br />
+Password = user<br />
 
 <%@include file="./includes/bottom.jsp" %>
 

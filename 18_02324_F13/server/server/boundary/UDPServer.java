@@ -39,6 +39,7 @@ public class UDPServer extends Thread
 	public void stopThread()
 	{
 		keepRunning = false;
+		udpSocket.close();
 		udpSocket = null;
 	}
 	
@@ -60,7 +61,6 @@ public class UDPServer extends Thread
 				String data = new String(incommingPacket.getData());
 				function.parse(data);
 			}
-			
 			catch (IOException | InterruptedException e) { System.out.println("IOException: " + e); }
 		}
 	}
