@@ -41,7 +41,7 @@ public class DataPackageDAO implements IDataPackageDAO
 	public JSONArray getTop10WithSubhosts(Date dateFrom) throws SQLException 
 	{
 		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());		
-		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT host, subhost, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
 		return parseResultsetToJSONArray("hostsWithSubhost", mySqlOutput);
 	}
 
