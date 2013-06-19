@@ -3,11 +3,10 @@
 <%@include file="./includes/top.jsp" %>
 
 <%
-    boolean useCustom = false;
-    boolean useStdPage = false;
+    boolean useCustom = false, useStdPage = false, chartsExists = false, layoutExists = false;
     int i, chartNum = 0;
     String path, savedData = null;
-    String[] temp, layout, selectedCharts;
+    String[] temp, layout = null, selectedCharts = null;
     
     /* Check if user wants std. page */
     if("true".equals(request.getParameter("std"))) {
@@ -30,13 +29,29 @@
     	DAO.closeConnection();
     }
     
+    /* Only use data if it exists */
+    if(useCustom && savedData != null) {
+	    /* Insert into arrays */
+	    temp = savedData.split(";");
+	    layout = temp[0].split(",");
+	    selectedCharts = temp[1].split(",");
     
-    if (useCustom && savedData != null) {
-        /* Insert into arrays */
-        temp = savedData.split(";");
-        layout = temp[0].split(",");
-        selectedCharts = temp[1].split(",");
-        
+    	/* Check if the customized info is valid */
+    	for(i=0; i<5; i++) {
+    		if(!"null".equals(layout[i])) {
+    			layoutExists = true;
+    		}
+    	}
+    	
+    	for(i=0; i<10; i++) {
+    		if(!"null".equals(selectedCharts[i])) {
+    			chartsExists = true;
+    		}
+    	}
+    }
+    
+    /* Only use data if it exists */
+    if (useCustom && savedData != null && layoutExists && chartsExists) {
         out.println("This is your custom statistics page. You can always acces the standard page");
         out.println("<a href=\"./statistics.jsp?std=true\">here</a>, or customize your page");
         out.println("<a href=\"./customize_selection.jsp\">here</a>.");
@@ -68,6 +83,9 @@
         out.println("<div class=\"clear\"></div>");
     }
     else {
+        if(useCustom && (!layoutExists || !chartsExists)) {
+        	out.println("<span id=\"message\">Customized statistics is set up, but no charts selected or no layout set. Displaying default page instead.</span><br /><br />");
+        }
 %>
 
 <div id="statistics_top_right"><% out.println(CustomCharts.top10Pie1Month()); %></div>

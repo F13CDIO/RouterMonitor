@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Context path="/18_02324_F13">
+<Context path="/">
 	<!-- JDBCRealm setup -->
 	<Realm
 		className="org.apache.catalina.realm.JDBCRealm"

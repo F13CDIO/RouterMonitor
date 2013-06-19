@@ -1,7 +1,7 @@
 <%@include file="./includes/top.jsp" %>
 
 <%
-    String[] availibleCharts = {
+    String[] availableCharts = {
         "Top 10 Bar-chart for the last 10 minutes",
         "Top 10 Bar-chart for the last hour",
         "Top 10 Bar-chart for the last day",
@@ -18,7 +18,7 @@
     
     int i, i2, chartNum = 0, numOfSelectedCharts = 0;
     String[] layout = new String[5];
-    String[] selectedCharts = new String[availibleCharts.length];
+    String[] selectedCharts = new String[availableCharts.length];
 
     /* Reads the selected layout into array */
     for (i = 0; i < 5; i++) {
@@ -26,9 +26,9 @@
     }
     
     /* Reads the selected charts into array */
-    for (i=0; i<availibleCharts.length; i++) {
+    for (i=0; i<availableCharts.length; i++) {
         if("on".equals( request.getParameter("chart"+i) )) {
-            selectedCharts[numOfSelectedCharts] = availibleCharts[i];
+            selectedCharts[numOfSelectedCharts] = availableCharts[i];
             numOfSelectedCharts++;
         }
     }

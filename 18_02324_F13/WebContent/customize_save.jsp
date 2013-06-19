@@ -33,7 +33,14 @@
     userName = request.getRemoteUser();
     if(userName != null) {
     	DAO.openConnection();
-    	DAO.addUserSettings(userName, combinedData);
+    	
+    	if(DAO.hasUserSettings(userName)) {
+    		DAO.editUserSettings(userName, combinedData);
+    	}
+    	else {
+    		DAO.addUserSettings(userName, combinedData);
+    	}
+    	
     	DAO.closeConnection();
     }
 %>
