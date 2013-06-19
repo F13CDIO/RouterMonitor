@@ -80,7 +80,7 @@
 	else if ("show_wifi".equals(feedback)) {
 		splitTemp = wifiNetworks.split("\\r?\\n");
 		
-		wifiInfo = new String[splitTemp.length][9];
+		wifiInfo = new String[splitTemp.length][8];
 		
 		for(i=0; i<splitTemp.length; i++) {
 			wifiInfo[i] = splitTemp[i].split("\\|");
@@ -104,11 +104,11 @@ Network overview for pi "<% out.print(selectedPi); %>":
 	for(i=1; i<splitTemp.length; i++) {
 %>
 	<div class="wifi_line">
-		<div class="wifi_item0"><% out.print(wifiInfo[i][2]); %></div>
-		<div class="wifi_item1"><% out.print(wifiInfo[i][1]); %></div>
-		<div class="wifi_item2"><% out.print(wifiInfo[i][3]); %></div>
-		<div class="wifi_item3"><% out.print(wifiInfo[i][4]); %></div>
-		<div class="wifi_item4"><% out.print(wifiInfo[i][7]); %></div>
+		<div class="wifi_item0"><% out.print(wifiInfo[i][1]); %></div>
+		<div class="wifi_item1"><% out.print(wifiInfo[i][0]); %></div>
+		<div class="wifi_item2"><% out.print(wifiInfo[i][2]); %></div>
+		<div class="wifi_item3"><% out.print(wifiInfo[i][3]); %></div>
+		<div class="wifi_item4"><% out.print(wifiInfo[i][6]); %></div>
 	</div>
 <%
 }

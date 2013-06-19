@@ -93,6 +93,10 @@ body {
     border: 2px solid #7c7c7c;
     float: left;
 }
+#pi_empty {
+	margin-left: 30px;
+	color: red;
+}
 a {
     color: black;
 }
