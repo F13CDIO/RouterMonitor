@@ -172,6 +172,10 @@ public class ConnectedTCPClient extends Thread
 	            			System.out.println("rPi ignored: " + macAddress);
 	            		}
 	            		break;
+	            	case "ERROR":
+	            	{
+	            		System.out.println("Invalid Command to Raspberry Pi");
+	            	}
 	            	
 	            	default: 
 	            		write("Invalid command");
