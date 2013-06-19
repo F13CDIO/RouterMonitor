@@ -3,6 +3,8 @@ package server.data.mySqlDataAccessObjects;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
+import java.util.Queue;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -52,8 +54,6 @@ public class DataPackageDAO implements IDataPackageDAO
 		java.sql.Timestamp mySqlTimestampTo = new java.sql.Timestamp(date.getTime());
 		String query = "SELECT FROM_UNIXTIME(ROUND(UNIX_TIMESTAMP(timestamp)/(1))*(1)) as timestamp, COUNT(*) AS count FROM dataPackages WHERE timestamp BETWEEN ('"+mySqlTimestampTo+"' - INTERVAL 10 SECOND) and '"+mySqlTimestampTo+"' "+host+" GROUP BY UNIX_TIMESTAMP(timestamp) DIV 1 LIMIT 10";
 		ResultSet mySqlOutput = mySQLConnector.execQuery(query);
-		System.out.println("mySQL: Get 10 second traffic");
-		System.out.println("Query: " + query);
 		return parseResultsetToJSONObject("traffic", mySqlOutput);
 	}
 	
@@ -115,7 +115,6 @@ public class DataPackageDAO implements IDataPackageDAO
 		query += dataPackage.getUserAgent() + "', '";
 		query += mySqlTimestamp + "');";
 		
-		//System.out.println(query);
 		mySQLConnector.update(query);		
 	}
 	
@@ -311,5 +310,35 @@ public class DataPackageDAO implements IDataPackageDAO
 		}
 		
 		return null;
+	}
+
+
+	@Override
+	public void addMultipleDataPackets(Queue<DataPackage> dataPackets)throws SQLException 
+	{
+		String[] queries = new String[dataPackets.size()];
+		int count = 0;
+		
+		while (!dataPackets.isEmpty())
+		{
+			DataPackage dataPackage = dataPackets.poll();
+			java.sql.Timestamp mySqlTimestamp = new java.sql.Timestamp(dataPackage.getTimeStamp().getTime());
+
+			String query = "INSERT INTO dataPackages VALUES(";
+			query += "0, '";
+			query += dataPackage.getScourceIP() + "', '";
+			query += dataPackage.getDestinationIP() + "', '";
+			query += dataPackage.getHost() + "', '";
+			query += dataPackage.getSubHost() + "','";
+			query += dataPackage.getUserAgent() + "', '";
+			query += mySqlTimestamp + "');";
+			
+			queries[count] = query;
+			count++;
+		}
+
+		System.out.println("Queries: " + count);
+		mySQLConnector.insertBatch(queries);
+		
 	}
 }
