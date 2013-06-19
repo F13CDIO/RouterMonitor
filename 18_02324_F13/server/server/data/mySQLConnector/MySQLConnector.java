@@ -42,7 +42,10 @@ public class MySQLConnector
 		    sqlStatement.addBatch(query);
 		}
 		
+		sqlConnection.setAutoCommit(false);
 		sqlStatement.executeBatch();
+		sqlConnection.commit();
+		sqlConnection.setAutoCommit(true);
 	}
 	
 	public void connect() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException

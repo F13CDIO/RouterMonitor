@@ -77,7 +77,6 @@ public class SaveToDB extends Thread
 				}
 				
 
-				
 				try
 				{	
 					dataPackageDAO.addMultipleDataPackets(dataPackets);
