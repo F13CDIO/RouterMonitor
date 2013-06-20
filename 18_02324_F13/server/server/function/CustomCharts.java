@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import server.data.mySQLInterfaces.IDataPackageDAO;
 import server.data.mySqlDataAccessObjects.DataPackageDAO;
 
@@ -237,14 +238,15 @@ public class CustomCharts {
     
     private String top10Bar(Date offset, String title) {
         try {
-            int i;
+            int i, iSub;
+            JSONArray data, dataSub;
+            JSONObject temp;
 
             /* Connects to mySQL database, to be able to get data */
             DAO.openConnection();
 
             /* Get data */
-            JSONArray data = DAO.getTop10(offset);
-            JSONObject temp;
+            data = DAO.getTop10WithSubhosts(offset);
             
             /* Creates array with size according to actual number of pages in top10 */
             String[] mainValues = new String[data.size()];
@@ -257,12 +259,26 @@ public class CustomCharts {
 
                 mainValues[i] = temp.get("count").toString();
                 mainCategories[i] = temp.get("host").toString();
+                
+                Object obj=JSONValue.parse(temp.get("subHosts").toString());
+                dataSub=(JSONArray)obj;
+                
+                for(iSub = 0; iSub < dataSub.size(); iSub++) {
+                    temp = (JSONObject) dataSub.get(iSub);
+                    
+                    subValues[i][iSub] = temp.get("count").toString();
+                    subCategories[i][iSub] = temp.get("subhost").toString();
+                    
+                    if(subCategories[i][iSub].equals("null")) {
+                        subCategories[i][iSub] = "Unknown";
+                    }
+                }
             }
 
             return generateBar(mainCategories, mainValues, subCategories, subValues, title);
         }
         catch (Exception e) {
-            return "Database error occurred. <br /><br />Error: " + e.getMessage() + "<br />";
+            return "Database error occurred. <br /><br />Error: " + e + "<br />";
         }
         finally {
         	/* Close mySQL database connection */
@@ -300,21 +316,20 @@ public class CustomCharts {
 	String htmlSubValues;
 	String data = "";
 	for(i=0; i<mainValues.length; i++) {
-		if(i != 0) {
-			data = data + ", ";
-		}
-		
-		htmlSubCategories = "'" + subCategories[i][0] + "'";
-		for(iSub=1; iSub<subValues[i].length; iSub++) {
-			htmlSubCategories = htmlSubCategories + ", '" + subCategories[i][iSub] + "'";
-		}
-		
-		htmlSubValues = "" + subValues[i][0];
-		for(iSub=1; iSub<subValues[i].length; iSub++) {
-			htmlSubValues = htmlSubValues + ", " + subValues[i][iSub];
-		}
-		
-		data = data + "{y: " + mainValues[i] + ", color: colors[" + i + "], drilldown: {name: '" + mainCategories[i] + " " + SUB_PAGES_DESCRIPTION + "', categories: [" + htmlSubCategories + "], data: [" + htmlSubValues + "], color: colors[" + i + "]}}";
+            if(i != 0) {
+                data = data + ", ";
+            }
+
+            htmlSubCategories = "'" + subCategories[i][0] + "'";
+            htmlSubValues = "" + subValues[i][0];
+            for(iSub=1; iSub<subValues[i].length; iSub++) {
+                if(subCategories[i][iSub] != null) {
+                    htmlSubCategories = htmlSubCategories + ", '" + subCategories[i][iSub] + "'";
+                    htmlSubValues = htmlSubValues + ", " + subValues[i][iSub];
+                }
+            }
+
+            data = data + "{y: " + mainValues[i] + ", color: colors[" + i + "], drilldown: {name: '" + mainCategories[i] + " " + SUB_PAGES_DESCRIPTION + "', categories: [" + htmlSubCategories + "], data: [" + htmlSubValues + "], color: colors[" + i + "]}}";
 	}
 	
 
