@@ -66,7 +66,17 @@ Change channel:
 	
 	/* Function to get new data and insert it into the list */
 	function updatePiList() {
-		$.get("./includes/pi_list.jsp", function(data) {
+		var i;
+		var elements = document.getElementsByName("selectedPi");
+		var selected = "none";
+		
+		for (i=0; i<elements.length; i++) {
+			if (elements[i].checked) {
+				selected = elements[i].value;
+			}
+		}
+				
+		$.get("./includes/pi_list.jsp?selected="+selected, function(data) {
 			document.getElementById("pi_list").innerHTML=data;
 		});
 	}

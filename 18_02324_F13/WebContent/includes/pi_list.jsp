@@ -10,6 +10,8 @@
 <% 
 	String[] piList;
 	String[] piStatus;
+	String preSelected;
+	boolean preSelectedExists = false;
 	int i;
 	
 	/* Get list of Pi's */
@@ -23,6 +25,9 @@
 	
 	/* Everything only runs if the Pi-server is availible */
 	if(piList != null) {
+		/* Checks if any Pi's should be pre-selected */
+		preSelected = request.getParameter("selected");
+		
 	    /* Pi status array is created with the same length as piList */
 	    piStatus = new String[piList.length];
 	    
@@ -40,15 +45,26 @@
 	            piStatus[i] = "Unknown";
 	        }
 	    }
+	    
+	    /* Check if all Pi's are still connected */
+	    for(i=0; i<piList.length; i++) {
+	    	if(piList[i].equals(preSelected)) {
+	    		preSelectedExists = true;
+	    	}
+	    }
+	    
+	    if(!preSelectedExists) {
+	    	preSelected = null;
+	    }
 
         /* Print list of Pi's */
-        for(i=0; i<piList.length; i++) {
+        for(i=0; i<piList.length; i++) {        	
             out.println("<label class=\"pi_line\">");
             out.println("<span class=\"pi_num\">" + (i+1) + "</span>");
             out.println("<span class=\"pi_info\">" + piList[i] + "</span>");
             out.println("<span class=\"pi_info\">" + piStatus[i] + "</span>");
             out.print("<input name=\"selectedPi\" value=\"" + piList[i] + "\" type=\"radio\"");
-            if(i==0) {
+            if(piList[i].equals(preSelected) || (i==0 && preSelected == null)) {
                 out.print(" checked");
             }
             out.println(" />");
