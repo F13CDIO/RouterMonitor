@@ -50,7 +50,6 @@ public class MenuHandler {
 			isSniffing = true;
 			break;
 		case stop:
-			System.out.println("stopping sniffer your flag is rigt now "+ hopper.getFlag());
 			if(hopper != null)
 				hopper.setFlag(false);
 			stopSniffing();
@@ -130,7 +129,15 @@ public class MenuHandler {
 			}
 			tc.exec("bash rPi/rPi/restoreNIC.sh");
 			
-		} else if (this.currentOS == SupportedOS.Windows){
+		}else if(this.currentOS == SupportedOS.Mac){
+			BufferedReader br = tc.exec("bash rPi/rPi/killScript.sh");
+			try {
+				System.out.println(br.readLine());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if (this.currentOS == SupportedOS.Windows){
 			System.out.println("windows can't sniff");
 		}
 		cc.stopUDP();
@@ -253,16 +260,16 @@ public class MenuHandler {
 		
 		if (this.currentOS == SupportedOS.Mac){
 			// Dissociate from current network
-			tc.exec("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -z");
+			tc.exec("sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -z");
 			System.out.println("Dissociated from access point");
 			// set channel
-			String chanCmd = "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --channel=";
+			String chanCmd = "sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --channel=";
 			System.out.println("setting channel to " +chanCmd + chan);
 			BufferedReader response = tc.exec(chanCmd + chan);
 			try {
 				String rootRequired = response.readLine();
 				System.out.println(rootRequired);
-				if (rootRequired.length() > 0){
+				if (rootRequired != null){
 					cc.sendStringTCP(rootRequired);
 				} else {
 					cc.sendStringTCP("\0");

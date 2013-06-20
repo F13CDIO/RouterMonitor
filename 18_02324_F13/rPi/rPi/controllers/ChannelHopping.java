@@ -66,9 +66,9 @@ public class ChannelHopping extends Thread {
 	private void iteratingMac(String ssid){
 		ArrayList<Integer> channels = getRelevantChannelsMac(ssid);
 		int i = 0;
-		while(true){
-			tc.exec("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -z");
-			tc.exec("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --channel="+channels.get(i));
+		while(flag){
+			tc.exec("sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -z");
+			tc.exec("sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --channel="+channels.get(i));
 			try{
 				Thread.sleep(5000);
 			}catch(InterruptedException e){
