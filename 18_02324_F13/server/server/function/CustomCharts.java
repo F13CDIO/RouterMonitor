@@ -353,7 +353,6 @@ public class CustomCharts {
 
             /* Get top10 data */
             top10Data = DAO.getTop10(dateOffset.getTime());
-            System.out.println(top10Data);
             
             /* Check if the top10 has enough elements to get the requested number of domains */
             if(top10Data.size() < NUMBER_OF_DOMAINS) {
@@ -374,7 +373,7 @@ public class CustomCharts {
 
                 /* Get series data */
                 temp = getTraffic(secondsBack, dateNow.getTime(), series[i]);
-                System.out.println(temp);
+                System.out.println("Dataset: " + temp);
                 
                 /* Process series data */
                 for(iSub = 0; iSub < numberOfPoints; iSub++) {
@@ -384,7 +383,6 @@ public class CustomCharts {
                     }
                     /* Generate date-key-string */
                     dateString = javaDateString(dateOffset, numberOfZeros);
-                    System.out.println(dateString);
                     
                     /* Get data from date-key */
                     if(temp.get(dateString) != null) {

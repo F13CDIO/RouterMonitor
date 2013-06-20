@@ -58,6 +58,7 @@
                 out.print(" checked");
             }
             out.println(" />");
+            out.println("<input name=\"" + userNames[i] + "_role\" value=\"" + userRoles[i] + "\" type=\"hidden\" />");
             out.println("</label>");
         }
         

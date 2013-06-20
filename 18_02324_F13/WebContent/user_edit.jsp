@@ -2,13 +2,13 @@
 
 <%
 	/* Get parameters */
-	String selectedUser, action, output;
+	String selectedUser, action, output, role;
 
 	selectedUser = request.getParameter("selectedUser");
 	action = request.getParameter("action");
 
 	
-	if("Delete selected user".equals(action)) { 
+	if("Delete selected user".equals(action) && selectedUser != null) { 
 		try {
 			DAO.openConnection();
 			
@@ -44,8 +44,8 @@
 	</html>
 <% 
 	}
-	else if("Edit selected user".equals(action)) {
-		
+	else if("Edit selected user".equals(action) && selectedUser != null) {
+		role = request.getParameter(selectedUser + "_role");
 %>
 
 <%@include file="./includes/top.jsp" %>
@@ -57,8 +57,8 @@
     <div class="form_description">Role:</div>
     <div class="form_input">
 	<select name="role">
-		<option value="admin">admin</option>
-		<option value="user">user</option>		
+		<option value="admin"<% if("admin".equals(role)) {out.print(" selected");} %>>admin</option>
+		<option value="user"<% if("user".equals(role)) {out.print(" selected");} %>>user</option>		
 	</select>
 	</div>
 	<div class="clear"></div>
