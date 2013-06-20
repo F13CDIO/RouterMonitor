@@ -46,11 +46,6 @@ public class DisconnectCheck extends Thread
 						connected = false;
 						client.close();
 					}
-					else
-					{
-						System.out.println("still connected");
-					}
-					System.out.println(disconnectCorrection);
 				}
 				catch (IOException e)
 				{
