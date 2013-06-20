@@ -28,6 +28,7 @@
     <head>
         <title>Network Monitoring System - <% out.print(pageNameNice); %></title>
         <link rel="stylesheet" type="text/css" href="./styles/main.css" />
+        <link rel="icon" href="./favicon.ico" type="image/x-icon">
         
         <jsp:useBean id="CustomCharts" class="server.function.CustomCharts" /> 
         <% out.print(CustomCharts.importScripts()); %>

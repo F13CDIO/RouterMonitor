@@ -102,6 +102,17 @@ body {
 	float: left;
 	color: #777777;
 }
+#pi_loading {
+	margin-top: 10px;
+	display: none;
+}
+#pi_loading_img {
+	float: left;
+}
+#pi_loading_text {
+	float: left;
+	margin: 8px 0 0 5px;
+}
 a {
     color: black;
 }
