@@ -60,7 +60,7 @@
         /* Print list of Pi's */
         for(i=0; i<piList.length; i++) {
             out.println("<label class=\"pi_line\">");
-            out.println("<span class=\"pi_num\">" + i+1 + "</span>");
+            out.println("<span class=\"pi_num\">" + (i+1) + "</span>");
             out.println("<span class=\"pi_info\">" + piList[i] + "</span>");
             out.println("<span class=\"pi_info\">" + piStatus[i] + "</span>");
             out.print("<input name=\"selectedPi\" value=\"" + piList[i] + "\" type=\"radio\"");
@@ -103,7 +103,7 @@
 
         <input class="pi_control_submit" type="submit" name="action" value="Start" />
         <input class="pi_control_submit" type="submit" name="action" value="Stop" />
-        <input class="pi_control_submit" type="submit" name="action" value="Get WiFi status" />
+        <input class="pi_control_submit" type="submit" name="action" value="Iterate channels" />
         <input class="pi_control_submit" type="submit" name="action" value="Scan networks" />
         <input class="pi_control_submit pi_submit_last" type="submit" name="action" value="Set channel" />
 

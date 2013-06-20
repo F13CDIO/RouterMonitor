@@ -8,6 +8,7 @@ public class MainController {
 	
 	private final SupportedOS currentOS;
 	private final String server_ip;
+	private MenuHandler mh;
 	
 	TerminalExecutor tc = new TerminalExecutor();
 	public BufferedReader br = null;
@@ -66,7 +67,8 @@ public class MainController {
 	 */
 	public void handleCommand() throws IOException
 	{
-		MenuHandler mh = new MenuHandler(currentOS, cc, inputFromServer);
+		if(mh == null)
+			mh = new MenuHandler(currentOS, cc, inputFromServer);
 		
 		SupportedCommands thisCommand = SupportedCommands.nop;
 		String commandStringFromServer = inputFromServer.readLine();

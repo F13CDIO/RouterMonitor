@@ -63,6 +63,9 @@ public class Connector implements IConnector {
 		}
 	}
 	public void stopUDP(){
-		udp.stopUDP();
+		if(udp != null)
+			udp.stopUDP();
+		else
+			System.out.println("there is no UDP connection to terminate");
 	}
 }

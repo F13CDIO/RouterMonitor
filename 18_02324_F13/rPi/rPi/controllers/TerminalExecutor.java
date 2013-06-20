@@ -30,7 +30,6 @@ public class TerminalExecutor {
 	 */
 	public BufferedReader exec(String pathToScriptOrTheCommand)
 	{
-		System.out.println("terminal executor bla bla bla");
 		assert(pathToScriptOrTheCommand.length() > 0);
 		
 		try {

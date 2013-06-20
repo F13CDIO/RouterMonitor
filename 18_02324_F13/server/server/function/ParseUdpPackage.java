@@ -35,7 +35,7 @@ public class ParseUdpPackage implements IParseUdpPackage, IFunction
 		Calendar cal = Calendar.getInstance();
 		String[] sniffedData = input.split("\t");
 
-		if (sniffedData.length <= 1)
+		if (sniffedData.length <= 3)
 		{
 			return;
 		}

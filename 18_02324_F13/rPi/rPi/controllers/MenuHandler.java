@@ -19,7 +19,9 @@ public class MenuHandler {
 	private SupportedOS currentOS;
 	private ConnectionController cc;
 	private BufferedReader inputFromServer;
-	private String STARTSCRIPT = "bash ./rPi/rPi/startScript.sh";
+	private ChannelHopping hopper;
+	private int portnr;
+	private boolean isSniffing = false;
 	TerminalExecutor tc = new TerminalExecutor();
 	/**
 	 * The constructor needs to know host OS and CC. The knowledge of BufferedReader inputFromserver is a hack -> mitigate
@@ -41,14 +43,18 @@ public class MenuHandler {
 	public void switchMenu(SupportedCommands cmd) throws Exception{
 		switch (cmd) {
 		case start: // start sniffing
-			int portnr = extractNumber();
+			portnr = extractNumber();
 			System.out.println("extracted port nr : " + portnr);
 			startSniffing(portnr);
 			System.out.println("started sniffing");
+			isSniffing = true;
 			break;
 		case stop:
-			System.out.println("stopping sniffer");
+			System.out.println("stopping sniffer your flag is rigt now "+ hopper.getFlag());
+			if(hopper != null)
+				hopper.setFlag(false);
 			stopSniffing();
+			isSniffing = false;		//stops the iterate loop in ChannelHopping
 			break;
 		case scanNetworks:
 			System.out.println("scanning networks");
@@ -66,11 +72,19 @@ public class MenuHandler {
 		case getMacAddress:
 			cc.sendStringTCP( getMacAddress() );
 			break;
-		case iterate: 
-			ChannelHopping hopper = new ChannelHopping("dtu", currentOS);
+		case iterate:
+			boolean wasSniffing = false;
+			if(isSniffing){				//If the program has already started sniffing the process have to be stopped while the iteration process is started
+				stopSniffing();
+				wasSniffing = true;
+			}
+			hopper = new ChannelHopping("dtu", currentOS);
+			hopper.setFlag(true);
 			(new Thread(hopper)).start();
-				
-		default: cc.sendStringTCP("ERROR"); // enum might get extended
+			Thread.sleep(5000);
+			if(wasSniffing)
+				startSniffing(portnr);
+			break;
 		}
 		
 	}
@@ -104,7 +118,6 @@ public class MenuHandler {
 	 *  This method requires the start script has been run, and not just tshark, invoked since pid needs to have been saved
 	 */
 	public void stopSniffing(){
-		cc.stopUDP();
 		// stopping the process is easy to do in one line, so here it goes with some bash-fu (linux/osx compatible)
 		if (this.currentOS == SupportedOS.Linux){
 			BufferedReader br = tc.exec("pidof tshark");
@@ -120,6 +133,7 @@ public class MenuHandler {
 		} else if (this.currentOS == SupportedOS.Windows){
 			System.out.println("windows can't sniff");
 		}
+		cc.stopUDP();
 	}
 	
 	/**
@@ -143,6 +157,8 @@ public class MenuHandler {
 		} else if (this.currentOS == SupportedOS.Linux){
 			System.out.println("executing linux scan");
 			tc.exec("bash rPi/rPi/restoreNIC.sh");
+			tc.exec("sudo iw dev wlan0 scan");		//Hack for at faa "iwlist wlan0 scan" til at virke, SKAL AENDRES
+			Thread.sleep(2000);
 			scanCommand = "iwlist wlan0 scan";
 		}
 		BufferedReader br = tc.exec(scanCommand); 
@@ -185,8 +201,11 @@ public class MenuHandler {
 			try{
 				//Fordi den ikke tager det det sidste info med da den kun add til arraylisten naar den stoder p[ "Cell"
 				line = br.readLine();
-				if(line == null)
+				if(line == null){
+					networks.add(aNetwork);
 					break;
+				}
+				System.out.println(line);
 				String[] temp = line.split("\\s+");
 //				for(String t : temp){
 //					System.out.println(t);
@@ -198,10 +217,10 @@ public class MenuHandler {
 					networks.add(aNetwork); // save current network when 1. line is met
 					aNetwork = new String[7];
 					
-					aNetwork[4] = null; // set HT to null
-					aNetwork[5] = null; // set CC to null
+					aNetwork[4] = "null"; // set HT to null
+					aNetwork[5] = "null"; // set CC to null
 					System.out.println("temp4"+temp[5]);
-					aNetwork[1] = temp[4]; // BSSID from temp to aNetwork
+					aNetwork[1] = temp[5]; // BSSID from temp to aNetwork
 				} else if (temp[1].startsWith("Channel")){
 					aNetwork[3] = temp[1].split(":")[1]; // CHANNEL from temp to aNetwork
 				} else if (temp[1].startsWith("Quality")){
@@ -210,7 +229,7 @@ public class MenuHandler {
 					aNetwork[6] = temp[2].split(":")[1]; // Sec settings not as verbose as mac (on/off)
 				} else if (temp[1].startsWith("ESSID")){
 					String tempESSID = temp[1].split(":")[1]; // saves ESSID but with quotes around
-					aNetwork[0] = tempESSID.substring(1, tempESSID.length()-2); // remove quotes from "ESSID"
+					aNetwork[0] = tempESSID.substring(1, tempESSID.length()-1); // remove quotes from "ESSID"
 				} 
 				
 			} catch (IOException e){
@@ -252,8 +271,9 @@ public class MenuHandler {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if (this.currentOS == SupportedOS.Windows){
-			
+		} else if (this.currentOS == SupportedOS.Linux){
+			tc.exec("bash rPi/rPi/monitor.sh");
+			tc.exec("sudo iw dev en0 set channel " + chan);
 		}
 	}
 	
