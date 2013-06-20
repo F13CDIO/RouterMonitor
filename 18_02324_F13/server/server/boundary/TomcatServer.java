@@ -15,7 +15,7 @@ public class TomcatServer
 	public static void start()
 	{
 		Tomcat tomcat = new Tomcat();
-		tomcat.setPort(8080);
+		tomcat.setPort(80);
 		tomcat.getHost().setDeployOnStartup(true);
         tomcat.getHost().setAutoDeploy(true);
         tomcat.getHost().setAppBase("WebContent");
