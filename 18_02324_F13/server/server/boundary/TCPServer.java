@@ -96,7 +96,7 @@ public class TCPServer
 			{
 				data = client.readData();
 			}
-			
+			client.resumeCommandRead();
 		} 
 		
 		catch (IOException e)

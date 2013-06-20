@@ -88,7 +88,7 @@ public class ConnectedTCPClient extends Thread
     }
     
     /**
-     * Reads data send via TCP, with a timeout of 20 times 50ms    
+     * Reads data send via TCP, with a timeout of 300 times 50ms    
      * @return The data recieved as one string
      * @throws IOException
      */
@@ -114,11 +114,22 @@ public class ConnectedTCPClient extends Thread
 			data += readLine() + "\n";
 		}
 		
-    	disconnectControl.setGUIinterrupt(false);
-		GUIInterrupt = false;
 		return data;
     }
     
+    /**
+     * Returns to the normal loop, with disconnectcheck, and reading commands from the client
+     */
+    public void resumeCommandRead()
+    {
+    	disconnectControl.setGUIinterrupt(false);
+		GUIInterrupt = false;
+    }
+    
+    /**
+     * Reads a line, and adds the missing bit, if it was removed
+     * @return Returns the corrected readLine read from the buffered reader
+     */
     private String readLine()
     {
     	try
@@ -172,7 +183,7 @@ public class ConnectedTCPClient extends Thread
 	            			System.out.println("rPi ignored: " + macAddress);
 	            		}
 	            		break;
-	            	case "ERROR":
+	            	case "error":
 	            	{
 	            		System.out.println("Invalid Command to Raspberry Pi");
 	            	}
