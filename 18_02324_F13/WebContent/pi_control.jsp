@@ -9,7 +9,12 @@
 	    request.getSession().removeAttribute("pi_response");
 	}
 %>    
-  
+
+<div id="pi_loading">
+	<img id="pi_loading_img" src="./images/loading.gif" />
+	<div id="pi_loading_text">Please wait. Processing data...</div>
+	<div class="clear"></div>
+</div>  
 <br />
 <span id="pi_title">Available Pi's:</span>
 Change channel:
@@ -47,14 +52,18 @@ Change channel:
 
 	<div class="clear"></div>
 
-	<input class="pi_control_submit" type="submit" name="action" value="Start" />
-	<input class="pi_control_submit" type="submit" name="action" value="Stop" />
-	<input class="pi_control_submit" type="submit" name="action" value="Iterate channels" />
-	<input class="pi_control_submit" type="submit" name="action" value="Scan networks" />
-	<input class="pi_control_submit pi_submit_last" type="submit" name="action" value="Set channel" />
+	<input class="pi_control_submit" type="submit" name="action" value="Start" onclick="showLoading()" />
+	<input class="pi_control_submit" type="submit" name="action" value="Stop" onclick="showLoading()" />
+	<input class="pi_control_submit" type="submit" name="action" value="Iterate channels" onclick="showLoading()" />
+	<input class="pi_control_submit" type="submit" name="action" value="Scan networks" onclick="showLoading()" />
+	<input class="pi_control_submit pi_submit_last" type="submit" name="action" value="Set channel" onclick="showLoading()" />
 </form>
 
 <script>
+	function showLoading() {
+		document.getElementById("pi_loading").style.display = "block";
+	}
+	
 	/* Function to get new data and insert it into the list */
 	function updatePiList() {
 		$.get("./includes/pi_list.jsp", function(data) {
@@ -63,7 +72,7 @@ Change channel:
 	}
 	
 	window.setInterval(updatePiList, 5000);
-	
+	window.onunload = function(){};
 </script>
 
 <%@include file="./includes/bottom.jsp" %>
