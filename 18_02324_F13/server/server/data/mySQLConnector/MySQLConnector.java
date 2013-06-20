@@ -38,17 +38,13 @@ public class MySQLConnector
 		return sqlStatement.executeUpdate(cmd);
 	}
 	
-	public void insertBatch(String[] queries) throws SQLException 
+	public void insertBatch(String queries) throws SQLException 
 	{
-		
-		for (String query : queries) 
-		{
-		    sqlStatement.addBatch(query);
-		}
-		
+		sqlStatement.addBatch("START TRANSACTION");
+		sqlStatement.addBatch(queries);
+		sqlStatement.addBatch("Commit");
 		sqlConnection.setAutoCommit(false);
 		sqlStatement.executeBatch();
-		sqlConnection.commit();
 		sqlConnection.setAutoCommit(true);
 	}
 	
