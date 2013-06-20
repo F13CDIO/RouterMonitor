@@ -328,34 +328,62 @@ public class DataPackageDAO implements IDataPackageDAO
 	}
 
 
+//	@Override
+//	public void addMultipleDataPackets(Queue<DataPackage> dataPackets)throws SQLException 
+//	{
+//		String[] queries = new String[dataPackets.size()];
+//		int count = 0;
+//		
+//		while (!dataPackets.isEmpty())
+//		{
+//			DataPackage dataPackage = dataPackets.poll();
+//			java.sql.Timestamp mySqlTimestamp = new java.sql.Timestamp(dataPackage.getTimeStamp().getTime());
+//
+//			String query = "INSERT INTO dataPackages VALUES(";
+//			query += "0, '";
+//			query += dataPackage.getScourceIP() + "', '";
+//			query += dataPackage.getDestinationIP() + "', '";
+//			query += dataPackage.getHost() + "', '";
+//			query += dataPackage.getSubHost() + "','";
+//			query += dataPackage.getUserAgent() + "', '";
+//			query += mySqlTimestamp + "');";
+//			
+//			queries[count] = query;
+//			count++;
+//		}
+//
+//		System.out.println("Queries: " + count);
+//		mySQLConnector.insertBatch(queries);
+//		
+//	}
+
 	@Override
 	public void addMultipleDataPackets(Queue<DataPackage> dataPackets)throws SQLException 
 	{
-		String[] queries = new String[dataPackets.size()];
 		int count = 0;
 		
+		String query = "INSERT INTO dataPackages VALUES ";
 		while (!dataPackets.isEmpty())
 		{
 			DataPackage dataPackage = dataPackets.poll();
 			java.sql.Timestamp mySqlTimestamp = new java.sql.Timestamp(dataPackage.getTimeStamp().getTime());
 
-			String query = "INSERT INTO dataPackages VALUES(";
+			query += "(";
 			query += "0, '";
 			query += dataPackage.getScourceIP() + "', '";
 			query += dataPackage.getDestinationIP() + "', '";
 			query += dataPackage.getHost() + "', '";
 			query += dataPackage.getSubHost() + "','";
 			query += dataPackage.getUserAgent() + "', '";
-			query += mySqlTimestamp + "');";
+			query += mySqlTimestamp + "'),";
 			
-			queries[count] = query;
 			count++;
 		}
+		query = query.substring(0, query.length()-1);
 
 		System.out.println("Queries: " + count);
-		mySQLConnector.insertBatch(queries);
+		mySQLConnector.insertBatch(query);
 		
 	}
-
 	
 }

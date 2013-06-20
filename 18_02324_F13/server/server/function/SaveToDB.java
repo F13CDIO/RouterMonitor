@@ -67,10 +67,10 @@ public class SaveToDB extends Thread
 				startTimeout = System.currentTimeMillis();
 				stopTimeout = System.currentTimeMillis();
 				
+				long timeOut = stopTimeout - startTimeout;
 				
-				while(((stopTimeout-startTimeout)<2000) && !data.isEmpty())
+				while((timeOut < 3000) && !data.isEmpty())
 				{
-					
 					dataPackage = data.getDataPackage();
 					dataPackets.add(dataPackage);
 					stopTimeout = System.currentTimeMillis();
