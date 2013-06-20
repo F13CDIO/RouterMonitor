@@ -78,13 +78,13 @@ public class ConnectedTCPClient extends Thread
     public void run() // Thread start method
     {
     	disconnectControl.start();
-			while(!clientDisconnected)
+		while(!clientDisconnected)
+		{
+			if (!GUIInterrupt)
 			{
-				if (!GUIInterrupt)
-				{
-					readCommand();
-				}
+				readCommand();
 			}
+		}
     }
     
     /**
