@@ -3,6 +3,7 @@ package server.data.mySqlDataAccessObjects;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 import java.util.Queue;
 
 import org.json.simple.JSONArray;
@@ -358,14 +359,16 @@ public class DataPackageDAO implements IDataPackageDAO
 //	}
 
 	@Override
-	public void addMultipleDataPackets(Queue<DataPackage> dataPackets)throws SQLException 
+	public void addMultipleDataPackets(List<DataPackage> dataPackets)throws SQLException 
 	{
 		int count = 0;
 		
 		String query = "INSERT INTO dataPackages VALUES ";
 		while (!dataPackets.isEmpty())
-		{
-			DataPackage dataPackage = dataPackets.poll();
+		{		
+			DataPackage dataPackage = dataPackets.get(dataPackets.size()-1);
+			dataPackets.remove(dataPackage);
+			
 			java.sql.Timestamp mySqlTimestamp = new java.sql.Timestamp(dataPackage.getTimeStamp().getTime());
 
 			query += "(";
