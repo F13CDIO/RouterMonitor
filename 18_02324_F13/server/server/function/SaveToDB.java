@@ -1,20 +1,39 @@
 package server.function;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 import server.data.DataPackage;
 import server.data.mySqlDataAccessObjects.DataPackageDAO;
 import server.data.IData;
 
-public class SaveToDB implements Runnable
+public class SaveToDB extends Thread
 {
 	private IData data;
 	private DataPackage dataPackage = null;
 	private DataPackageDAO dataPackageDAO;	
+	private long startTimeout;
+	private long stopTimeout;
+	//private List<DataPackage> dataPackets;
+	
+	private Queue<DataPackage> dataPackets = new LinkedList<DataPackage>();
+	
+	
+		
 	
 	public SaveToDB()
 	{
 		data = Function.getDatalayer();
 		dataPackageDAO = new DataPackageDAO();
+		startTimeout = System.currentTimeMillis();
+		//dataPackets = new ArrayList<DataPackage>();
+		
+		stopTimeout = System.currentTimeMillis();
+		startTimeout = System.currentTimeMillis();
+		
 	}
 	
 	@Override
@@ -22,13 +41,11 @@ public class SaveToDB implements Runnable
 	{		
 		while(true)
 		{
+			
+			
 			while(data.isEmpty())
 			{
-				try
-				{
-					Thread.sleep(5); 
-				}
-				
+				try{ Thread.sleep(1); }
 				catch (InterruptedException e) { System.out.println(e.getMessage()); }
 			}
 			
@@ -40,16 +57,37 @@ public class SaveToDB implements Runnable
 			
 			catch (SQLException e1) { System.out.println(e1.getMessage()); 	}
 			
+
+			startTimeout = System.currentTimeMillis();
+			stopTimeout = System.currentTimeMillis();
+			
+			
 			while(!data.isEmpty())
 			{
-				try
+				startTimeout = System.currentTimeMillis();
+				stopTimeout = System.currentTimeMillis();
+				
+				
+				while(((stopTimeout-startTimeout)<2000) && !data.isEmpty())
 				{
-					dataPackage= data.getDataPackage();
-					dataPackageDAO.addDataPackage(dataPackage);
+					
+					dataPackage = data.getDataPackage();
+					dataPackets.add(dataPackage);
+					stopTimeout = System.currentTimeMillis();
 				}
 				
-				catch(Exception e) { e.getMessage(); }
+
+				try
+				{	
+					dataPackageDAO.addMultipleDataPackets(dataPackets);
+				}
+				
+				catch(Exception e) { System.out.println(e.getMessage()); }
+				
+				dataPackets.clear();
 			}
+			
+			
 			
 			System.out.println("mySQL: Stop adding packets.");
 			dataPackageDAO.closeConnection();

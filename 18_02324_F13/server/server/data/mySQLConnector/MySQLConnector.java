@@ -34,13 +34,26 @@ public class MySQLConnector
 		return sqlStatement.executeUpdate(cmd);
 	}
 	
+	public void insertBatch(String[] queries) throws SQLException 
+	{
+		
+		for (String query : queries) 
+		{
+		    sqlStatement.addBatch(query);
+		}
+		
+		sqlConnection.setAutoCommit(false);
+		sqlStatement.executeBatch();
+		sqlConnection.commit();
+		sqlConnection.setAutoCommit(true);
+	}
+	
 	public void connect() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
 	{		
 		Class.forName("com.mysql.jdbc.Driver"); 
 
 			sqlConnection = DriverManager.getConnection(sqlURL + sqlDbName, sqlUser, sqlPassword);
 			sqlStatement = sqlConnection.createStatement();
-			System.out.println("mySQL: Connection opened");
 	}
 	
 	public void closeConnection()
@@ -52,7 +65,6 @@ public class MySQLConnector
 				if (!sqlConnection.isClosed())
 				{
 					sqlConnection.close();
-					System.out.println("mySQL: Connection closed");
 				}
 			}
 		} 

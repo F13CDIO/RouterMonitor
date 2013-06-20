@@ -92,8 +92,11 @@ public class TCPServer
 			{
 				client.setUDPactive(false);
 			}
-			
-			data = client.readData();
+			else if(command.equals("scanNetworks"))
+			{
+				data = client.readData();
+			}
+			client.resumeCommandRead();
 		} 
 		
 		catch (IOException e)

@@ -39,6 +39,7 @@ public class UDPServer extends Thread
 	public void stopThread()
 	{
 		keepRunning = false;
+		udpSocket.close();
 		udpSocket = null;
 	}
 	
@@ -49,7 +50,7 @@ public class UDPServer extends Thread
 	{
 		try { udpSocket = new DatagramSocket(udpPort); } 
 		catch (SocketException e1) { System.out.println(e1.getMessage()); }
-			
+		String data = "";
 		while (keepRunning)
 		{
 			try
@@ -57,10 +58,10 @@ public class UDPServer extends Thread
 				Thread.sleep(1);
 				incommingPacket = new DatagramPacket(new byte[1024], 1024);
 				udpSocket.receive(incommingPacket);
-				String data = new String(incommingPacket.getData());
+				data = new String(incommingPacket.getData());
+				//System.out.println(data);
 				function.parse(data);
 			}
-			
 			catch (IOException | InterruptedException e) { System.out.println("IOException: " + e); }
 		}
 	}

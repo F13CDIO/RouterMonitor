@@ -74,7 +74,7 @@ Select the charts you would like on your customized statistics page...
             <td>1</td>
             <td><input type="radio" name="row0" value="1" checked /></td>
             <td><input type="radio" name="row0" value="2" /></td>
-            <td><input type="radio" name="row0" value="0" disabled="disabled" /></td>
+            <td><input type="radio" name="row0" value="0" /></td>
         </tr>
         <tr>
             <td>2</td>

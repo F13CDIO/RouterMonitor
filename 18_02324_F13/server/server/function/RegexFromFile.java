@@ -1,9 +1,6 @@
 package server.function;
-
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.InputStream;
+import java.util.Scanner;
 
 /**
  * Reads the first line from a file 
@@ -23,15 +20,15 @@ public class RegexFromFile
 		String line = null;
 		try
 		{
-			FileInputStream stream = new FileInputStream("RegEx files/"+file);
-			DataInputStream in = new DataInputStream(stream);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			line = br.readLine(); //reads the first line
-			br.close();
+			String path = "/RegEx files/" + file;
+			InputStream inputStream = RegexFromFile.class.getResourceAsStream(path);
+			Scanner scanner = new Scanner(inputStream);
+			line = scanner.nextLine();
+			scanner.close();
 		}
 		catch(Exception e)
 		{
-			System.out.println("file " +file+ ".txt not found");
+			System.out.println("file " +file+ " not found");
 		}
 		return line;
 	}
