@@ -78,8 +78,6 @@
 <%
     }
 	else if ("show_wifi".equals(feedback)) {
-		/*
-		
 		splitTemp = wifiNetworks.split("\\r?\\n");
 		
 		wifiInfo = new String[splitTemp.length][8];
@@ -89,8 +87,6 @@
 			
 			//out.println("Navn: " + wifiInfo[i][1] + " Mac: " + wifiInfo[i][2] + "<br />");
 		}
-		
-		*/
 %>
 <%@include file="./includes/top.jsp" %>
 <br />
@@ -103,6 +99,7 @@ Network overview for pi "<% out.print(selectedPi); %>":
 		<div class="wifi_item3">Channel</div>
 		<div class="wifi_item4">Security (auth/unicast/group)</div>
 	</div>
+	
 <%
 	for(i=1; i<splitTemp.length; i++) {
 %>
