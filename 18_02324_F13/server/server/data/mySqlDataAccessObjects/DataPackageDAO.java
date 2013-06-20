@@ -3,7 +3,6 @@ package server.data.mySqlDataAccessObjects;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
 import java.util.Queue;
 
 import org.json.simple.JSONArray;
@@ -26,7 +25,7 @@ public class DataPackageDAO implements IDataPackageDAO
 	public JSONArray getTop10() throws SQLException 
 	{
 		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
-		return parseResultsetToJSONArray("hosts", mySqlOutput);
+		return parseResultsetToJSONArray("hosts", mySqlOutput, null);
 	}
 
 	@Override
@@ -34,16 +33,25 @@ public class DataPackageDAO implements IDataPackageDAO
 	{
 		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());		
 		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
-		return parseResultsetToJSONArray("hosts", mySqlOutput);
+		return parseResultsetToJSONArray("hosts", mySqlOutput, null);
 	}
 	
 	@Override
 	public JSONArray getTop10WithSubhosts(Date dateFrom) throws SQLException 
 	{
 		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());		
-		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT host, subhost, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
-		return parseResultsetToJSONArray("hostsWithSubhost", mySqlOutput);
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
+		return parseResultsetToJSONArray("hostsWithSubhost", mySqlOutput, dateFrom);
 	}
+	
+	@Override
+	public JSONArray getTop10Subhosts(Date dateFrom, String host) throws SQLException 
+	{
+		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());	
+		ResultSet mySqlOutput = mySQLConnector.execQuery2("SELECT host, subhost, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "' AND host = '"+host+"' GROUP BY subhost ORDER BY count DESC LIMIT 10");
+		return parseResultsetToJSONArray("subhosts", mySqlOutput, null);
+	}
+	
 
 	@Override
 	public JSONObject get10SecondTraffic(Date date, String host) throws SQLException 
@@ -119,7 +127,7 @@ public class DataPackageDAO implements IDataPackageDAO
 	}
 	
 	@SuppressWarnings("unchecked")
-	private JSONArray parseResultsetToJSONArray(String function, ResultSet mySqlOutput) 
+	private JSONArray parseResultsetToJSONArray(String function, ResultSet mySqlOutput, Date dateFrom) 
 	{
 		JSONArray jsonArray = new JSONArray();
 		
@@ -137,11 +145,18 @@ public class DataPackageDAO implements IDataPackageDAO
 						jsonArray.add(jo);
 						break;
 						
+					case "subhosts":
+						jo.put("rank", mySqlOutput.getRow());
+						jo.put("count", mySqlOutput.getInt("count"));
+						jo.put("subhost", mySqlOutput.getString("subhost"));
+						jsonArray.add(jo);
+						break;
+						
 					case "hostsWithSubhost":
 						jo.put("rank", mySqlOutput.getRow());
 						jo.put("count", mySqlOutput.getInt("count"));
 						jo.put("host", mySqlOutput.getString("host"));
-						jo.put("subHost", mySqlOutput.getString("subhost"));
+						jo.put("subHosts", getTop10Subhosts(dateFrom, mySqlOutput.getString("host")));
 						jsonArray.add(jo);
 						break;
 						
@@ -256,7 +271,7 @@ public class DataPackageDAO implements IDataPackageDAO
 	public JSONArray getAllUsers() throws SQLException 
 	{
 		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT * FROM userRoleTable ORDER BY userNameCol ASC");
-		return parseResultsetToJSONArray("users", mySqlOutput);
+		return parseResultsetToJSONArray("users", mySqlOutput, null);
 	}
 
 	@Override
@@ -341,4 +356,6 @@ public class DataPackageDAO implements IDataPackageDAO
 		mySQLConnector.insertBatch(queries);
 		
 	}
+
+	
 }

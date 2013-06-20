@@ -14,6 +14,7 @@ public interface IDataPackageDAO
 	JSONArray getTop10() throws SQLException ;
 	JSONArray getTop10(Date dateFrom) throws SQLException ;
 	JSONArray getTop10WithSubhosts(Date dateFrom) throws SQLException ;
+	JSONArray getTop10Subhosts(Date dateFrom, String host) throws SQLException ;
 	JSONObject get10SecondTraffic(Date date, String host) throws SQLException ;
 	JSONObject get10Minute(Date date, String host) throws SQLException ;
 	JSONObject get1HourTraffic(Date date, String host) throws SQLException ;

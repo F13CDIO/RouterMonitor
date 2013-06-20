@@ -16,21 +16,25 @@ public class MySQLConnector
 	
 	private Connection sqlConnection = null;
 	private Statement sqlStatement = null;
+	private Statement sqlStatement2 = null;
 	
-	public MySQLConnector() //throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
+	public MySQLConnector()
 	{
 		
 	}
 	
 	public ResultSet execQuery(String query) throws SQLException 
 	{		  
-		//System.out.println(query);
 		return sqlStatement.executeQuery(query);
+	}
+	
+	public ResultSet execQuery2(String query) throws SQLException // For getTop10Subhosts only
+	{		  
+		return sqlStatement2.executeQuery(query);
 	}
 	
 	public int update(String cmd) throws SQLException
 	{
-		//System.out.println(cmd);
 		return sqlStatement.executeUpdate(cmd);
 	}
 	
@@ -54,6 +58,7 @@ public class MySQLConnector
 
 			sqlConnection = DriverManager.getConnection(sqlURL + sqlDbName, sqlUser, sqlPassword);
 			sqlStatement = sqlConnection.createStatement();
+			sqlStatement2 = sqlConnection.createStatement();
 	}
 	
 	public void closeConnection()
