@@ -16,7 +16,6 @@ import java.io.OutputStream;
 public class TerminalExecutor {
 	private static int BUFFER_SIZE = 10; // Buffer size in bytes
 	Process thisProcess = null;
-	StreamParser streamParser = new StreamParser();
 	BufferedReader br = null;
 	OutputStream out = null;
 
