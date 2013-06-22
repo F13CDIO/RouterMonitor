@@ -17,11 +17,11 @@
 <html>
     <head>
         <title>Network Monitoring System - Saving data...</title>
-        <meta http-equiv="refresh" content="0; url=./login.jsp">
+        <meta http-equiv="refresh" content="0; url=../login.jsp">
     </head>
     
     <body>
     	<% out.println(output); %>
-        Continue to login-page <a href="./login.jsp">here.</a>
+        Continue to login-page <a href="../login.jsp">here.</a>
     </body>
 </html>

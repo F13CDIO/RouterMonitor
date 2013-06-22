@@ -1,4 +1,4 @@
-var LIVE_FEED_PATH = './chart/custom_live_get10SecondTraffic.jsp';
+var LIVE_FEED_PATH = './livefeeds/get_10_second_traffic_live.jsp';
 
 var bufferIndex = -1;
 var activeBuffer = 1;

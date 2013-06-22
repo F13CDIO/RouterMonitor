@@ -10,10 +10,10 @@ session.invalidate();
 <html>
     <head>
         <title>Network Monitoring System - Saving data...</title>
-        <meta http-equiv="refresh" content="0; url=./logout_check.jsp?user=<% out.print(user); %>">
+        <meta http-equiv="refresh" content="0; url=./logout_check_action.jsp?user=<% out.print(user); %>">
     </head>
     
     <body>
-        Continue to logout-check <a href="./logout_check.jsp?user=<% out.print(user); %>">here.</a>
+        Continue to logout-check <a href="./logout_check_action.jsp?user=<% out.print(user); %>">here.</a>
     </body>
 </html>

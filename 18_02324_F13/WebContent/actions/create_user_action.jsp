@@ -39,11 +39,11 @@
 <html>
     <head>
         <title>Network Monitoring System - Saving data...</title>
-        <meta http-equiv="refresh" content="0; url=./create_user.jsp">
+        <meta http-equiv="refresh" content="0; url=../create_user.jsp">
     </head>
     
     <body>
 		<% out.println(message); %>
-		<a href="./pi_control.jsp">Continue...</a>
+		<a href="../create_user.jsp">Continue...</a>
     </body>
 </html>

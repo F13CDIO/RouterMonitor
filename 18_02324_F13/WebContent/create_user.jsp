@@ -12,7 +12,7 @@
 
 <br />
 
-<form action="./create_user_action.jsp" method="post">
+<form action="./actions/create_user_action.jsp" method="post">
     <div class="form_description">Email:</div>
     <div id="mail_input" class="form_input"><input size="70" name="mail" type="email" onchange="onChange(this.value);" onkeyup="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" /></div>
     <div id="live_check">...</div>
@@ -61,7 +61,7 @@
 	}
 	
 	function checkAvailable(input) {
-		$.get("./live_check_user.jsp?username="+input, function(data) {
+		$.get("./livefeeds/check_user_live.jsp?username="+input, function(data) {
 			if(input == currentValue) {
 				if(data == "true") {
 					setInfo("Username is already taken.");

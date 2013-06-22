@@ -11,7 +11,7 @@ import server.data.mySqlDataAccessObjects.DataPackageDAO;
 
 public class CustomCharts {
     /* The Javascript files for jQuery, Highchart etc. can be placed in a subfolder */
-    private static String SCRIPT_PATH = "./chart/";
+    private static String SCRIPT_PATH = "./javascripts/";
     
     /* The DAO is used by almost all of the methods, so it is instantiated once, globally */
     private IDataPackageDAO DAO = new DataPackageDAO();
@@ -27,7 +27,7 @@ public class CustomCharts {
         begin = "<script type=\"text/javascript\" src=\"";
         end = "\"></script>\n  ";
         
-        return begin + SCRIPT_PATH + "jquery.min.js" + end + begin + SCRIPT_PATH + "highcharts.js" + end + begin + SCRIPT_PATH + "modules/exporting.js" + end;
+        return begin + SCRIPT_PATH + "jquery.min.js" + end + begin + SCRIPT_PATH + "highcharts.js" + end + begin + SCRIPT_PATH + "highcharts_exporting.js" + end;
     }
     
     public String generateJspLiveFeed(String timestamp) {
@@ -388,7 +388,6 @@ public class CustomCharts {
 
                 /* Get series data */
                 temp = getTraffic(secondsBack, dateNow.getTime(), series[i]);
-                System.out.println("Dataset: " + temp);
                 
                 /* Process series data */
                 for(iSub = 0; iSub < numberOfPoints; iSub++) {

@@ -27,11 +27,11 @@
 <html>
     <head>
         <title>Network Monitoring System - Saving data...</title>
-        <meta http-equiv="refresh" content="0; url=./user_management.jsp">
+        <meta http-equiv="refresh" content="0; url=../user_management.jsp">
     </head>
     
     <body>
         <% out.println(output); %>
-        See the result <a href="./user_management.jsp">here.</a>
+        See the result <a href="../user_management.jsp">here.</a>
     </body>
 </html>

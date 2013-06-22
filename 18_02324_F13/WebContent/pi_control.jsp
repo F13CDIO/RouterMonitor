@@ -18,11 +18,11 @@
 <br />
 <span id="pi_title">Available Pi's:</span>
 Change channel:
-<form action="./pi_action.jsp" method="post">
+<form action="./pi_control_result.jsp" method="post">
 	<div id="pi_list">
 
 <!-- Includes .jsp with list of Pi's -->
-<%@include file="./includes/pi_list.jsp" %>
+<%@include file="./livefeeds/pi_list_live.jsp" %>
 <!-- Included .jsp list end -->
 
 	</div>
@@ -76,7 +76,7 @@ Change channel:
 			}
 		}
 				
-		$.get("./includes/pi_list.jsp?selected="+selected, function(data) {
+		$.get("./livefeeds/pi_list_live.jsp?selected="+selected, function(data) {
 			document.getElementById("pi_list").innerHTML=data;
 		});
 	}
