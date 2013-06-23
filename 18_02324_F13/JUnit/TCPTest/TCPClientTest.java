@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,7 +37,7 @@ public class TCPClientTest {
 	public static ServerSocket serverSocket;
 	public static ConnectedTCPClient client;
 	public static Runnable r;
-	public static int serverNum;
+	public static int serverNum = 9000;
 
 	/*
 	 * Setup Thread that has TCPServer object.
@@ -45,8 +47,6 @@ public class TCPClientTest {
 	@BeforeClass
 	public static void init()
 	{
-		serverNum = 9000;
-		
 		// anonymous inner class in separate thread for setting up TCPServer
 		r = new Runnable()
 		{
@@ -54,22 +54,22 @@ public class TCPClientTest {
 			public void run() 
 			{
 				try {
-					TCPServer.startServer(serverNum);
-
-					serverNum++;
+					TCPServer.startServer(9000);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}		
 		};
 		new Thread(r).start();
-		
+
 		//Setting up client part of test. 
 		try {
-			Thread.sleep(300);	//Sleep is used to ensure server in separate thread is up and running before we try to write to it. 
+			//Sleep is used to ensure server in separate thread is ready
+			Thread.sleep(300);	 
 			clientSocket = new Socket("127.0.0.1", 9000);
 			outToServer = new DataOutputStream(clientSocket.getOutputStream());
-			outToServer.writeBytes("Mac\n" + macAddress + "\n");	//This line should make the server save a client in it's list of connectedTCPClient objects.
+			//Server saves a client in it's list of connectedTCPClient objects.
+			outToServer.writeBytes("Mac\n" + macAddress + "\n");	
 			outToServer.flush();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -77,7 +77,8 @@ public class TCPClientTest {
 	}
 
 	/*
-	 * Tests if TCPServer has saved a client with the correct mac address in it's hashmap of clients 
+	 * Tests if TCPServer has saved a client with the correct 
+	 * mac address in it's hashmap of clients 
 	 */
 	@Test
 	public void testSavedClient()
@@ -90,9 +91,9 @@ public class TCPClientTest {
 		assertTrue(TCPServer.hasClient(macAddress));
 	}
 
-/*
- * Tests that TCPServer has a client in it's Client array with the mac address macAddress 
- */
+	/*
+	 * Tests that TCPServer has a client in it's Client array with the mac address macAddress 
+	 */
 	@Test
 	public void testCorrectMac() 
 	{
@@ -119,9 +120,6 @@ public class TCPClientTest {
 		{
 			outToServer.writeBytes("Invalid command\n" + newMacAddress + "\n");
 			outToServer.flush();
-
-			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
 			assertFalse(TCPServer.getClients()[0].equals(newMacAddress));
 		} 
 		catch (IOException e) 
@@ -139,12 +137,8 @@ public class TCPClientTest {
 	{
 		try {
 			clientSocket.close();
-			//			TCPServer.
 		} catch (IOException e) {
-
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
 }
