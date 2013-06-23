@@ -14,7 +14,7 @@
 
 <form action="./actions/create_user_action.jsp" method="post">
     <div class="form_description">Email:</div>
-    <div id="mail_input" class="form_input"><input size="70" name="mail" type="email" onchange="onChange(this.value);" onkeyup="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" /></div>
+    <div id="mail_input" class="form_input"><input size="70" name="mail" type="email" onchange="onChange(this.value);" onkeyup="this.onchange();" oninput="this.onchange();" /></div>
     <div id="live_check">...</div>
     <div class="form_description">Password:</div>
     <div class="form_input"><input size="70" name="password" type="password" /></div>  

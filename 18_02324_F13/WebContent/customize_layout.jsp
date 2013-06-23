@@ -41,7 +41,7 @@
         for (i = 0; i < 5; i++) {
             if ("1".equals(layout[i])) {
                 out.println("<div class=\"layout_big\">");
-                out.println("<input name=\"row" + i + "\" value=\"" + layout[i] + "\" hidden=\"true\" />");
+                out.println("<input name=\"row" + i + "\" value=\"" + layout[i] + "\" type=\"hidden\" />");
                 out.println("Select the chart to display here:<br />");
                 out.println("<select name=\"chart" + chartNum + "\">");
 

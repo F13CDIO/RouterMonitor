@@ -11,7 +11,7 @@
 %>    
 
 <div id="pi_loading">
-	<img id="pi_loading_img" src="./images/loading.gif" />
+	<img id="pi_loading_img" src="./images/loading.gif" alt="Loading animation..." />
 	<div id="pi_loading_text">Please wait. Processing data...</div>
 	<div class="clear"></div>
 </div>  

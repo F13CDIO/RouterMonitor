@@ -55,7 +55,6 @@
 			<url-pattern>/actions/change_password_action.jsp</url-pattern>
 			<url-pattern>/actions/customize_action.jsp</url-pattern>
 			<url-pattern>/actions/logout_action.jsp</url-pattern>
-			<url-pattern>/livefeeds/check_user_live.jsp</url-pattern>
 			<url-pattern>/livefeeds/get_10_second_traffic_live.jsp</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>

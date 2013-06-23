@@ -59,12 +59,12 @@ Select the charts you would like on your customized statistics page...
             <td class="customize_option">
                 One big
                 <br />
-                <img src="./images/chart_single.png" />
+                <img src="./images/chart_single.png" alt="Example of 1 chart per row" />
             </td>
             <td class="customize_option">
                 Two small
                 <br />
-                <img class="example" src="./images/chart_double.png" />
+                <img class="example" src="./images/chart_double.png" alt="Example of two charts per row" />
             </td>
             <td class="customize_option">
                 None
