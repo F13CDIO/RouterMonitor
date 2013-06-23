@@ -1,4 +1,4 @@
-package TCPTest;
+package testPackage;
 
 import static org.junit.Assert.*;
 
