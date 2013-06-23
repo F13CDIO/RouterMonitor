@@ -11,7 +11,7 @@ import server.function.Function;
 import server.function.IFunction;
 
 public class IFunctionTest {
-
+ 
 	public String srcIP = "10.16.98.67";
 	public String destIP = "69.171.235.16";
 	public String url = "0-pct.channel.facebook.com", host = "facebook.com", subHost = "channel";
