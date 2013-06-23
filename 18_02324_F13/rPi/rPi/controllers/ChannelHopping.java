@@ -1,6 +1,7 @@
 package rPi.controllers;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.channels.Channels;
 import java.util.ArrayList;
 
 import rPi.controllers.MainController.SupportedOS;
@@ -15,7 +16,8 @@ import rPi.controllers.MainController.SupportedOS;
 public class ChannelHopping extends Thread {
 	private String SSID;
 	private SupportedOS currentOS;
-	TerminalExecutor tc;
+	private boolean flag;
+	private TerminalExecutor tc;
 	//git test
 	
 	public ChannelHopping(String ssid, SupportedOS currentOS) {
@@ -36,11 +38,18 @@ public class ChannelHopping extends Thread {
 	}
 	
 	private void iteratingLinux(String ssid){
-		ArrayList<Integer> channels = getRelevantChannelsLinux(ssid);
-		tc.exec("bash monitor.sh");
+		ArrayList<Integer> channels = null;
+		try {
+			channels = getRelevantChannelsLinux(ssid);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		tc.exec("bash rPi/rPi/monitor.sh");
+		System.out.println("array lenth : "+ channels.size());
 		int i = 0;
-		while(true){
-			tc.exec("iw dev mon0 set channel "+channels.get(i));
+		while(flag){
+			tc.exec("sudo iw dev en0 set channel "+channels.get(i));
 			System.out.println("current channel: "+channels.get(i));
 			try {
 				Thread.sleep(5000);
@@ -57,9 +66,9 @@ public class ChannelHopping extends Thread {
 	private void iteratingMac(String ssid){
 		ArrayList<Integer> channels = getRelevantChannelsMac(ssid);
 		int i = 0;
-		while(true){
-			tc.exec("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -z");
-			tc.exec("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --channel="+channels.get(i));
+		while(flag){
+			tc.exec("sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -z");
+			tc.exec("sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --channel="+channels.get(i));
 			try{
 				Thread.sleep(5000);
 			}catch(InterruptedException e){
@@ -74,9 +83,16 @@ public class ChannelHopping extends Thread {
 	 * This method scans the wireless networks and returns the channels we want to monitor
 	 * @param ssid(Name of AP)
 	 * @return list of channels it supports
+	 * @throws InterruptedException 
 	 */
-	private ArrayList<Integer> getRelevantChannelsLinux(String ssid){
+	private ArrayList<Integer> getRelevantChannelsLinux(String ssid) throws InterruptedException{
 		//the iwlist command scans all the AP's detectable and prints their info
+		
+		tc.exec("bash rPi/rPi/restoreNIC.sh");
+		Thread.sleep(300);
+		tc.exec("sudo iw dev wlan0 scan");
+		Thread.sleep(4000);				//Fucked up hack -----> SKAL FIXES HVIS DER ER TID	
+		
 		BufferedReader br = tc.exec("iwlist wlan0 scan");
 		ArrayList<String> lineList = new ArrayList<String>();
 		ArrayList<Integer> channels = new ArrayList<Integer>();
@@ -86,9 +102,8 @@ public class ChannelHopping extends Thread {
 			//Saves all the lines in a list
 			while((line = br.readLine())!= null){
 				lineList.add(line);
-				System.out.println(line);
 				//If the AP we are searching for it will extract its channel
-				if(line.contains("\""+ssid+"\"")){
+				if(line.contains(ssid)){
 					//4 lines before contains the channel
 					String channelLine = lineList.get(listIndex-4);
 					//Strips all the whitespace -> format: "channel:x"
@@ -128,6 +143,13 @@ public class ChannelHopping extends Thread {
 			}
 		}
 		return channels;
+	}
+	
+	public void setFlag(boolean flag){
+		this.flag = flag;
+	}
+	public boolean getFlag(){
+		return flag;
 	}
 
 }

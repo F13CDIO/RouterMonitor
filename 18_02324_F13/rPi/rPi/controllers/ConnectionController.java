@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 import rPi.connectors.Connector;
 
+import rPi.connectors.IConnector;
+
+
 /**
  * This class has the responsibility for networking and "calling home"
  * 
@@ -24,10 +27,9 @@ public class ConnectionController {
 	
 	//=================================================//
 	
-	Connector con = new Connector();
+	IConnector con = new Connector();
 	BufferedReader inputFromServer;
 	String fromServer;
-	StreamParser parser = new StreamParser();
 	
 	public ConnectionController(){
 	}
@@ -45,10 +47,10 @@ public class ConnectionController {
 			System.out.println("Could not resolve server ip to InetAddress");
 			e1.printStackTrace();
 		}
-		
+		con.initTCPClient();
 		// The loop that tries to connect to server once in a while
 		while (inputFromServer == null){
-			inputFromServer = con.initTCPClient(SERVER_IP, DEFAULT_PORT); 
+			 inputFromServer = con.createConnection(SERVER_IP, DEFAULT_PORT);
 			if (inputFromServer == null){
 				try {
 					Thread.sleep(RECONNECT_INTERVAL_SECONDS);
@@ -100,6 +102,7 @@ public class ConnectionController {
 			System.out.println("array length "+ array.length);
 			String networkInfo = "";
 			for (String str : array){
+				System.out.println(str);
 				networkInfo += str + "|";
 			}
 			System.out.println(networkInfo);

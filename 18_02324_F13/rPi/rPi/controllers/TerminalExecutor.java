@@ -16,7 +16,6 @@ import java.io.OutputStream;
 public class TerminalExecutor {
 	private static int BUFFER_SIZE = 10; // Buffer size in bytes
 	Process thisProcess = null;
-	StreamParser streamParser = new StreamParser();
 	BufferedReader br = null;
 	OutputStream out = null;
 
@@ -30,7 +29,6 @@ public class TerminalExecutor {
 	 */
 	public BufferedReader exec(String pathToScriptOrTheCommand)
 	{
-		System.out.println("terminal executor bla bla bla");
 		assert(pathToScriptOrTheCommand.length() > 0);
 		
 		try {
@@ -40,17 +38,15 @@ public class TerminalExecutor {
 			System.out.println("could not execute script or command: " + pathToScriptOrTheCommand);
 			e.printStackTrace();
 		}
-		finally 
+		try 
 		{
-			try 
-			{
-				br = new BufferedReader(new InputStreamReader(thisProcess.getInputStream()), BUFFER_SIZE);
-			} catch (Exception e)
-			{
-				System.out.println("Could not read from stdout");
-			}
-			return br;
+			br = new BufferedReader(new InputStreamReader(thisProcess.getInputStream()), BUFFER_SIZE);
+		} catch (Exception e)
+		{
+			System.out.println("Could not read from stdout");
 		}
+		return br;
+		
 	}
 	
 	/*

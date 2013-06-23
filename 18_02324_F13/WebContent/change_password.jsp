@@ -10,7 +10,7 @@
 %>
 <br />
 
-<form action="./change_password_action.jsp" method="post">
+<form action="./actions/change_password_action.jsp" method="post">
     <div class="form_description_long">Old password:</div>
     <div class="form_input"><input size="70" name="old_password" type="password" /></div>
     <div class="form_description_long">New password:</div>

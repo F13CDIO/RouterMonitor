@@ -41,10 +41,10 @@
 <html>
     <head>
         <title>Network Monitoring System - Saving data...</title>
-        <meta http-equiv="refresh" content="0; url=./change_password.jsp">
+        <meta http-equiv="refresh" content="0; url=../change_password.jsp">
     </head>
     
     <body>
-		<a href="./change_password.jsp">Continue...</a>
+		<a href="../change_password.jsp">Continue...</a>
     </body>
 </html>

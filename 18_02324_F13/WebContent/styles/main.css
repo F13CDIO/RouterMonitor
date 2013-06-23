@@ -97,6 +97,22 @@ body {
 	margin-left: 30px;
 	color: red;
 }
+#live_check {
+	margin-left: 20px;
+	float: left;
+	color: #777777;
+}
+#pi_loading {
+	margin-top: 10px;
+	display: none;
+}
+#pi_loading_img {
+	float: left;
+}
+#pi_loading_text {
+	float: left;
+	margin: 8px 0 0 5px;
+}
 a {
     color: black;
 }

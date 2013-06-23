@@ -17,9 +17,9 @@ public class SaveToDB extends Thread
 	private DataPackageDAO dataPackageDAO;	
 	private long startTimeout;
 	private long stopTimeout;
-	//private List<DataPackage> dataPackets;
+	private List<DataPackage> dataPackets;
 	
-	private Queue<DataPackage> dataPackets = new LinkedList<DataPackage>();
+	//private Queue<DataPackage> dataPackets = new LinkedList<DataPackage>();
 	
 	
 		
@@ -27,13 +27,7 @@ public class SaveToDB extends Thread
 	public SaveToDB()
 	{
 		data = Function.getDatalayer();
-		dataPackageDAO = new DataPackageDAO();
-		startTimeout = System.currentTimeMillis();
-		//dataPackets = new ArrayList<DataPackage>();
-		
-		stopTimeout = System.currentTimeMillis();
-		startTimeout = System.currentTimeMillis();
-		
+		dataPackageDAO = new DataPackageDAO();		
 	}
 	
 	@Override
@@ -41,7 +35,7 @@ public class SaveToDB extends Thread
 	{		
 		while(true)
 		{
-			
+			dataPackets = new ArrayList<DataPackage>();
 			
 			while(data.isEmpty())
 			{
@@ -67,13 +61,14 @@ public class SaveToDB extends Thread
 				startTimeout = System.currentTimeMillis();
 				stopTimeout = System.currentTimeMillis();
 				
+				long timeOut = stopTimeout - startTimeout;
 				
-				while(((stopTimeout-startTimeout)<2000) && !data.isEmpty())
+				while((timeOut < 3000) && !data.isEmpty())
 				{
-					
 					dataPackage = data.getDataPackage();
 					dataPackets.add(dataPackage);
 					stopTimeout = System.currentTimeMillis();
+					dataPackage = null;
 				}
 				
 
@@ -82,13 +77,10 @@ public class SaveToDB extends Thread
 					dataPackageDAO.addMultipleDataPackets(dataPackets);
 				}
 				
-				catch(Exception e) { System.out.println(e.getMessage()); }
-				
-				dataPackets.clear();
+				catch(Exception e) { System.out.println(e.getMessage()); }	
 			}
-			
-			
-			
+
+			dataPackets = null;
 			System.out.println("mySQL: Stop adding packets.");
 			dataPackageDAO.closeConnection();
 		}

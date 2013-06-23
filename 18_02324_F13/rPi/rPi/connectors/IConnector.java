@@ -11,9 +11,10 @@ import java.net.InetAddress;
  */
 
 public interface IConnector {
-	BufferedReader initTCPClient(InetAddress serverAddress, short serverPort);
+	void initTCPClient();
 	void sendTCP(String message);
 	void initUDP(int portToSendFrom, int destinationPort, InetAddress destinationIP);
+	BufferedReader createConnection(InetAddress serverAddress, short serverPort);
 	void sendUDP(BufferedReader bf);
 	void stopUDP();
 }

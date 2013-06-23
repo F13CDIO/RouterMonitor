@@ -26,7 +26,7 @@ public class DataPackageDAO implements IDataPackageDAO
 	public JSONArray getTop10() throws SQLException 
 	{
 		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages GROUP BY host ORDER BY count DESC LIMIT 10");
-		return parseResultsetToJSONArray("hosts", mySqlOutput);
+		return parseResultsetToJSONArray("hosts", mySqlOutput, null);
 	}
 
 	@Override
@@ -34,16 +34,25 @@ public class DataPackageDAO implements IDataPackageDAO
 	{
 		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());		
 		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
-		return parseResultsetToJSONArray("hosts", mySqlOutput);
+		return parseResultsetToJSONArray("hosts", mySqlOutput, null);
 	}
 	
 	@Override
 	public JSONArray getTop10WithSubhosts(Date dateFrom) throws SQLException 
 	{
 		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());		
-		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT host, subhost, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
-		return parseResultsetToJSONArray("hostsWithSubhost", mySqlOutput);
+		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT host, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "'GROUP BY host ORDER BY count DESC LIMIT 10");
+		return parseResultsetToJSONArray("hostsWithSubhost", mySqlOutput, dateFrom);
 	}
+	
+	@Override
+	public JSONArray getTop10Subhosts(Date dateFrom, String host) throws SQLException 
+	{
+		java.sql.Timestamp mySqlFrom = new java.sql.Timestamp(dateFrom.getTime());	
+		ResultSet mySqlOutput = mySQLConnector.execQuery2("SELECT host, subhost, COUNT(*) as count FROM dataPackages WHERE timestamp > '" + mySqlFrom + "' AND host = '"+host+"' GROUP BY subhost ORDER BY count DESC LIMIT 10");
+		return parseResultsetToJSONArray("subhosts", mySqlOutput, null);
+	}
+	
 
 	@Override
 	public JSONObject get10SecondTraffic(Date date, String host) throws SQLException 
@@ -119,7 +128,7 @@ public class DataPackageDAO implements IDataPackageDAO
 	}
 	
 	@SuppressWarnings("unchecked")
-	private JSONArray parseResultsetToJSONArray(String function, ResultSet mySqlOutput) 
+	private JSONArray parseResultsetToJSONArray(String function, ResultSet mySqlOutput, Date dateFrom) 
 	{
 		JSONArray jsonArray = new JSONArray();
 		
@@ -137,11 +146,18 @@ public class DataPackageDAO implements IDataPackageDAO
 						jsonArray.add(jo);
 						break;
 						
+					case "subhosts":
+						jo.put("rank", mySqlOutput.getRow());
+						jo.put("count", mySqlOutput.getInt("count"));
+						jo.put("subhost", mySqlOutput.getString("subhost"));
+						jsonArray.add(jo);
+						break;
+						
 					case "hostsWithSubhost":
 						jo.put("rank", mySqlOutput.getRow());
 						jo.put("count", mySqlOutput.getInt("count"));
 						jo.put("host", mySqlOutput.getString("host"));
-						jo.put("subHost", mySqlOutput.getString("subhost"));
+						jo.put("subHosts", getTop10Subhosts(dateFrom, mySqlOutput.getString("host")));
 						jsonArray.add(jo);
 						break;
 						
@@ -256,7 +272,7 @@ public class DataPackageDAO implements IDataPackageDAO
 	public JSONArray getAllUsers() throws SQLException 
 	{
 		ResultSet mySqlOutput = mySQLConnector.execQuery("SELECT * FROM userRoleTable ORDER BY userNameCol ASC");
-		return parseResultsetToJSONArray("users", mySqlOutput);
+		return parseResultsetToJSONArray("users", mySqlOutput, null);
 	}
 
 	@Override
@@ -313,32 +329,64 @@ public class DataPackageDAO implements IDataPackageDAO
 	}
 
 
+//	@Override
+//	public void addMultipleDataPackets(Queue<DataPackage> dataPackets)throws SQLException 
+//	{
+//		String[] queries = new String[dataPackets.size()];
+//		int count = 0;
+//		
+//		while (!dataPackets.isEmpty())
+//		{
+//			DataPackage dataPackage = dataPackets.poll();
+//			java.sql.Timestamp mySqlTimestamp = new java.sql.Timestamp(dataPackage.getTimeStamp().getTime());
+//
+//			String query = "INSERT INTO dataPackages VALUES(";
+//			query += "0, '";
+//			query += dataPackage.getScourceIP() + "', '";
+//			query += dataPackage.getDestinationIP() + "', '";
+//			query += dataPackage.getHost() + "', '";
+//			query += dataPackage.getSubHost() + "','";
+//			query += dataPackage.getUserAgent() + "', '";
+//			query += mySqlTimestamp + "');";
+//			
+//			queries[count] = query;
+//			count++;
+//		}
+//
+//		System.out.println("Queries: " + count);
+//		mySQLConnector.insertBatch(queries);
+//		
+//	}
+
 	@Override
-	public void addMultipleDataPackets(Queue<DataPackage> dataPackets)throws SQLException 
+	public void addMultipleDataPackets(List<DataPackage> dataPackets)throws SQLException 
 	{
-		String[] queries = new String[dataPackets.size()];
 		int count = 0;
 		
+		String query = "INSERT INTO dataPackages VALUES ";
 		while (!dataPackets.isEmpty())
-		{
-			DataPackage dataPackage = dataPackets.poll();
+		{		
+			DataPackage dataPackage = dataPackets.get(dataPackets.size()-1);
+			dataPackets.remove(dataPackage);
+			
 			java.sql.Timestamp mySqlTimestamp = new java.sql.Timestamp(dataPackage.getTimeStamp().getTime());
 
-			String query = "INSERT INTO dataPackages VALUES(";
+			query += "(";
 			query += "0, '";
 			query += dataPackage.getScourceIP() + "', '";
 			query += dataPackage.getDestinationIP() + "', '";
 			query += dataPackage.getHost() + "', '";
 			query += dataPackage.getSubHost() + "','";
 			query += dataPackage.getUserAgent() + "', '";
-			query += mySqlTimestamp + "');";
+			query += mySqlTimestamp + "'),";
 			
-			queries[count] = query;
 			count++;
 		}
+		query = query.substring(0, query.length()-1);
 
 		System.out.println("Queries: " + count);
-		mySQLConnector.insertBatch(queries);
+		mySQLConnector.insertBatch(query);
 		
 	}
+	
 }

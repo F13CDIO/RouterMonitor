@@ -9,15 +9,20 @@
 	    request.getSession().removeAttribute("pi_response");
 	}
 %>    
-  
+
+<div id="pi_loading">
+	<img id="pi_loading_img" src="./images/loading.gif" />
+	<div id="pi_loading_text">Please wait. Processing data...</div>
+	<div class="clear"></div>
+</div>  
 <br />
 <span id="pi_title">Available Pi's:</span>
 Change channel:
-<form action="./pi_action.jsp" method="post">
+<form action="./pi_control_result.jsp" method="post">
 	<div id="pi_list">
 
 <!-- Includes .jsp with list of Pi's -->
-<%@include file="./includes/pi_list.jsp" %>
+<%@include file="./livefeeds/pi_list_live.jsp" %>
 <!-- Included .jsp list end -->
 
 	</div>
@@ -47,23 +52,37 @@ Change channel:
 
 	<div class="clear"></div>
 
-	<input class="pi_control_submit" type="submit" name="action" value="Start" />
-	<input class="pi_control_submit" type="submit" name="action" value="Stop" />
-	<input class="pi_control_submit" type="submit" name="action" value="Iterate channels" />
-	<input class="pi_control_submit" type="submit" name="action" value="Scan networks" />
-	<input class="pi_control_submit pi_submit_last" type="submit" name="action" value="Set channel" />
+	<input class="pi_control_submit" type="submit" name="action" value="Start" onclick="showLoading()" />
+	<input class="pi_control_submit" type="submit" name="action" value="Stop" onclick="showLoading()" />
+	<input class="pi_control_submit" type="submit" name="action" value="Iterate channels" onclick="showLoading()" />
+	<input class="pi_control_submit" type="submit" name="action" value="Scan networks" onclick="showLoading()" />
+	<input class="pi_control_submit pi_submit_last" type="submit" name="action" value="Set channel" onclick="showLoading()" />
 </form>
 
 <script>
+	function showLoading() {
+		document.getElementById("pi_loading").style.display = "block";
+	}
+	
 	/* Function to get new data and insert it into the list */
 	function updatePiList() {
-		$.get("./includes/pi_list.jsp", function(data) {
+		var i;
+		var elements = document.getElementsByName("selectedPi");
+		var selected = "none";
+		
+		for (i=0; i<elements.length; i++) {
+			if (elements[i].checked) {
+				selected = elements[i].value;
+			}
+		}
+				
+		$.get("./livefeeds/pi_list_live.jsp?selected="+selected, function(data) {
 			document.getElementById("pi_list").innerHTML=data;
 		});
 	}
 	
 	window.setInterval(updatePiList, 5000);
-	
+	window.onunload = function(){};
 </script>
 
 <%@include file="./includes/bottom.jsp" %>
