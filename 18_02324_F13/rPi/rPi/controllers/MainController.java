@@ -84,16 +84,16 @@ public class MainController {
 				//throw new InputMismatchException("command recieved : " + commandStringFromServer);
 			}
 		}
-		
-		try {
+		if(thisCommand != SupportedCommands.nop){
+			try {
 			// call the menu handler
 			mh.switchMenu(thisCommand);
 			
-		} catch (Exception e) {
+			} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			}
 		}
-		
 		
 	} // end handleCommand()
 	
