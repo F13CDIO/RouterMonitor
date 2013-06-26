@@ -1,4 +1,4 @@
-(?i)(Firefox)|(Chrome)|(Safari)|(MSIE)|(Opera)|(Netscape)|(Chromium)
+(?i)(Firefox)|(Chrome)|(Safari)|(MSIE)|(Opera)|(Netscape)|(Chromium)|(Curl)
 
 Whitelist over acceptet useragents, if updatet the server has to be restartet
 

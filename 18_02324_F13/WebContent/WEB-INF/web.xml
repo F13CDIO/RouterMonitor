@@ -7,6 +7,7 @@
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
   
+
 	<security-constraint>
 		<display-name>Admin</display-name>
 
@@ -31,11 +32,7 @@
 		<auth-constraint>
 			<role-name>admin</role-name>
 		</auth-constraint>
-	<!--
-    <user-data-constraint>
-        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-    </user-data-constraint>
-	-->
+
 	</security-constraint>
 	
 	<security-constraint>
@@ -71,6 +68,14 @@
 
 	</security-constraint>
 	
+	<security-constraint>
+
+		<user-data-constraint>
+        	<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    	</user-data-constraint>
+
+    </security-constraint>
+
 	<login-config>
 		<auth-method>FORM</auth-method>
 		<form-login-config>

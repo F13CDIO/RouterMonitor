@@ -42,9 +42,16 @@ Select the charts you would like on your customized statistics page...
         </div>
     </div>
     
+    <div class="selection_box_container">
+    	Live charts:
+    	<div class="selection_box">
+    		<input type="checkbox" name="chart12" />Live traffic
+    	</div>
+    </div>
+    
     <div class="clear"></div>
     
-    <br /><br /><br /><br />
+    <br /><br /><br />
     Select the division of the space on your customized statistics page...
     <br /><br />
     You can select up to 10 small charts, up to 5 big charts, or any combination of the two.

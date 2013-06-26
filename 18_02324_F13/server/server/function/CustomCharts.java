@@ -57,7 +57,7 @@ public class CustomCharts {
     }
     
     public String insertChartFromName(String input) {
-        String[] availibleCharts = {
+        String[] availableCharts = {
             "Top 10 Bar-chart for the last 10 minutes",
             "Top 10 Bar-chart for the last hour",
             "Top 10 Bar-chart for the last day",
@@ -69,44 +69,48 @@ public class CustomCharts {
             "Top 10 Pie-chart for the last 10 minutes",
             "Top 10 Pie-chart for the last hour",
             "Top 10 Pie-chart for the last day",
-            "Top 10 Pie-chart for the last month"
+            "Top 10 Pie-chart for the last month",
+            "Live traffic"
         };
         
-        if(input.equals(availibleCharts[0])) {
+        if(input.equals(availableCharts[0])) {
             return top10Bar10Minute();
         }
-        else if(input.equals(availibleCharts[1])) {
+        else if(input.equals(availableCharts[1])) {
             return top10Bar1Hour();
         }
-        else if(input.equals(availibleCharts[2])) {
+        else if(input.equals(availableCharts[2])) {
             return top10Bar1Day();
         }
-        else if(input.equals(availibleCharts[3])) {
+        else if(input.equals(availableCharts[3])) {
             return top10Bar1Month();
         }
-        else if(input.equals(availibleCharts[4])) {
+        else if(input.equals(availableCharts[4])) {
             return top5Line10Minute();
         }
-        else if(input.equals(availibleCharts[5])) {
+        else if(input.equals(availableCharts[5])) {
             return top5Line1Hour();
         }
-        else if(input.equals(availibleCharts[6])) {
+        else if(input.equals(availableCharts[6])) {
             return top5Line1Day();
         }
-        else if(input.equals(availibleCharts[7])) {
+        else if(input.equals(availableCharts[7])) {
             return top5Line1Month();
         }
-        else if(input.equals(availibleCharts[8])) {
+        else if(input.equals(availableCharts[8])) {
             return top10Pie10Minute();
         }
-        else if(input.equals(availibleCharts[9])) {
+        else if(input.equals(availableCharts[9])) {
             return top10Pie1Hour();
         }
-        else if(input.equals(availibleCharts[10])) {
+        else if(input.equals(availableCharts[10])) {
             return top10Pie1Day();
         }
-        else if(input.equals(availibleCharts[11])) {
+        else if(input.equals(availableCharts[11])) {
             return top10Pie1Month();
+        }
+        else if(input.equals(availableCharts[12])) {
+        	return liveTraffic();
         }
         
         return "Internal error..";
