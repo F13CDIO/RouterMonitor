@@ -13,8 +13,13 @@ import java.util.Scanner;
  */
 
 public class RpiMain {
+	private MainController mc;
+	
 	public static void main(String[] args) throws Exception {
-
+		new RpiMain().run(args);
+	}
+	
+	private void run(String[] args) throws Exception{
 		String server_ip;
 		// Take server ip in as argument when program is run in terminal
 		if (args.length > 1){
@@ -27,6 +32,7 @@ public class RpiMain {
 		System.out.println("ip entered : " + server_ip);
 		
 		MainController mc = new MainController(server_ip);
+		connectToInet();
 		mc.connectToServer();
 		while (true){
 			try {			
@@ -38,5 +44,9 @@ public class RpiMain {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	private void connectToInet(){
+		
 	}
 }

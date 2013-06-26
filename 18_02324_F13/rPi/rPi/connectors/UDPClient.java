@@ -29,6 +29,7 @@ class UDPClient extends Thread
 	}
 	
 	public void stopUDP(){
+		serverSocket.close();
 		this.RUNNING = false;
 	}
 	

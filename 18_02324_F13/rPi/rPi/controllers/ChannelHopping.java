@@ -1,7 +1,6 @@
 package rPi.controllers;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.channels.Channels;
 import java.util.ArrayList;
 
 import rPi.controllers.MainController.SupportedOS;

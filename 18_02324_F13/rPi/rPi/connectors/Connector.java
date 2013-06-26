@@ -43,11 +43,11 @@ public class Connector implements IConnector {
 	{
 		udp = new UDPClient();
 		
-
+		
 		try {
 			udp.initUDP(portToSendFrom, destinationPort, destinationIP);
 		} catch (Exception e){
-			// TO be handled
+			System.out.println(e);
 		}
 	}
 	public void sendUDP(BufferedReader bf)

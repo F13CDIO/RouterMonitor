@@ -1,6 +1,5 @@
 package rPi.controllers;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -24,6 +23,7 @@ public class ConnectionController {
 	private static short DEFAULT_PORT = 9000; // the TCP port the server listens on
 	private static int UDP_PORT_TO_SEND_FROM = 15000;
 	private static int RECONNECT_INTERVAL_SECONDS = 10;
+	private static String MAC_ADDR;
 	
 	//=================================================//
 	
@@ -31,7 +31,8 @@ public class ConnectionController {
 	BufferedReader inputFromServer;
 	String fromServer;
 	
-	public ConnectionController(){
+	public ConnectionController(String mac){
+		this.MAC_ADDR = mac;
 	}
 
 	/**
@@ -65,7 +66,7 @@ public class ConnectionController {
 		
 		// OUR PROTOCOL HANDSHAKE / WHATEVA
 		con.sendTCP("mac\n");
-		con.sendTCP("60:c5:47:0a:05:fe\n");
+		con.sendTCP(MAC_ADDR+ "\n");
 		
 		return inputFromServer;
 	}
@@ -83,6 +84,7 @@ public class ConnectionController {
 	 */
 	public void stopUDP(){
 		con.stopUDP();
+		UDP_PORT_TO_SEND_FROM++;
 	}
 	/**
 	 * This method sends a string to the server through TCP and then a carriage return and newline
@@ -110,4 +112,5 @@ public class ConnectionController {
 		}
 		System.out.println("TCParray sent");
 	}
+	
 }

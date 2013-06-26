@@ -2,7 +2,6 @@ package rPi.controllers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.InputMismatchException;
 
 public class MainController {
 	
@@ -18,7 +17,7 @@ public class MainController {
 	public MainController(String server_ip) throws Exception {
 		this.server_ip = server_ip;
 		this.currentOS = checkOS();
-		cc = new ConnectionController();		
+		cc = new ConnectionController(getMacAddress());		
 	}
 	
 	public void connectToServer() throws IOException {
@@ -96,5 +95,55 @@ public class MainController {
 		}
 		
 	} // end handleCommand()
+	/**
+	 * Method to get host MAC address for identification purposes
+	 * 
+	 * @return String with MAC addr.
+	 * @throws Exception
+	 */
+	private String getMacAddress() throws Exception{
+		assert(this.currentOS != null);
+		
+		String addr = ""; // the MAC address we wanna return
+		BufferedReader br = null;
+		
+		// MAC
+		if (this.currentOS == SupportedOS.Mac){
+			br = tc.exec("ifconfig");
+			String line;
+		    while ( (line = br.readLine()) != null){
+		    	System.out.println(line);
+		    	if (line.indexOf("ether") >= 0){
+		    		addr = line.substring(line.indexOf(" ")+1 );
+			   	}
+		    }	
+		// WIN
+		} else if (this.currentOS == SupportedOS.Windows){
+			br = tc.exec("ipconfig /all");
+			String line;
+		    while ( (line = br.readLine()) != null){
+		    	System.out.println(line);
+		    	if (line.indexOf("Psysical Address") >= 0){
+		    		addr = line.substring(line.indexOf(" ")+1 );
+			   	}
+		    }	
+		// NIX
+		} else if (this.currentOS == SupportedOS.Linux){
+			br = tc.exec("ifconfig -a");
+			String line;
+			while( (line = br.readLine()) != null){
+				System.out.println("line");
+				if (line.indexOf("HWaddr") >= 0){
+					String[] parseArr = line.split("\\s+");
+					for(String i : parseArr){
+						System.out.println(i);
+					}
+					addr = parseArr[4];
+				}
+			}
+		}
+		System.out.println("Mac Addr: "+ addr);
+		return addr;
+	}
 	
 } // end class 

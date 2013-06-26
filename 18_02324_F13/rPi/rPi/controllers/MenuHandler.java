@@ -2,7 +2,6 @@ package rPi.controllers;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 
 import rPi.controllers.MainController.SupportedOS;
 import rPi.controllers.MainController.SupportedCommands;
