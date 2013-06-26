@@ -13,7 +13,8 @@
         "Top 10 Pie-chart for the last 10 minutes",
         "Top 10 Pie-chart for the last hour",
         "Top 10 Pie-chart for the last day",
-        "Top 10 Pie-chart for the last month"
+        "Top 10 Pie-chart for the last month",
+        "Live traffic"
     };
     
     int i, i2, chartNum = 0, numOfSelectedCharts = 0;
