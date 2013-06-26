@@ -97,7 +97,7 @@ public class ConnectedTCPClient extends Thread
     	String data = "";
     	int timeout = 0;
     	
-    	while(!dataFromClient.ready() && timeout < 300)
+    	while(!dataFromClient.ready() && timeout < 1200)
     	{
     		timeout++;
     		try
@@ -177,6 +177,7 @@ public class ConnectedTCPClient extends Thread
 	            			System.out.println("Server: Start on UDP port " + linkedUDPServer.getPort());
 	            			TCPServer.addClient(this);
 	            			linkedUDPServer.start();
+
 	            		}
 	            		else
 	            		{
